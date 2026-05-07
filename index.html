@@ -83,11 +83,12 @@
           year.
         </p>
         <p>
-          Before that, I contributed to Meta's <a href="https://github.com/facebook/pyre-check">Pysa</a>
-          static analyzer through the MLH Fellowship — extending its taint-tracking and
-          building tooling to surface exploit-like flows in Python code. Right now I'm
-          building <a href="#draftiq">DraftIQ</a>, a production REST API for fantasy
-          baseball auction drafting.
+          Before that, I built a fuzzer for Meta's
+          <a href="https://github.com/facebook/pyre-check">Pysa</a> static analyzer
+          through the MLH Fellowship — it generated Python snippets to surface false
+          negatives in Pysa's interprocedural taint-tracking. Right now I'm building
+          <a href="#draftiq">DraftIQ</a>, a production REST API for fantasy baseball
+          auction drafting.
         </p>
       </section>
 
@@ -121,10 +122,12 @@
             <span class="when">May – Aug 2024 &middot; Remote</span>
           </header>
           <p>
-            Extended Pysa's static analysis engine with interprocedural taint-tracking. Built a
-            fuzz-inspired generator producing 10,000+ Python snippets and authored test suites
-            that surfaced 20+ exploit-like flows.
-            <a href="https://github.com/facebook/pyre-check/pulls?q=author%3Aesohel30">View PRs &rarr;</a>
+            Built a fuzzer for Pysa that generated 10,000+ Python snippets to find false
+            negatives in its interprocedural taint-tracking. The work surfaced 20+ flows
+            Pysa missed and shipped as
+            <a href="https://github.com/facebook/pyre-check/pull/886">pyre-check#886</a>.
+            Smaller fixes alongside —
+            <a href="https://github.com/facebook/pyre-check/pulls?q=is%3Apr+author%3Aesohel30+is%3Amerged">merged PRs &rarr;</a>
           </p>
         </article>
 
@@ -157,8 +160,7 @@
             <span>Node.js</span><span>Express</span><span>SQLite</span><span>React</span><span>MLB Stats API</span><span>OpenAPI 3.0</span>
           </p>
           <p class="links">
-            <a href="https://player-data-api.onrender.com/developer-portal/">Developer portal &rarr;</a>
-            <a href="https://player-data-api.vercel.app">Demo &rarr;</a>
+            <a href="https://player-data-api.onrender.com/developer-portal/">Live developer portal &rarr;</a>
             <a href="https://github.com/ericsohel">GitHub &rarr;</a>
           </p>
           <p class="aside">124+ tests. CI/CD via GitHub Actions to Render with a hybrid Vercel frontend.</p>
@@ -166,13 +168,16 @@
 
         <article class="entry">
           <header class="entry-head">
-            <h3>facebook/pyre-check contributions</h3>
+            <h3>Pysa fuzzer (facebook/pyre-check)</h3>
             <span class="when">2024</span>
           </header>
           <p>
-            Open-source contributions to Meta's Pysa static analyzer during the MLH Fellowship —
-            taint-tracking extensions, generated-test infrastructure, and bug fixes.
-            <a href="https://github.com/facebook/pyre-check/pulls?q=author%3Aesohel30">PRs on facebook/pyre-check &rarr;</a>
+            A fuzzer for Meta's Pysa static analyzer, written during the MLH Fellowship.
+            Generated Python snippets to expose false negatives in Pysa's taint-tracking;
+            shipped as
+            <a href="https://github.com/facebook/pyre-check/pull/886">pyre-check#886</a>
+            with smaller fixes alongside
+            (<a href="https://github.com/facebook/pyre-check/pulls?q=is%3Apr+author%3Aesohel30+is%3Amerged">merged PRs</a>).
           </p>
         </article>
       </section>

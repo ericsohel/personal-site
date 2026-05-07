@@ -52,15 +52,17 @@ main {
 a {
   color: var(--fg);
   text-decoration: underline;
-  text-decoration-color: var(--rule);
+  text-decoration-color: var(--muted);
   text-decoration-thickness: 1px;
   text-underline-offset: 3px;
-  transition: color 120ms ease, text-decoration-color 120ms ease;
+  transition: color 120ms ease, text-decoration-color 120ms ease,
+    text-decoration-thickness 120ms ease;
 }
 
 a:hover {
   color: var(--accent);
   text-decoration-color: var(--accent);
+  text-decoration-thickness: 2px;
 }
 
 a:focus-visible {
