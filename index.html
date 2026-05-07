@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Eric Sohel</title>
+    <meta name="description" content="Eric Sohel — software engineer working on backend systems, security tooling, and real-time data infrastructure." />
+
+    <meta property="og:title" content="Eric Sohel" />
+    <meta property="og:description" content="Software engineer working on backend systems, security tooling, and real-time data infrastructure." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://ericsohel.com" />
+
+    <meta name="theme-color" content="#0b0b0c" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/styles.css" />
+
+    <script>
+      // Inline to avoid FOUC on theme. Reads stored preference, falls back to system.
+      (function () {
+        try {
+          var saved = localStorage.getItem("theme");
+          var dark =
+            saved === "dark" ||
+            (!saved && window.matchMedia("(prefers-color-scheme: dark)").matches);
+          if (dark) document.documentElement.dataset.theme = "dark";
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <header class="site-header">
+      <a href="#" class="brand" aria-label="Eric Sohel — home">eric sohel</a>
+      <button
+        id="theme-toggle"
+        class="theme-toggle"
+        type="button"
+        aria-label="Toggle color theme"
+        aria-pressed="false"
+      >
+        <svg class="icon-sun" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+          <circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.6"/>
+          <g stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+            <line x1="12" y1="2" x2="12" y2="5"/>
+            <line x1="12" y1="19" x2="12" y2="22"/>
+            <line x1="2" y1="12" x2="5" y2="12"/>
+            <line x1="19" y1="12" x2="22" y2="12"/>
+            <line x1="4.6" y1="4.6" x2="6.7" y2="6.7"/>
+            <line x1="17.3" y1="17.3" x2="19.4" y2="19.4"/>
+            <line x1="4.6" y1="19.4" x2="6.7" y2="17.3"/>
+            <line x1="17.3" y1="6.7" x2="19.4" y2="4.6"/>
+          </g>
+        </svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+          <path
+            d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.6"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </button>
+    </header>
+
+    <main id="main">
+      <section class="intro">
+        <h1>Eric Sohel</h1>
+        <p class="tagline">
+          Software engineer working on backend systems, security tooling, and real-time data infrastructure.
+        </p>
+        <p class="meta">New York City &middot; <a href="mailto:ericsohel05@gmail.com">ericsohel05@gmail.com</a></p>
+      </section>
+
+      <section aria-labelledby="about-h">
+        <h2 id="about-h">About</h2>
+        <p>
+          I'm studying computer science and applied math at Stony Brook University,
+          graduating May 2027. I'm headed back to Capital One in NYC this summer for
+          my second SWE internship after working on their wire transfer platform last
+          year.
+        </p>
+        <p>
+          Before that, I contributed to Meta's <a href="https://github.com/facebook/pyre-check">Pysa</a>
+          static analyzer through the MLH Fellowship — extending its taint-tracking and
+          building tooling to surface exploit-like flows in Python code. Right now I'm
+          building <a href="#draftiq">DraftIQ</a>, a production REST API for fantasy
+          baseball auction drafting.
+        </p>
+      </section>
+
+      <section aria-labelledby="experience-h">
+        <h2 id="experience-h">Experience</h2>
+
+        <article class="entry">
+          <header class="entry-head">
+            <h3>Capital One <span class="role">— Software Engineer Intern</span></h3>
+            <span class="when">Jun – Aug 2026 &middot; NYC</span>
+          </header>
+          <p>Returning offer. Team and project TBD.</p>
+        </article>
+
+        <article class="entry">
+          <header class="entry-head">
+            <h3>Capital One <span class="role">— Software Engineer Intern</span></h3>
+            <span class="when">Jun – Aug 2025 &middot; McLean, VA</span>
+          </header>
+          <p>
+            Migrated the wire transfer platform off third-party vendors to internal systems.
+            Built Node.js / Fastify microservices on AWS Lambda and EC2 with idempotency keys,
+            designed a PostgreSQL approval workflow integrating four verification APIs, and
+            shipped React UI features.
+          </p>
+        </article>
+
+        <article class="entry">
+          <header class="entry-head">
+            <h3>Meta <span class="role">— Software Engineer Fellow, MLH Fellowship</span></h3>
+            <span class="when">May – Aug 2024 &middot; Remote</span>
+          </header>
+          <p>
+            Extended Pysa's static analysis engine with interprocedural taint-tracking. Built a
+            fuzz-inspired generator producing 10,000+ Python snippets and authored test suites
+            that surfaced 20+ exploit-like flows.
+            <a href="https://github.com/facebook/pyre-check/pulls?q=author%3Aesohel30">View PRs &rarr;</a>
+          </p>
+        </article>
+
+        <article class="entry">
+          <header class="entry-head">
+            <h3>Stanford Code in Place <span class="role">— Volunteer Section Leader, CS 106A</span></h3>
+            <span class="when">Mar – Jun 2024</span>
+          </header>
+          <p>Taught an intro Python section to ~10 students worldwide.</p>
+        </article>
+      </section>
+
+      <section aria-labelledby="projects-h">
+        <h2 id="projects-h">Projects</h2>
+
+        <article class="entry hero" id="draftiq">
+          <header class="entry-head">
+            <h3>DraftIQ Player Data API</h3>
+            <span class="when">2025 – present</span>
+          </header>
+          <p>
+            A production REST API for fantasy baseball auction drafting. Real-time MLB data
+            ingestion via a tiered scheduler (15-minute injuries, 6-hour depth charts, daily
+            metadata), a z-score-above-replacement valuation engine that handles positional
+            scarcity, and a self-service developer portal — scrypt password hashing,
+            signed-cookie sessions, per-key IP allowlists with CIDR matching, sliding-window
+            rate limits, and a 30-day audit log.
+          </p>
+          <p class="stack">
+            <span>Node.js</span><span>Express</span><span>SQLite</span><span>React</span><span>MLB Stats API</span><span>OpenAPI 3.0</span>
+          </p>
+          <p class="links">
+            <a href="https://player-data-api.onrender.com/developer-portal/">Developer portal &rarr;</a>
+            <a href="https://player-data-api.vercel.app">Demo &rarr;</a>
+            <a href="https://github.com/ericsohel">GitHub &rarr;</a>
+          </p>
+          <p class="aside">124+ tests. CI/CD via GitHub Actions to Render with a hybrid Vercel frontend.</p>
+        </article>
+
+        <article class="entry">
+          <header class="entry-head">
+            <h3>facebook/pyre-check contributions</h3>
+            <span class="when">2024</span>
+          </header>
+          <p>
+            Open-source contributions to Meta's Pysa static analyzer during the MLH Fellowship —
+            taint-tracking extensions, generated-test infrastructure, and bug fixes.
+            <a href="https://github.com/facebook/pyre-check/pulls?q=author%3Aesohel30">PRs on facebook/pyre-check &rarr;</a>
+          </p>
+        </article>
+      </section>
+
+      <section aria-labelledby="skills-h">
+        <h2 id="skills-h">Skills</h2>
+        <dl class="skills">
+          <dt>Languages</dt>
+          <dd>Python, Java, JavaScript / TypeScript. Familiar with C / C++ and OCaml from coursework.</dd>
+
+          <dt>Frameworks</dt>
+          <dd>React, Node.js, Fastify, Express, Flask.</dd>
+
+          <dt>Data</dt>
+          <dd>PostgreSQL, MongoDB, SQLite, SQL.</dd>
+
+          <dt>Infra &amp; tools</dt>
+          <dd>AWS (Lambda, EC2), Docker, Linux, Git, GitHub Actions, CI/CD.</dd>
+
+          <dt>Areas</dt>
+          <dd>Static analysis, distributed systems, REST API design, full-stack, system design.</dd>
+        </dl>
+      </section>
+
+      <section aria-labelledby="contact-h">
+        <h2 id="contact-h">Contact</h2>
+        <ul class="contact">
+          <li><a href="mailto:ericsohel05@gmail.com">ericsohel05@gmail.com</a></li>
+          <li><a href="https://github.com/ericsohel">github.com/ericsohel</a></li>
+          <li><a href="https://www.linkedin.com/in/eric-sohel/">linkedin.com/in/eric-sohel</a></li>
+          <li><a href="https://github.com/facebook/pyre-check/pulls?q=author%3Aesohel30">Pysa contributions</a></li>
+        </ul>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>&copy; <span id="year"></span> Eric Sohel</p>
+    </footer>
+
+    <script src="/script.js" defer></script>
+  </body>
+</html>
