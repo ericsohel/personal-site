@@ -119,16 +119,15 @@ const CHARIZARD = (function () {
    ========================================================================= */
 (function ambient() {
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-  if (window.innerWidth < 720) return;
 
   const PX = 4; // pixel-art scale: 4 CSS pixels per sprite pixel
 
   const style = document.createElement("style");
   style.textContent = `
 #ch-amb {
-  position: fixed; bottom: 5vh; right: 3vw;
-  z-index: 50; pointer-events: auto; cursor: pointer;
-  will-change: transform;
+  position: fixed; bottom: 60px; right: 30px;
+  z-index: 9000; pointer-events: auto; cursor: pointer;
+  opacity: 1;
   filter: drop-shadow(0 8px 18px rgba(0,0,0,0.28)) drop-shadow(0 0 20px rgba(255,100,0,0.18));
   transition: opacity 0.4s ease;
 }
@@ -163,7 +162,7 @@ const CHARIZARD = (function () {
   20%  { opacity: 1; transform: scale(1); }
   100% { opacity: 0; transform: scale(2.4) translate(70px, -28px); }
 }
-@media (max-width: 720px) { #ch-amb { display: none; } }
+@media (max-width: 480px) { #ch-amb { display: none; } }
 `;
   document.head.appendChild(style);
 
