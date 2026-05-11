@@ -26,77 +26,90 @@
 })();
 
 /* =========================================================================
-   Pixel-art Charizard — shared sprite used everywhere on the page.
-   22 wide × 17 tall, flying right, wings spread back-left, tail-flame trailing.
+   Hand-drawn pixel-art dragon sprite (Charizard-inspired original art).
+   22 wide × 17 tall, side profile flying right.
+   Two frames — wings up and wings down — alternate to produce a real flap.
    ========================================================================= */
 const CHARIZARD = (function () {
   const SVGNS = "http://www.w3.org/2000/svg";
 
-  // 22 wide × 17 tall.
-  // .=transparent  W=wing-outline  w=wing-shade  o=orange  O=orange-deep
-  // b=black-outline  E=eye-white  L=belly  l=belly-shade
-  // D=tail-shadow  F=flame-yellow  R=flame-red
-  const SPRITE = [
-    "......................", // 0
-    ".......W..........bb..", // 1  wing tip + horn tips
-    "......WWW........boob.", // 2
-    ".....WWWWW......boooob", // 3  head outline
-    "....WWWoWWW....booooob", // 4
-    "...WWWoooWWW.booooEoob", // 5  eye
-    ".WWWoooooooWoooooooooB", // 6  body emerges
-    "WWoooooooooooooooooooB", // 7
-    ".WooooooooooollllllooB", // 8  belly starts
-    "..wwoooooLLLLLLLLLLooo", // 9
-    "...wooooLLLLLLLLLLLLLO", // 10
-    "...DooooLLLLLLLLLLLO..", // 11
-    "..DDoooooooLLLLLLLO...", // 12
-    ".DFooooooooooLLLLO....", // 13
-    "DFFoooooooooo.........", // 14  tail base
-    "FRFooooo..............", // 15
-    ".RF...................", // 16  flame tip
+  // Legend:
+  //   .=transparent   W=wing-outline (near-black)   w=wing-shade
+  //   o=orange body   O=orange shade                b/B=black outline
+  //   E=white eye     L=cream belly                 l=belly shade
+  //   D=tail shadow   F=flame yellow                R=flame red core
+  //
+  // Frame A: wings raised, fully spread (top of the flap arc)
+  const FRAME_A = [
+    "......................",
+    ".......W..........bb..",
+    "......WoW........boob.",
+    ".....WoooW......boooob",
+    "....WoooooW....booooob",
+    "...WoooooooW..booooEob",
+    "..WoooooooooWoooooooooB",
+    "..Wwwwwwwwww oooooooooB",
+    ".WWwwwwwwwwoollllllooBb",
+    "..wwwoooooLLLLLLLLLLoo",
+    "...wooooLLLLLLLLLLLLLO",
+    "...DoooLLLLLLLLLLLLLO.",
+    "..DDooooooLLLLLLLLLO..",
+    ".DFooooooooooLLLLO....",
+    "DFFoooooooooo.........",
+    "FRFooooo..............",
+    ".RF...................",
+  ];
+
+  // Frame B: wings pulled down/in (bottom of the flap arc)
+  const FRAME_B = [
+    "......................",
+    "..................bb..",
+    ".................boob.",
+    "................boooob",
+    "...............booooob",
+    "...wwwwwww....booooEob",
+    "..WWwwwwwwwWoooooooooB",
+    ".WWooooooooooooooooooB",
+    "..WoooooooooollllllooB",
+    "...woooooLLLLLLLLLLooo",
+    "....oooLLLLLLLLLLLLLLO",
+    "...DoooLLLLLLLLLLLLLO.",
+    "..DDooooooLLLLLLLLLO..",
+    ".DFooooooooooLLLLO....",
+    "DFFoooooooooo.........",
+    "FRFooooo..............",
+    ".RF...................",
   ];
 
   const PAL = {
-    ".": null,
-    W: "#3a1604",   // dark brown wing — high contrast with orange
-    w: "#1f0a02",   // wing shade (near-black)
-    o: "#ff6d00",   // bright orange body
+    ".": null, " ": null,
+    W: "#3a1604",   // wing — dark brown
+    w: "#1f0a02",   // wing shade
+    o: "#ff6d00",   // bright orange
     O: "#c44d12",   // orange shade
-    b: "#000000",   // pure black outline
+    b: "#000000",
     B: "#000000",
-    E: "#ffffff",   // eye white
-    L: "#ffd180",   // cream belly
-    l: "#c98a4f",   // belly shade
-    D: "#3a1604",   // tail-shadow (matches wings)
-    F: "#ffeb3b",   // flame yellow
-    R: "#ff3d00",   // flame red
+    E: "#ffffff",
+    L: "#ffd180",
+    l: "#c98a4f",
+    D: "#3a1604",
+    F: "#ffeb3b",
+    R: "#ff3d00",
   };
 
-  // Sanity-check sprite dimensions on load — if rows are misaligned the art looks wrong.
   const W = 22;
-  const H = SPRITE.length;
-  SPRITE.forEach((r, i) => {
-    if (r.length !== W) console.warn(`CHARIZARD row ${i} is ${r.length}, expected ${W}: "${r}"`);
-  });
+  const H = FRAME_A.length;
 
-  function build(pxSize) {
+  function buildFrame(rows, pxSize) {
     const svg = document.createElementNS(SVGNS, "svg");
     svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
     svg.setAttribute("width", W * pxSize);
     svg.setAttribute("height", H * pxSize);
     svg.setAttribute("shape-rendering", "crispEdges");
     svg.style.display = "block";
-
-    const gWing = document.createElementNS(SVGNS, "g");
-    gWing.setAttribute("class", "ch-wing");
-    const gBody = document.createElementNS(SVGNS, "g");
-    const gFlame = document.createElementNS(SVGNS, "g");
-    gFlame.setAttribute("class", "ch-flame");
-
-    SPRITE.forEach((row, y) => {
+    rows.forEach((row, y) => {
       for (let x = 0; x < row.length && x < W; x++) {
-        const c = row[x];
-        const fill = PAL[c];
+        const fill = PAL[row[x]];
         if (!fill) continue;
         const r = document.createElementNS(SVGNS, "rect");
         r.setAttribute("x", x);
@@ -104,19 +117,37 @@ const CHARIZARD = (function () {
         r.setAttribute("width", 1);
         r.setAttribute("height", 1);
         r.setAttribute("fill", fill);
-        if (c === "W" || c === "w") gWing.appendChild(r);
-        else if (c === "F" || c === "R") gFlame.appendChild(r);
-        else gBody.appendChild(r);
+        svg.appendChild(r);
       }
     });
-
-    svg.appendChild(gWing);
-    svg.appendChild(gBody);
-    svg.appendChild(gFlame);
     return svg;
   }
 
-  // A tiny flame-only sprite for inline decoration (5×6 px)
+  // Returns a wrapper containing both frames, stacked, with CSS-driven alternation.
+  function build(pxSize) {
+    const box = document.createElement("div");
+    box.className = "ch-flapper";
+    box.style.position = "relative";
+    box.style.display = "inline-block";
+    box.style.lineHeight = "0";
+    box.style.width = W * pxSize + "px";
+    box.style.height = H * pxSize + "px";
+
+    const a = buildFrame(FRAME_A, pxSize);
+    a.classList.add("ch-frame-a");
+    const b = buildFrame(FRAME_B, pxSize);
+    b.classList.add("ch-frame-b");
+    [a, b].forEach((s) => {
+      s.style.position = "absolute";
+      s.style.left = "0";
+      s.style.top = "0";
+    });
+
+    box.appendChild(a);
+    box.appendChild(b);
+    return box;
+  }
+
   function buildFlame(pxSize) {
     const FLAME = [
       "..F..",
@@ -126,6 +157,7 @@ const CHARIZARD = (function () {
       ".FRF.",
       "..R..",
     ];
+    const FPAL = { ".": null, F: "#ffd54f", R: "#ff3d00" };
     const fw = 5, fh = FLAME.length;
     const svg = document.createElementNS(SVGNS, "svg");
     svg.setAttribute("viewBox", `0 0 ${fw} ${fh}`);
@@ -136,8 +168,7 @@ const CHARIZARD = (function () {
     svg.style.verticalAlign = "middle";
     FLAME.forEach((row, y) => {
       for (let x = 0; x < row.length; x++) {
-        const c = row[x];
-        const fill = PAL[c];
+        const fill = FPAL[row[x]];
         if (!fill) continue;
         const r = document.createElementNS(SVGNS, "rect");
         r.setAttribute("x", x);
@@ -161,65 +192,59 @@ const CHARIZARD = (function () {
    - Footer Charizard
    ========================================================================= */
 (function decorate() {
-  // Shared style for the inline decorations + ambient companion
+  // Shared style for inline decorations + ambient companion.
   const style = document.createElement("style");
   style.textContent = `
+/* Two-frame wing flap — alternate visibility of FRAME_A and FRAME_B */
+.ch-flapper .ch-frame-a,
+.ch-flapper .ch-frame-b {
+  position: absolute; top: 0; left: 0;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+@keyframes chFrameToggle {
+  0%, 49.99%   { opacity: 1; }
+  50%, 100%    { opacity: 0; }
+}
+.ch-flapper .ch-frame-a { animation: chFrameToggle 0.44s infinite; }
+.ch-flapper .ch-frame-b { animation: chFrameToggle 0.44s infinite; animation-delay: 0.22s; }
+
 .ch-hero {
   display: inline-block;
   vertical-align: middle;
-  margin-left: 1rem;
-  filter: drop-shadow(0 4px 12px rgba(255,100,0,0.25));
+  margin-left: 0.9rem;
+  filter: drop-shadow(0 4px 14px rgba(255,100,0,0.3));
+  animation: chHover 3.2s ease-in-out infinite;
 }
 @keyframes chHover {
-  0%,100% { transform: translateY(0); }
-  50%     { transform: translateY(-6px); }
-}
-.ch-hero { animation: chHover 3.2s ease-in-out infinite; }
-
-.ch-hero .ch-wing {
-  transform-box: fill-box;
-  transform-origin: 50% 100%;
-  animation: chFlap 0.5s ease-in-out infinite alternate;
-}
-.ch-hero .ch-flame {
-  transform-box: fill-box;
-  transform-origin: 50% 100%;
-  animation: chFlick 0.2s steps(2) infinite;
-}
-@keyframes chFlap {
-  from { transform: translateY(0) scaleY(1); }
-  to   { transform: translateY(0.5px) scaleY(0.8); }
-}
-@keyframes chFlick {
-  0%   { transform: scaleY(1); }
-  50%  { transform: scaleY(1.2) scaleX(0.85); }
+  0%,100% { transform: translateY(0) rotate(-2deg); }
+  50%     { transform: translateY(-8px) rotate(2deg); }
 }
 
 .ch-mini {
   display: inline-block;
   vertical-align: middle;
-  margin-right: 0.6rem;
+  margin-right: 0.55rem;
   position: relative;
   top: -1px;
 }
-.ch-mini .ch-flame {
+.ch-mini svg {
   transform-box: fill-box;
   transform-origin: 50% 100%;
   animation: chFlick 0.22s steps(2) infinite;
 }
+@keyframes chFlick {
+  0%   { transform: scaleY(1); }
+  50%  { transform: scaleY(1.15) scaleX(0.9); }
+}
 
 .ch-footer {
   display: block;
-  margin-top: 1.25rem;
-  opacity: 0.55;
+  margin-top: 1.5rem;
+  opacity: 0.6;
   transition: opacity 0.2s;
 }
 .ch-footer:hover { opacity: 1; }
-
-.ch-hero svg, .ch-mini svg, .ch-footer svg {
-  image-rendering: pixelated;
-  image-rendering: crisp-edges;
-}
 
 /* Ambient companion */
 #ch-amb {
@@ -228,37 +253,25 @@ const CHARIZARD = (function () {
   z-index: 9000;
   pointer-events: auto; cursor: pointer;
   opacity: 1;
-  filter: drop-shadow(0 8px 22px rgba(0,0,0,0.35)) drop-shadow(0 0 28px rgba(255,100,0,0.35));
+  filter: drop-shadow(0 8px 22px rgba(0,0,0,0.4)) drop-shadow(0 0 32px rgba(255,120,0,0.35));
   transition: opacity 0.4s ease;
-}
-#ch-amb svg { image-rendering: pixelated; image-rendering: crisp-edges; }
-#ch-amb .ch-wing {
-  transform-box: fill-box;
-  transform-origin: 50% 100%;
-  animation: chFlap 0.42s ease-in-out infinite alternate;
-}
-#ch-amb .ch-flame {
-  transform-box: fill-box;
-  transform-origin: 50% 100%;
-  animation: chFlick 0.18s steps(2) infinite;
 }
 
 .ch-puff {
-  position: fixed; width: 12px; height: 12px;
+  position: fixed; width: 14px; height: 14px;
   pointer-events: none; z-index: 8999; border-radius: 50%;
   background: radial-gradient(circle, #fff8d6 0%, #ffd54f 30%, #ff6d00 70%, #d62b00 100%);
-  animation: chPuff 0.95s ease-out forwards;
+  animation: chPuff 1s ease-out forwards;
   mix-blend-mode: screen;
 }
 @keyframes chPuff {
   0%   { opacity: 0; transform: scale(0.25); }
   20%  { opacity: 1; transform: scale(1); }
-  100% { opacity: 0; transform: scale(2.4) translate(70px, -28px); }
+  100% { opacity: 0; transform: scale(2.6) translate(80px, -30px); }
 }
 
-/* Mobile: shrink ambient, hide hero one */
 @media (max-width: 540px) {
-  #ch-amb { transform: scale(0.6) !important; transform-origin: bottom right; bottom: 16px; right: 12px; }
+  #ch-amb { transform: scale(0.65) !important; transform-origin: bottom right; bottom: 16px; right: 12px; }
   .ch-hero { display: none; }
 }
 `;
@@ -289,7 +302,7 @@ const CHARIZARD = (function () {
     const fc = document.createElement("span");
     fc.className = "ch-footer";
     fc.setAttribute("aria-hidden", "true");
-    fc.appendChild(CHARIZARD.build(3)); // 22*3 = 66px wide
+    fc.appendChild(CHARIZARD.build(4)); // 22*4 = 88px wide
     footerP.parentNode.appendChild(fc);
   }
 })();
@@ -300,12 +313,10 @@ const CHARIZARD = (function () {
 (function ambient() {
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-  const PX = 8; // 22*8=176px wide ambient sprite
-
   const wrap = document.createElement("div");
   wrap.id = "ch-amb";
   wrap.setAttribute("aria-hidden", "true");
-  wrap.appendChild(CHARIZARD.build(PX));
+  wrap.appendChild(CHARIZARD.build(8)); // 22*8 = 176px wide
   document.body.appendChild(wrap);
 
   let curX = 0, curY = 0;
@@ -351,14 +362,21 @@ const CHARIZARD = (function () {
     setTimeout(() => { wrap.remove(); }, 1450);
   });
 
+  let prevX = 0, prevY = 0;
   function tick() {
     if (dismissed) return;
-    curX += (tgtX - curX) * 0.045;
-    curY += (tgtY - curY) * 0.045;
+    const dx = (tgtX - curX) * 0.045;
+    const dy = (tgtY - curY) * 0.045;
+    curX += dx;
+    curY += dy;
     const t = performance.now() / 720;
     const bobX = Math.sin(t) * 3.5;
     const bobY = Math.cos(t * 1.2) * 2.5;
-    wrap.style.transform = `translate(${curX + bobX}px, ${curY + bobY}px)`;
+    // Tilt toward movement direction — clamp so it doesn't go upside-down
+    const vx = curX - prevX;
+    const tilt = Math.max(-12, Math.min(12, vx * 6));
+    prevX = curX; prevY = curY;
+    wrap.style.transform = `translate(${curX + bobX}px, ${curY + bobY}px) rotate(${tilt}deg)`;
     if (scrolling && performance.now() - lastPuff > 75) {
       lastPuff = performance.now();
       spawnPuff();
