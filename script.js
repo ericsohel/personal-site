@@ -39,46 +39,47 @@ const CHARIZARD = (function () {
   //   E=white eye     L=cream belly                 l=belly shade
   //   D=tail shadow   F=flame yellow                R=flame red core
   //
-  // Frame A: wings raised, fully spread (top of the flap arc)
+  // Frame A — wings up, fully spread.
+  // 22 cols × 17 rows. Every row exactly 22 chars.
   const FRAME_A = [
-    "......................",
-    ".......W..........bb..",
-    "......WoW........boob.",
-    ".....WoooW......boooob",
-    "....WoooooW....booooob",
-    "...WoooooooW..booooEob",
-    "..WoooooooooWoooooooooB",
-    "..Wwwwwwwwww oooooooooB",
-    ".WWwwwwwwwwoollllllooBb",
-    "..wwwoooooLLLLLLLLLLoo",
-    "...wooooLLLLLLLLLLLLLO",
-    "...DoooLLLLLLLLLLLLLO.",
-    "..DDooooooLLLLLLLLLO..",
-    ".DFooooooooooLLLLO....",
-    "DFFoooooooooo.........",
-    "FRFooooo..............",
-    ".RF...................",
+    "....W.................",
+    "...WwW...........bbb..",
+    "..WwwwW.........bOOOb.",
+    "..WwwwwW........bOOOOb",
+    ".WwwwwwwW......bOEoOOb",
+    ".WwwwwwwwW....bOoooobb",
+    "WwwwwwwwwwWooboooooooB",
+    ".WWwwwwwwwoooooooooooB",
+    "..WWWWWooooollllllooOB",
+    "...oooooLLLLLLLLLLLOOB",
+    "..DooooLLLLLLLLLLLLLO.",
+    ".DDooooLLLLLLLLLLLLO..",
+    ".DFoooooooLLLLLLLLO...",
+    "DFFooooooooooLLLLO....",
+    "FRFoooooooooo.........",
+    ".RFooooo..............",
+    "..F...................",
   ];
 
-  // Frame B: wings pulled down/in (bottom of the flap arc)
+  // Frame B — wings tucked down (mid-stroke). Body stays put; only the wings move.
   const FRAME_B = [
     "......................",
-    "..................bb..",
-    ".................boob.",
-    "................boooob",
-    "...............booooob",
-    "...wwwwwww....booooEob",
-    "..WWwwwwwwwWoooooooooB",
-    ".WWooooooooooooooooooB",
-    "..WoooooooooollllllooB",
-    "...woooooLLLLLLLLLLooo",
-    "....oooLLLLLLLLLLLLLLO",
-    "...DoooLLLLLLLLLLLLLO.",
-    "..DDooooooLLLLLLLLLO..",
-    ".DFooooooooooLLLLO....",
-    "DFFoooooooooo.........",
-    "FRFooooo..............",
-    ".RF...................",
+    "..................bbb.",
+    ".................bOOOb",
+    "................bOOOOb",
+    "...............bOEoOOb",
+    "..............bOoooobb",
+    "..............booooooB",
+    "....WwwwwwooooooooooooB",
+    "...WwwwwwooollllllooOB",
+    "..WWwwwooLLLLLLLLLLLOB",
+    "..wwwwoLLLLLLLLLLLLLLO",
+    ".DwwooooLLLLLLLLLLLLO.",
+    ".DDoooooooLLLLLLLLO...",
+    "DFFooooooooooLLLLO....",
+    "FRFoooooooooo.........",
+    ".RFooooo..............",
+    "..F...................",
   ];
 
   const PAL = {
@@ -186,16 +187,13 @@ const CHARIZARD = (function () {
 })();
 
 /* =========================================================================
-   Decorate the page with pixel-art Charizard accents:
-   - Hero sprite floating beside the H1
-   - Small flame icons on section numbers
-   - Footer Charizard
+   Single hero sprite beside the H1. Click to send it flying off the page.
    ========================================================================= */
-(function decorate() {
-  // Shared style for inline decorations + ambient companion.
+(function hero() {
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
   const style = document.createElement("style");
   style.textContent = `
-/* Two-frame wing flap — alternate visibility of FRAME_A and FRAME_B */
 .ch-flapper .ch-frame-a,
 .ch-flapper .ch-frame-b {
   position: absolute; top: 0; left: 0;
@@ -206,55 +204,27 @@ const CHARIZARD = (function () {
   0%, 49.99%   { opacity: 1; }
   50%, 100%    { opacity: 0; }
 }
-.ch-flapper .ch-frame-a { animation: chFrameToggle 0.44s infinite; }
-.ch-flapper .ch-frame-b { animation: chFrameToggle 0.44s infinite; animation-delay: 0.22s; }
+.ch-flapper .ch-frame-a { animation: chFrameToggle 0.42s infinite; }
+.ch-flapper .ch-frame-b { animation: chFrameToggle 0.42s infinite; animation-delay: 0.21s; }
 
 .ch-hero {
   display: inline-block;
   vertical-align: middle;
-  margin-left: 0.9rem;
-  filter: drop-shadow(0 4px 14px rgba(255,100,0,0.3));
-  animation: chHover 3.2s ease-in-out infinite;
+  margin-left: 1rem;
+  cursor: pointer;
+  filter: drop-shadow(0 4px 14px rgba(255,100,0,0.28));
+  transition: filter 0.18s ease;
+  animation: chHover 3.4s ease-in-out infinite;
 }
+.ch-hero:hover { filter: drop-shadow(0 4px 18px rgba(255,140,0,0.55)); }
 @keyframes chHover {
-  0%,100% { transform: translateY(0) rotate(-2deg); }
-  50%     { transform: translateY(-8px) rotate(2deg); }
+  0%,100% { transform: translateY(0) rotate(-1.5deg); }
+  50%     { transform: translateY(-7px) rotate(1.5deg); }
 }
-
-.ch-mini {
-  display: inline-block;
-  vertical-align: middle;
-  margin-right: 0.55rem;
-  position: relative;
-  top: -1px;
-}
-.ch-mini svg {
-  transform-box: fill-box;
-  transform-origin: 50% 100%;
-  animation: chFlick 0.22s steps(2) infinite;
-}
-@keyframes chFlick {
-  0%   { transform: scaleY(1); }
-  50%  { transform: scaleY(1.15) scaleX(0.9); }
-}
-
-.ch-footer {
-  display: block;
-  margin-top: 1.5rem;
-  opacity: 0.6;
-  transition: opacity 0.2s;
-}
-.ch-footer:hover { opacity: 1; }
-
-/* Ambient companion */
-#ch-amb {
-  position: fixed;
-  bottom: 32px; right: 28px;
-  z-index: 9000;
-  pointer-events: auto; cursor: pointer;
-  opacity: 1;
-  filter: drop-shadow(0 8px 22px rgba(0,0,0,0.4)) drop-shadow(0 0 32px rgba(255,120,0,0.35));
-  transition: opacity 0.4s ease;
+.ch-hero.flying {
+  animation: none;
+  transition: transform 1.6s cubic-bezier(0.55, 0, 0.9, 0.4), opacity 1.6s ease;
+  pointer-events: none;
 }
 
 .ch-puff {
@@ -271,120 +241,54 @@ const CHARIZARD = (function () {
 }
 
 @media (max-width: 540px) {
-  #ch-amb { transform: scale(0.65) !important; transform-origin: bottom right; bottom: 16px; right: 12px; }
   .ch-hero { display: none; }
 }
 `;
   document.head.appendChild(style);
 
-  // 1. HERO sprite beside the H1
   const h1 = document.querySelector(".intro h1");
-  if (h1) {
-    const hero = document.createElement("span");
-    hero.className = "ch-hero";
-    hero.setAttribute("aria-hidden", "true");
-    hero.appendChild(CHARIZARD.build(6)); // 22*6 = 132px wide
-    h1.appendChild(hero);
-  }
+  if (!h1) return;
 
-  // 2. Flame icon prefix on every numbered section header
-  document.querySelectorAll("section:not(.intro) h2").forEach((h2) => {
-    const mini = document.createElement("span");
-    mini.className = "ch-mini";
-    mini.setAttribute("aria-hidden", "true");
-    mini.appendChild(CHARIZARD.buildFlame(3)); // 15×18 px
-    h2.insertBefore(mini, h2.firstChild);
-  });
+  const hero = document.createElement("span");
+  hero.className = "ch-hero";
+  hero.setAttribute("role", "button");
+  hero.setAttribute("tabindex", "0");
+  hero.setAttribute("aria-label", "Pet the dragon");
+  hero.title = "click to fly off";
+  hero.appendChild(CHARIZARD.build(7)); // 22 * 7 = 154px wide
+  h1.appendChild(hero);
 
-  // 3. Footer sprite
-  const footerP = document.querySelector(".site-footer p");
-  if (footerP) {
-    const fc = document.createElement("span");
-    fc.className = "ch-footer";
-    fc.setAttribute("aria-hidden", "true");
-    fc.appendChild(CHARIZARD.build(4)); // 22*4 = 88px wide
-    footerP.parentNode.appendChild(fc);
-  }
-})();
-
-/* =========================================================================
-   Ambient companion — flies around with scroll, breathes fire on scroll.
-   ========================================================================= */
-(function ambient() {
-  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-  const wrap = document.createElement("div");
-  wrap.id = "ch-amb";
-  wrap.setAttribute("aria-hidden", "true");
-  wrap.appendChild(CHARIZARD.build(8)); // 22*8 = 176px wide
-  document.body.appendChild(wrap);
-
-  let curX = 0, curY = 0;
-  let tgtX = 0, tgtY = 0;
-  let scrolling = false;
-  let scrollStop = null;
-  let lastPuff = 0;
-  let dismissed = false;
-
-  function recalcTarget() {
-    const s = window.scrollY;
-    tgtX = -Math.sin(s * 0.0042) * 180;
-    tgtY = -Math.cos(s * 0.0036) * 90;
-  }
-
-  function spawnPuff() {
-    const r = wrap.getBoundingClientRect();
-    const mx = r.right - 12;
-    const my = r.top + r.height * 0.28;
+  function spawnPuff(originX, originY) {
     const p = document.createElement("div");
     p.className = "ch-puff";
-    p.style.left = mx + (Math.random() - 0.5) * 10 + "px";
-    p.style.top = my + (Math.random() - 0.5) * 10 + "px";
+    p.style.left = originX + (Math.random() - 0.5) * 14 + "px";
+    p.style.top = originY + (Math.random() - 0.5) * 14 + "px";
     document.body.appendChild(p);
-    setTimeout(() => p.remove(), 950);
+    setTimeout(() => p.remove(), 1000);
   }
 
-  function onScroll() {
-    recalcTarget();
-    scrolling = true;
-    clearTimeout(scrollStop);
-    scrollStop = setTimeout(() => { scrolling = false; }, 160);
+  let flown = false;
+  function flyOff() {
+    if (flown) return;
+    flown = true;
+    const r = hero.getBoundingClientRect();
+    const mouthX = r.right - 10;
+    const mouthY = r.top + r.height * 0.35;
+    for (let i = 0; i < 14; i++) setTimeout(() => spawnPuff(mouthX, mouthY), i * 55);
+    hero.classList.add("flying");
+    hero.style.opacity = "0";
+    hero.style.transform = `translate(${window.innerWidth - r.left + 100}px, -${r.top + 120}px) rotate(-18deg) scale(1.25)`;
+    setTimeout(() => hero.remove(), 1600);
   }
-  window.addEventListener("scroll", onScroll, { passive: true });
 
-  wrap.addEventListener("click", () => {
-    if (dismissed) return;
-    dismissed = true;
-    wrap.style.transition = "transform 1.4s cubic-bezier(0.5,0,1,0.5), opacity 1.4s ease";
-    wrap.style.transform = `translate(${window.innerWidth + 280}px, -${window.innerHeight * 0.55}px) rotate(-22deg) scale(1.15)`;
-    wrap.style.opacity = "0";
-    for (let i = 0; i < 12; i++) setTimeout(spawnPuff, i * 55);
-    setTimeout(() => { wrap.remove(); }, 1450);
+  hero.addEventListener("click", flyOff);
+  hero.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") { e.preventDefault(); flyOff(); }
   });
 
-  let prevX = 0, prevY = 0;
-  function tick() {
-    if (dismissed) return;
-    const dx = (tgtX - curX) * 0.045;
-    const dy = (tgtY - curY) * 0.045;
-    curX += dx;
-    curY += dy;
-    const t = performance.now() / 720;
-    const bobX = Math.sin(t) * 3.5;
-    const bobY = Math.cos(t * 1.2) * 2.5;
-    // Tilt toward movement direction — clamp so it doesn't go upside-down
-    const vx = curX - prevX;
-    const tilt = Math.max(-12, Math.min(12, vx * 6));
-    prevX = curX; prevY = curY;
-    wrap.style.transform = `translate(${curX + bobX}px, ${curY + bobY}px) rotate(${tilt}deg)`;
-    if (scrolling && performance.now() - lastPuff > 75) {
-      lastPuff = performance.now();
-      spawnPuff();
-    }
-    requestAnimationFrame(tick);
+  if (reduceMotion) {
+    hero.style.animation = "none";
   }
-  recalcTarget();
-  tick();
 })();
 
 /* =========================================================================
