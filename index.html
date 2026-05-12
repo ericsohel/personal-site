@@ -72,7 +72,7 @@
           Software engineer working on backend systems, security tooling, and real-time data infrastructure.
         </p>
         <p class="meta">
-          New York City<span class="sep">/</span><a href="mailto:ericsohel05@gmail.com">ericsohel05@gmail.com</a>
+          New York City<span class="sep">/</span><a href="mailto:ericsohel05@gmail.com">ericsohel05@gmail.com</a><span class="sep">/</span><a href="/resume.pdf">resume&nbsp;(pdf)</a>
         </p>
       </section>
 
@@ -85,10 +85,11 @@
           year.
         </p>
         <p>
-          Before that, I built a fuzzer for Meta's
+          Before that, I built a differential-testing harness for Meta's
           <a href="https://github.com/facebook/pyre-check">Pysa</a> static analyzer
-          through the MLH Fellowship — it generated Python snippets to surface false
-          negatives in Pysa's interprocedural taint-tracking. Right now I'm building
+          through the MLH Fellowship — it synthesized 10,000+ Python programs with
+          ground-truth source→sink labels to surface false negatives in Pysa's
+          interprocedural taint-tracking. Right now I'm building
           <a href="#draftiq">DraftIQ</a>, a production REST API for fantasy baseball
           auction drafting.
         </p>
@@ -100,20 +101,32 @@
         <article class="entry">
           <div class="entry-when">Jun – Aug 2026</div>
           <div class="entry-body">
-            <h3>Capital One <span class="role">— Software Engineer Intern, NYC</span></h3>
-            <p>Returning offer. Team and project TBD.</p>
+            <h3>Capital One <span class="role">— SWE Intern, Low-Latency Platform, NYC</span></h3>
+            <p>
+              Returning to build real-time payment infrastructure under strict p99
+              latency budgets and exactly-once processing semantics.
+            </p>
           </div>
         </article>
 
         <article class="entry">
           <div class="entry-when">Jun – Aug 2025</div>
           <div class="entry-body">
-            <h3>Capital One <span class="role">— Software Engineer Intern, McLean</span></h3>
+            <h3>Capital One <span class="role">— SWE Intern, Wire Transfer Platform, McLean</span></h3>
             <p>
-              Migrated the wire transfer platform off third-party vendors to internal systems.
-              Built Node.js / Fastify microservices on AWS Lambda and EC2 with idempotency keys,
-              designed a PostgreSQL approval workflow integrating four verification APIs, and
-              shipped React UI features.
+              Migrated the wire transfer platform for high-value daily payments off
+              third-party vendors onto internal AWS infrastructure — eliminating
+              per-transaction fees and reducing vendor risk.
+            </p>
+            <p>
+              Built Node.js / Fastify microservices on AWS Lambda and Fargate with
+              idempotency keys and exponential-backoff retries to prevent duplicate
+              debits under network jitter, upstream timeouts, and client retries.
+            </p>
+            <p>
+              Designed an Aurora PostgreSQL approval state machine spanning four
+              verification APIs for auditable multi-step clearance, with automated
+              compliance checks and clean recovery from mid-flow worker crashes.
             </p>
           </div>
         </article>
@@ -121,14 +134,22 @@
         <article class="entry">
           <div class="entry-when">May – Aug 2024</div>
           <div class="entry-body">
-            <h3>Meta <span class="role">— SWE Fellow, MLH Fellowship</span></h3>
+            <h3>Meta <span class="role">— SWE Fellow, MLH Fellowship · Pysa Static Analyzer</span></h3>
             <p>
-              Built a fuzzer for Pysa that generated 10,000+ Python snippets to find false
-              negatives in its interprocedural taint-tracking. The work surfaced 20+ flows
-              Pysa missed and shipped as
-              <a href="https://github.com/facebook/pyre-check/pull/886">pyre-check#886</a>.
-              Smaller fixes alongside —
-              <a href="https://github.com/facebook/pyre-check/pulls?q=is%3Apr+author%3Aesohel30+is%3Amerged">merged PRs &rarr;</a>
+              Contributed to Pysa within Meta's
+              <a href="https://github.com/facebook/pyre-check">facebook/pyre-check</a>
+              repo — interprocedural taint analysis catching SQLi, SSRF, code
+              injection, and path traversal across Instagram's Python codebase.
+            </p>
+            <p>
+              Designed and shipped a differential-testing harness (merged as
+              <a href="https://github.com/facebook/pyre-check/pull/886">pyre-check#886</a>)
+              synthesizing 10,000+ Python programs with ground-truth source→sink
+              labels — randomized call graphs, decorator stacks, and API-misuse
+              patterns — to grade Pysa's analysis against an oracle. Surfaced 20+
+              previously-undetected exploit-shape taint flows; each locked as a
+              regression test.
+              <a href="https://github.com/facebook/pyre-check/pulls?q=is%3Apr+author%3Aesohel30+is%3Amerged">Merged PRs →</a>
             </p>
           </div>
         </article>
@@ -136,8 +157,12 @@
         <article class="entry">
           <div class="entry-when">Mar – Jun 2024</div>
           <div class="entry-body">
-            <h3>Stanford Code in Place <span class="role">— Volunteer Section Leader, CS 106A</span></h3>
-            <p>Taught an intro Python section to ~10 students worldwide.</p>
+            <h3>Stanford Code in Place <span class="role">— Section Leader, CS 106A</span></h3>
+            <p>
+              Led 2 weekly Python and Karel sections (~20 students) for Stanford's
+              free global CS 106A — 30,000+ learners across 100+ countries. Invited
+              back as Head TA for the next cohort.
+            </p>
           </div>
         </article>
       </section>
@@ -152,12 +177,24 @@
           <div class="entry-body">
             <h3>DraftIQ Player Data API</h3>
             <p>
-              A production REST API for fantasy baseball auction drafting. Real-time MLB data
-              ingestion via a tiered scheduler (15-minute injuries, 6-hour depth charts, daily
-              metadata), a z-score-above-replacement valuation engine that handles positional
-              scarcity, and a self-service developer portal — scrypt password hashing,
-              signed-cookie sessions, per-key IP allowlists with CIDR matching, sliding-window
-              rate limits, and a 30-day audit log.
+              A production REST API for fantasy baseball auction drafting. Real-time
+              MLB data ingestion via a tiered scheduler (30-minute injuries with
+              active-hours gating, 6-hour depth charts &amp; transactions, daily
+              metadata, seasonal stats); idempotent jobs with exponential backoff and
+              staleness-aware metadata.
+            </p>
+            <p>
+              Algorithmic valuation engine using z-score-based valuation against a
+              replacement-level baseline with positional-scarcity adjustments and
+              live draft-state re-valuation — 600+ player valuations in tens of
+              milliseconds, feeding ranked nominations, positional-need scores, and
+              budget allocations.
+            </p>
+            <p>
+              Self-serve developer portal with full API-key management — scrypt
+              password hashing, signed-cookie sessions, per-key CIDR whitelisting
+              (pure-Node, no library), tumbling-window rate limiting, and a 30-day
+              audit log.
             </p>
             <p class="stack">
               <span>Node.js</span><span>Express</span><span>SQLite</span><span>React</span><span>MLB Stats API</span><span>OpenAPI 3.0</span>
@@ -166,21 +203,22 @@
               <a href="https://player-data-api.onrender.com/developer-portal/">Live developer portal &rarr;</a>
               <a href="https://github.com/nmarmi/player-data-api">GitHub &rarr;</a>
             </p>
-            <p class="aside">124+ tests. CI/CD via GitHub Actions to Render with a hybrid Vercel frontend.</p>
+            <p class="aside">60+ Jest/supertest tests. OpenAPI 3.0 spec validated by CI. Deployed via GitHub Actions to Render + Vercel.</p>
           </div>
         </article>
 
         <article class="entry">
           <div class="entry-when">2024</div>
           <div class="entry-body">
-            <h3>Pysa fuzzer <span class="role">— facebook/pyre-check</span></h3>
+            <h3>Pysa differential-testing harness <span class="role">— facebook/pyre-check</span></h3>
             <p>
-              A fuzzer for Meta's Pysa static analyzer, written during the MLH Fellowship.
-              Generated Python snippets to expose false negatives in Pysa's taint-tracking;
-              shipped as
+              A differential-testing harness for Meta's Pysa static analyzer, built
+              during the MLH Fellowship. Generated Python programs with ground-truth
+              taint labels to expose false negatives in Pysa's interprocedural
+              taint-tracking; shipped as
               <a href="https://github.com/facebook/pyre-check/pull/886">pyre-check#886</a>
-              with smaller fixes alongside
-              (<a href="https://github.com/facebook/pyre-check/pulls?q=is%3Apr+author%3Aesohel30+is%3Amerged">merged PRs</a>).
+              alongside 3 smaller merged PRs (registry instrumentation, diagnostic
+              warnings, documentation).
             </p>
           </div>
         </article>
@@ -190,25 +228,32 @@
         <h2 id="skills-h">Skills</h2>
         <dl class="skills">
           <dt>Languages</dt>
-          <dd>Python, Java, JavaScript / TypeScript. Familiar with C / C++ and OCaml from coursework.</dd>
+          <dd>Python, JavaScript / TypeScript, Java, SQL; familiar with C / C++ and OCaml.</dd>
 
-          <dt>Frameworks</dt>
-          <dd>React, Node.js, Fastify, Express, Flask.</dd>
+          <dt>Cloud &amp; Distributed</dt>
+          <dd>AWS (Lambda, Fargate, EC2, Aurora, SQS), microservices, idempotency, exactly-once semantics, state machines, exponential backoff, REST / OpenAPI 3.0.</dd>
 
-          <dt>Data</dt>
-          <dd>PostgreSQL, MongoDB, SQLite, SQL.</dd>
+          <dt>Databases</dt>
+          <dd>PostgreSQL, MongoDB, SQLite, Redis.</dd>
 
-          <dt>Infra</dt>
-          <dd>AWS (Lambda, EC2), Docker, Linux, Git, GitHub Actions, CI/CD.</dd>
-
-          <dt>Areas</dt>
-          <dd>Static analysis, distributed systems, REST API design, full-stack, system design.</dd>
+          <dt>Backend &amp; Tooling</dt>
+          <dd>Node.js, Fastify, Express, React, Docker, Linux, Git, GitHub Actions, CI/CD, Jest, static analysis.</dd>
         </dl>
+      </section>
+
+      <section aria-labelledby="awards-h">
+        <h2 id="awards-h">Awards</h2>
+        <ul class="contact">
+          <li>Citadel Terminal Competition — 2nd place</li>
+          <li>Cornell Trading Competition — top 5 (2×)</li>
+          <li>AIME Qualifier (2×) — top ~5% of AMC test-takers</li>
+        </ul>
       </section>
 
       <section aria-labelledby="contact-h">
         <h2 id="contact-h">Contact</h2>
         <ul class="contact">
+          <li><a href="/resume.pdf">Download resume (PDF)</a></li>
           <li><a href="mailto:ericsohel05@gmail.com">ericsohel05@gmail.com</a></li>
           <li><a href="https://github.com/ericsohel">github.com/ericsohel</a></li>
           <li><a href="https://www.linkedin.com/in/eric-sohel/">linkedin.com/in/eric-sohel</a></li>
