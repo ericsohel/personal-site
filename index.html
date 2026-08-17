@@ -121,48 +121,45 @@
       <section aria-labelledby="ride-h">
         <h2 id="ride-h">The Ride So Far</h2>
         <div class="subway">
+          <div class="subway-head">
+            <span class="route-bullet" aria-hidden="true">E</span>
+            <span class="route-name">the eric local — makes all stops</span>
+          </div>
           <div class="subway-track" role="list" aria-label="Life stops, styled as a subway line">
             <button class="stop" role="listitem" type="button"
               data-story="High school in lower Manhattan. The softdev lab is where the first Flask apps and a Pac-Man clone happened.">
               <span class="stop-dot"></span>
-              <span class="stop-name">Stuyvesant</span>
-              <span class="stop-when">’19–’23</span>
+              <span class="stop-label">Stuyvesant <span class="stop-when">’19–’23</span></span>
             </button>
             <button class="stop" role="listitem" type="button"
               data-story="CS &amp; applied math. The math half is why DraftIQ values players with z-scores instead of vibes.">
               <span class="stop-dot"></span>
-              <span class="stop-name">Stony Brook</span>
-              <span class="stop-when">’23–’27</span>
+              <span class="stop-label">Stony Brook <span class="stop-when">’23–’27</span></span>
             </button>
             <button class="stop" role="listitem" type="button"
               data-story="Taught two weekly Python sections for Stanford's global CS 106A. Invited back as Head TA.">
               <span class="stop-dot"></span>
-              <span class="stop-name">Code in Place</span>
-              <span class="stop-when">’24</span>
+              <span class="stop-label">Code in Place <span class="stop-when">’24</span></span>
             </button>
             <button class="stop" role="listitem" type="button"
               data-story="MLH Fellowship on Pysa — the static analyzer that hunts taint flows across Instagram's Python.">
               <span class="stop-dot"></span>
-              <span class="stop-name">Meta</span>
-              <span class="stop-when">’24</span>
+              <span class="stop-label">Meta <span class="stop-when">’24</span></span>
             </button>
             <button class="stop" role="listitem" type="button"
               data-story="Capital One: shipped the approval workflow on their first in-house wire transfer platform. ~$1B/day.">
               <span class="stop-dot"></span>
-              <span class="stop-name">McLean</span>
-              <span class="stop-when">’25</span>
+              <span class="stop-label">McLean <span class="stop-when">’25</span></span>
             </button>
             <button class="stop" role="listitem" type="button"
               data-story="Capital One again — multi-agent reporting with LangGraph. Also: home.">
               <span class="stop-dot"></span>
-              <span class="stop-name">NYC</span>
-              <span class="stop-when">’26</span>
+              <span class="stop-label">NYC <span class="stop-when">’26</span></span>
             </button>
             <button class="stop stop-next" role="listitem" type="button"
               data-story="Graduating May 2027. Open to interesting problems.">
               <span class="stop-dot"></span>
-              <span class="stop-name">next stop</span>
-              <span class="stop-when">?</span>
+              <span class="stop-label">next stop <span class="stop-when">?</span></span>
             </button>
           </div>
           <p class="subway-caption" id="subway-caption" aria-live="polite">hover or tap a stop.</p>
@@ -358,34 +355,35 @@
         </p>
 
         <p class="book-group">research desk</p>
-        <ul class="books">
-          <li><span class="book-title">Thinking in Bets</span> <span class="book-author">— Annie Duke</span></li>
-          <li><span class="book-title">Principles</span> <span class="book-author">— Ray Dalio</span></li>
-          <li><span class="book-title">Deep Work</span> <span class="book-author">— Cal Newport</span></li>
-          <li><span class="book-title">Atomic Habits</span> <span class="book-author">— James Clear</span></li>
-          <li><span class="book-title">Why We Sleep</span> <span class="book-author">— Matthew Walker</span></li>
-          <li><span class="book-title">The Ten-Day MBA</span> <span class="book-author">— Steven Silbiger</span></li>
-          <li><span class="book-title">Meditations</span> <span class="book-author">— Marcus Aurelius</span></li>
-          <li><span class="book-title">Open to Work</span></li>
+        <ul class="spines">
+          <li class="spine" tabindex="0" data-book="Thinking in Bets — Annie Duke"><span>Thinking in Bets</span></li>
+          <li class="spine" tabindex="0" data-book="Principles — Ray Dalio"><span>Principles</span></li>
+          <li class="spine" tabindex="0" data-book="Deep Work — Cal Newport"><span>Deep Work</span></li>
+          <li class="spine" tabindex="0" data-book="Atomic Habits — James Clear"><span>Atomic Habits</span></li>
+          <li class="spine" tabindex="0" data-book="Why We Sleep — Matthew Walker"><span>Why We Sleep</span></li>
+          <li class="spine" tabindex="0" data-book="The Ten-Day MBA — Steven Silbiger"><span>The Ten-Day MBA</span></li>
+          <li class="spine" tabindex="0" data-book="Meditations — Marcus Aurelius"><span>Meditations</span></li>
+          <li class="spine" tabindex="0" data-book="Open to Work"><span>Open to Work</span></li>
         </ul>
 
         <p class="book-group">the quant shelf</p>
-        <ul class="books">
-          <li><span class="book-title">How to Solve It</span> <span class="book-author">— George Pólya</span></li>
-          <li><span class="book-title">Algorithms to Live By</span> <span class="book-author">— Brian Christian &amp; Tom Griffiths</span></li>
-          <li><span class="book-title">The Moscow Puzzles</span> <span class="book-author">— Boris Kordemsky</span></li>
-          <li><span class="book-title">Mathematical Brainteasers with Surprising Solutions</span> <span class="book-author">— Owen O'Shea</span></li>
+        <ul class="spines">
+          <li class="spine" tabindex="0" data-book="How to Solve It — George Pólya"><span>How to Solve It</span></li>
+          <li class="spine" tabindex="0" data-book="Algorithms to Live By — Brian Christian &amp; Tom Griffiths"><span>Algorithms to Live By</span></li>
+          <li class="spine" tabindex="0" data-book="The Moscow Puzzles — Boris Kordemsky"><span>The Moscow Puzzles</span></li>
+          <li class="spine" tabindex="0" data-book="Mathematical Brainteasers with Surprising Solutions — Owen O'Shea"><span>Mathematical Brainteasers with Surprising Solutions</span></li>
         </ul>
 
         <p class="book-group">long-term holds</p>
-        <ul class="books">
-          <li><span class="book-title">East of Eden</span> <span class="book-author">— John Steinbeck</span></li>
-          <li><span class="book-title">Never Let Me Go</span> <span class="book-author">— Kazuo Ishiguro</span></li>
-          <li><span class="book-title">The Remains of the Day</span> <span class="book-author">— Kazuo Ishiguro</span></li>
-          <li><span class="book-title">The Namesake</span> <span class="book-author">— Jhumpa Lahiri</span></li>
-          <li><span class="book-title">The Kite Runner</span> <span class="book-author">— Khaled Hosseini</span></li>
-          <li><span class="book-title">Frieren: Beyond Journey's End, Vol. 1</span> <span class="book-author">— Kanehito Yamada &amp; Tsukasa Abe</span></li>
+        <ul class="spines">
+          <li class="spine" tabindex="0" data-book="East of Eden — John Steinbeck"><span>East of Eden</span></li>
+          <li class="spine" tabindex="0" data-book="Never Let Me Go — Kazuo Ishiguro"><span>Never Let Me Go</span></li>
+          <li class="spine" tabindex="0" data-book="The Remains of the Day — Kazuo Ishiguro"><span>The Remains of the Day</span></li>
+          <li class="spine" tabindex="0" data-book="The Namesake — Jhumpa Lahiri"><span>The Namesake</span></li>
+          <li class="spine" tabindex="0" data-book="The Kite Runner — Khaled Hosseini"><span>The Kite Runner</span></li>
+          <li class="spine" tabindex="0" data-book="Frieren: Beyond Journey's End, Vol. 1 — Kanehito Yamada &amp; Tsukasa Abe"><span>Frieren: Beyond Journey's End, Vol. 1</span></li>
         </ul>
+        <p class="shelf-caption" id="shelf-caption">hover or tap a spine.</p>
       </section>
 
       <section aria-labelledby="repeat-h">

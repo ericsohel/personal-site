@@ -410,12 +410,37 @@ section.intro { border-top: none; }
 /* Subway life-map */
 
 .subway { margin-top: 0.25rem; }
+.subway-head {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 1.3rem;
+}
+.route-bullet {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.85rem;
+  flex: none;
+}
 .subway-track {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   position: relative;
-  padding: 0.4rem 0 0;
+  padding: 0.4rem 0 4.6rem;
 }
 /* the line itself */
 .subway-track::before {
@@ -423,8 +448,8 @@ section.intro { border-top: none; }
   position: absolute;
   left: 0.4rem;
   right: 3.2rem;
-  top: calc(0.4rem + 7px);
-  height: 3px;
+  top: calc(0.4rem + 8px);
+  height: 4px;
   background: var(--accent);
   border-radius: 2px;
 }
@@ -434,9 +459,9 @@ section.intro { border-top: none; }
   position: absolute;
   right: 0.2rem;
   width: 3rem;
-  top: calc(0.4rem + 7px);
+  top: calc(0.4rem + 8px);
   height: 0;
-  border-top: 3px dashed var(--accent);
+  border-top: 4px dashed var(--accent);
   opacity: 0.55;
 }
 .stop {
@@ -450,16 +475,15 @@ section.intro { border-top: none; }
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.45rem;
   cursor: pointer;
-  min-width: 3.2rem;
+  min-width: 3rem;
 }
 .stop-dot {
-  width: 14px;
-  height: 14px;
+  width: 17px;
+  height: 17px;
   border-radius: 50%;
-  background: var(--bg);
-  border: 3px solid var(--accent);
+  background: #fff;
+  border: 4px solid var(--accent);
   box-sizing: border-box;
   transition: transform 120ms ease, background 120ms ease;
 }
@@ -467,24 +491,39 @@ section.intro { border-top: none; }
 .stop:focus-visible .stop-dot,
 .stop.is-active .stop-dot {
   background: var(--accent);
-  transform: scale(1.15);
+  transform: scale(1.18);
 }
 .stop:focus-visible { outline: none; }
 .stop:focus-visible .stop-dot { box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 35%, transparent); }
-.stop-next .stop-dot { border-style: dashed; border-width: 2px; }
-.stop-name { font-size: 0.68rem; letter-spacing: 0.03em; line-height: 1.2; }
+.stop-next .stop-dot { border-style: dashed; border-width: 2.5px; background: var(--bg); }
+/* MTA-style angled station labels, anchored at the dot */
+.stop-label {
+  position: absolute;
+  top: calc(0.4rem + 20px);
+  left: 50%;
+  transform: rotate(38deg);
+  transform-origin: top left;
+  white-space: nowrap;
+  font-size: 0.68rem;
+  letter-spacing: 0.03em;
+  line-height: 1.2;
+}
 .stop-when { font-size: 0.62rem; opacity: 0.75; }
-.stop:hover .stop-name, .stop.is-active .stop-name { color: var(--fg); }
+.stop:hover .stop-label, .stop.is-active .stop-label { color: var(--fg); }
 .subway-caption {
   font-family: var(--font-mono);
   font-size: 0.8rem;
   color: var(--muted);
-  margin: 1.1rem 0 0;
+  margin: 0.9rem 0 0;
   min-height: 2.6em;
+  border: 1px solid var(--rule-strong);
+  border-left: 2px solid var(--accent);
+  border-radius: 0 8px 8px 0;
+  padding: 0.6rem 0.9rem;
 }
 
 @media (max-width: 600px) {
-  .subway-track { overflow-x: auto; gap: 1.1rem; justify-content: flex-start; padding-bottom: 0.3rem; }
+  .subway-track { overflow-x: auto; gap: 2.6rem; justify-content: flex-start; padding-bottom: 4.6rem; }
   .subway-track::before { right: 4rem; }
   .stop { flex: none; }
 }
@@ -500,18 +539,67 @@ section.intro { border-top: none; }
   margin: 1.4rem 0 0.6rem;
 }
 .book-group:first-of-type { margin-top: 0.4rem; }
-.books {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.45rem 1.5rem;
-}
 .book-title { font-weight: 600; }
 .book-author { color: var(--muted); font-size: 0.92rem; }
-@media (max-width: 600px) {
-  .books { grid-template-columns: 1fr; }
+
+/* Spines standing on a shelf board */
+.spines {
+  list-style: none;
+  margin: 0 0 0.4rem;
+  padding: 0 0.25rem;
+  display: flex;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 4px;
+  border-bottom: 3px solid var(--rule-strong);
+}
+.spine {
+  writing-mode: vertical-rl;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 128px;
+  padding: 0.6rem 0.3rem;
+  max-width: 2.1rem;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.02em;
+  color: var(--fg);
+  background: var(--code-bg);
+  border: 1px solid var(--rule-strong);
+  border-bottom: none;
+  border-radius: 3px 3px 0 0;
+  overflow: hidden;
+  cursor: default;
+  transition: transform 140ms ease;
+}
+.spine span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-height: 148px;
+}
+.spine:hover, .spine:focus-visible { transform: translateY(-7px); }
+.spine:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+/* varied bindings */
+.spine:nth-child(5n+1) { background: color-mix(in srgb, var(--accent) 26%, var(--code-bg)); }
+.spine:nth-child(5n+3) { background: color-mix(in srgb, var(--accent) 52%, var(--code-bg)); color: #fff; }
+.spine:nth-child(5n+4) { background: color-mix(in srgb, var(--fg) 14%, var(--code-bg)); }
+.spine:nth-child(5n) { background: color-mix(in srgb, var(--accent) 12%, var(--code-bg)); }
+/* varied heights, like a real shelf */
+.spine:nth-child(3n+2) { min-height: 152px; }
+.spine:nth-child(3n) { min-height: 140px; }
+.spine:nth-child(7n) { min-height: 166px; }
+.shelf-caption {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin: 1rem 0 0;
+  min-height: 1.6em;
+  border: 1px solid var(--rule-strong);
+  border-left: 2px solid var(--accent);
+  border-radius: 0 8px 8px 0;
+  padding: 0.6rem 0.9rem;
 }
 
 /* On Repeat — live Spotify */

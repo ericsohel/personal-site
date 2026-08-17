@@ -41,6 +41,19 @@
   });
 })();
 
+/* Bookshelf — caption follows the hovered/focused spine. */
+(function () {
+  const spines = document.querySelectorAll(".spine");
+  const cap = document.getElementById("shelf-caption");
+  if (!spines.length || !cap) return;
+  spines.forEach((s) => {
+    const show = () => { cap.textContent = s.dataset.book; };
+    s.addEventListener("mouseenter", show);
+    s.addEventListener("focus", show);
+    s.addEventListener("click", show);
+  });
+})();
+
 /* DraftIQ live demo — fetch shared by the projects widget and the terminal. */
 (function () {
   const API = "https://player-data-api.onrender.com/api/v1/demo/valuations";
