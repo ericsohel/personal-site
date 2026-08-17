@@ -41,17 +41,72 @@
   });
 })();
 
-/* Bookshelf — caption follows the hovered/focused spine. */
+/* Bookshelf — hover previews a spine; click pulls the book and opens notes. */
 (function () {
   const spines = document.querySelectorAll(".spine");
   const cap = document.getElementById("shelf-caption");
   if (!spines.length || !cap) return;
+
+  let open = null; // the spine currently pulled off the shelf
+
+  function preview(s) {
+    if (open) return; // a pulled book keeps the panel until closed
+    cap.textContent = s.dataset.book;
+  }
+
+  function closeBook() {
+    if (!open) return;
+    open.classList.remove("is-open");
+    open = null;
+    cap.classList.remove("is-reading");
+    cap.textContent = "hover or tap a spine — click to pull one off the shelf.";
+  }
+
+  function openBook(s) {
+    if (open === s) return closeBook();
+    if (open) open.classList.remove("is-open");
+    open = s;
+    s.classList.add("is-open");
+
+    cap.classList.remove("is-reading");
+    void cap.offsetWidth; // restart the entrance animation
+    cap.classList.add("is-reading");
+
+    cap.textContent = "";
+    const title = document.createElement("strong");
+    title.textContent = s.dataset.book;
+    const note = document.createElement("span");
+    note.className = "shelf-note";
+    // Mocked for now — replace data-thoughts per book with the real take.
+    note.textContent =
+      s.dataset.thoughts ||
+      "eric's marginalia are being transcribed — real notes on this one soon.";
+    const hint = document.createElement("span");
+    hint.className = "shelf-hint";
+    hint.textContent = "click the book again (or esc) to reshelve";
+    cap.append(title, note, hint);
+  }
+
   spines.forEach((s) => {
-    const show = () => { cap.textContent = s.dataset.book; };
-    s.addEventListener("mouseenter", show);
-    s.addEventListener("focus", show);
-    s.addEventListener("click", show);
+    s.addEventListener("mouseenter", () => preview(s));
+    s.addEventListener("focus", () => preview(s));
+    s.addEventListener("click", () => openBook(s));
+    s.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        openBook(s);
+      }
+    });
   });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeBook();
+  });
+  document.addEventListener("click", (e) => {
+    if (open && !e.target.closest(".spine") && !e.target.closest(".shelf-caption")) closeBook();
+  });
+
+  cap.textContent = "hover or tap a spine — click to pull one off the shelf.";
 })();
 
 /* DraftIQ live demo — fetch shared by the projects widget and the terminal. */

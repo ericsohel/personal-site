@@ -86,7 +86,17 @@ module.exports = async (_req, res) => {
       }),
     });
     const token = await tokenRes.json();
-    if (!token.access_token) throw new Error("token refresh failed");
+    if (!token.access_token) {
+      // Spotify's error code (e.g. invalid_grant, invalid_client) is safe to
+      // surface and tells us which credential is wrong — no secrets leaked.
+      res.status(502).json({
+        configured: true,
+        error: "token refresh failed",
+        stage: "token-refresh",
+        spotify: token.error || "unknown",
+      });
+      return;
+    }
     const H = { Authorization: `Bearer ${token.access_token}` };
 
     const payload = {
@@ -138,7 +148,12 @@ module.exports = async (_req, res) => {
 
     res.setHeader("Cache-Control", "s-maxage=60, stale-while-revalidate=240");
     res.status(200).json(payload);
-  } catch (_err) {
-    res.status(502).json({ configured: true, error: "spotify unreachable" });
+  } catch (err) {
+    res.status(502).json({
+      configured: true,
+      error: "spotify unreachable",
+      stage: "api-fetch",
+      detail: err && err.message ? String(err.message).slice(0, 120) : "unknown",
+    });
   }
 };
