@@ -4,10 +4,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Eric Sohel</title>
-    <meta name="description" content="Eric Sohel — software engineer working on backend systems, security tooling, and real-time data infrastructure." />
+    <meta name="description" content="Eric Sohel — software engineer working on backend systems, multi-agent AI, and security tooling." />
 
     <meta property="og:title" content="Eric Sohel" />
-    <meta property="og:description" content="Software engineer working on backend systems, security tooling, and real-time data infrastructure." />
+    <meta property="og:description" content="Software engineer working on backend systems, multi-agent AI, and security tooling." />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://ericsohel.com" />
 
@@ -69,20 +69,39 @@
       <section class="intro">
         <h1>Eric Sohel</h1>
         <p class="tagline">
-          Software engineer working on backend systems, security tooling, and real-time data infrastructure.
+          Software engineer working on backend systems, multi-agent AI, and security tooling.
         </p>
         <p class="meta">
           New York City<span class="sep">/</span><a href="mailto:ericsohel05@gmail.com">ericsohel05@gmail.com</a>
         </p>
+
+        <div class="terminal" id="terminal" hidden>
+          <div class="term-out" id="term-out" role="log" aria-live="polite" aria-label="Terminal output"></div>
+          <form class="term-line" id="term-form">
+            <label class="term-prompt" for="term-in" aria-hidden="true">eric@nyc:~$</label>
+            <input
+              id="term-in"
+              class="term-in"
+              type="text"
+              autocomplete="off"
+              autocapitalize="none"
+              spellcheck="false"
+              enterkeyhint="go"
+              aria-label="Interactive terminal. Type help and press Enter."
+              placeholder="type `help`"
+            />
+          </form>
+        </div>
       </section>
 
       <section aria-labelledby="about-h">
         <h2 id="about-h">About</h2>
         <p>
           I'm studying computer science and applied math at Stony Brook University,
-          graduating May 2027. I'm headed back to Capital One in NYC this summer for
-          my second SWE internship after working on their wire transfer platform last
-          year.
+          graduating May 2027. I just wrapped my second SWE internship at Capital One
+          in NYC, where I built a multi-agent system that turns natural-language
+          requests into finished financial reports — work that used to take analysts
+          two days.
         </p>
         <p>
           Before that, I built a differential-testing harness for Meta's
@@ -95,16 +114,77 @@
         </p>
       </section>
 
+      <section aria-labelledby="ride-h">
+        <h2 id="ride-h">The Ride So Far</h2>
+        <div class="subway">
+          <div class="subway-track" role="list" aria-label="Life stops, styled as a subway line">
+            <button class="stop" role="listitem" type="button"
+              data-story="High school in lower Manhattan. The softdev lab is where the first Flask apps and a Pac-Man clone happened.">
+              <span class="stop-dot"></span>
+              <span class="stop-name">Stuyvesant</span>
+              <span class="stop-when">’19–’23</span>
+            </button>
+            <button class="stop" role="listitem" type="button"
+              data-story="CS &amp; applied math. The math half is why DraftIQ values players with z-scores instead of vibes.">
+              <span class="stop-dot"></span>
+              <span class="stop-name">Stony Brook</span>
+              <span class="stop-when">’23–’27</span>
+            </button>
+            <button class="stop" role="listitem" type="button"
+              data-story="Taught two weekly Python sections for Stanford's global CS 106A. Invited back as Head TA.">
+              <span class="stop-dot"></span>
+              <span class="stop-name">Code in Place</span>
+              <span class="stop-when">’24</span>
+            </button>
+            <button class="stop" role="listitem" type="button"
+              data-story="MLH Fellowship on Pysa — the static analyzer that hunts taint flows across Instagram's Python.">
+              <span class="stop-dot"></span>
+              <span class="stop-name">Meta</span>
+              <span class="stop-when">’24</span>
+            </button>
+            <button class="stop" role="listitem" type="button"
+              data-story="Capital One: shipped the approval workflow on their first in-house wire transfer platform. ~$1B/day.">
+              <span class="stop-dot"></span>
+              <span class="stop-name">McLean</span>
+              <span class="stop-when">’25</span>
+            </button>
+            <button class="stop" role="listitem" type="button"
+              data-story="Capital One again — multi-agent reporting with LangGraph. Also: home.">
+              <span class="stop-dot"></span>
+              <span class="stop-name">NYC</span>
+              <span class="stop-when">’26</span>
+            </button>
+            <button class="stop stop-next" role="listitem" type="button"
+              data-story="Graduating May 2027. Open to interesting problems.">
+              <span class="stop-dot"></span>
+              <span class="stop-name">next stop</span>
+              <span class="stop-when">?</span>
+            </button>
+          </div>
+          <p class="subway-caption" id="subway-caption" aria-live="polite">hover or tap a stop.</p>
+        </div>
+      </section>
+
       <section aria-labelledby="experience-h">
         <h2 id="experience-h">Experience</h2>
 
         <article class="entry">
           <div class="entry-when">Jun – Aug 2026</div>
           <div class="entry-body">
-            <h3>Capital One <span class="role">— SWE Intern, Low-Latency Platform, NYC</span></h3>
+            <h3>Capital One <span class="role">— SWE Intern, NYC</span></h3>
             <p>
-              Returning to build real-time payment infrastructure under strict p99
-              latency budgets and exactly-once processing semantics.
+              Built a multi-agent financial reporting system — Python + LangGraph
+              agents handling data discovery, query generation, and report synthesis
+              across 4,000+ enterprise data tables, turning natural-language requests
+              into finished reports. A process that took analysts two days now takes
+              about a minute.
+            </p>
+            <p>
+              Hardened it with agentic validation loops, schema-aware query
+              verification, and context guardrails — 92% of reports shipped with no
+              analyst corrections. Instrumented the pipeline with latency metrics and
+              dashboards, then cut per-report latency from 8 minutes to 60 seconds
+              with Redis-backed caching and concurrent agent execution.
             </p>
           </div>
         </article>
@@ -202,9 +282,21 @@
             </p>
             <p class="links">
               <a href="https://player-data-api.onrender.com/developer-portal/">Live developer portal &rarr;</a>
-              <a href="https://github.com/nmarmi/player-data-api">GitHub &rarr;</a>
+              <a href="https://github.com/ericsohel/player-data-api">GitHub &rarr;</a>
             </p>
-            <p class="aside">60+ Jest/supertest tests. OpenAPI 3.0 spec validated by CI. Deployed via GitHub Actions to Render + Vercel.</p>
+            <p class="aside">125 Jest/supertest tests. OpenAPI 3.0 spec validated by CI. Deployed via GitHub Actions to Render + Vercel.</p>
+
+            <div class="demo" id="draftiq-demo" hidden>
+              <div class="demo-head">
+                <span class="demo-dot" aria-hidden="true"></span>
+                <span>live from the production API</span>
+                <button id="demo-run" class="demo-btn" type="button">run demo</button>
+              </div>
+              <div id="demo-body" class="demo-body">
+                Fetches current top-10 auction valuations computed by the
+                deployed engine — the same numbers the licensed API serves.
+              </div>
+            </div>
           </div>
         </article>
 
@@ -249,6 +341,65 @@
           <li>Cornell Trading Competition — top 5 (2×)</li>
           <li>AIME Qualifier (2×) — top ~5% of AMC test-takers</li>
         </ul>
+      </section>
+
+      <section aria-labelledby="books-h">
+        <h2 id="books-h">Bookshelf</h2>
+        <p class="aside">The ones I push on people.</p>
+
+        <p class="book-group">thinking &amp; doing</p>
+        <ul class="books">
+          <li><span class="book-title">Thinking in Bets</span> <span class="book-author">— Annie Duke</span></li>
+          <li><span class="book-title">Principles</span> <span class="book-author">— Ray Dalio</span></li>
+          <li><span class="book-title">Deep Work</span> <span class="book-author">— Cal Newport</span></li>
+          <li><span class="book-title">Atomic Habits</span> <span class="book-author">— James Clear</span></li>
+          <li><span class="book-title">Why We Sleep</span> <span class="book-author">— Matthew Walker</span></li>
+          <li><span class="book-title">The Ten-Day MBA</span> <span class="book-author">— Steven Silbiger</span></li>
+          <li><span class="book-title">Meditations</span> <span class="book-author">— Marcus Aurelius</span></li>
+          <li><span class="book-title">Open to Work</span></li>
+        </ul>
+
+        <p class="book-group">math &amp; puzzles</p>
+        <ul class="books">
+          <li><span class="book-title">How to Solve It</span> <span class="book-author">— George Pólya</span></li>
+          <li><span class="book-title">Algorithms to Live By</span> <span class="book-author">— Brian Christian &amp; Tom Griffiths</span></li>
+          <li><span class="book-title">The Moscow Puzzles</span> <span class="book-author">— Boris Kordemsky</span></li>
+          <li><span class="book-title">Mathematical Brainteasers with Surprising Solutions</span> <span class="book-author">— Owen O'Shea</span></li>
+        </ul>
+
+        <p class="book-group">fiction &amp; elsewhere</p>
+        <ul class="books">
+          <li><span class="book-title">East of Eden</span> <span class="book-author">— John Steinbeck</span></li>
+          <li><span class="book-title">Never Let Me Go</span> <span class="book-author">— Kazuo Ishiguro</span></li>
+          <li><span class="book-title">The Remains of the Day</span> <span class="book-author">— Kazuo Ishiguro</span></li>
+          <li><span class="book-title">The Namesake</span> <span class="book-author">— Jhumpa Lahiri</span></li>
+          <li><span class="book-title">The Kite Runner</span> <span class="book-author">— Khaled Hosseini</span></li>
+          <li><span class="book-title">Frieren: Beyond Journey's End, Vol. 1</span> <span class="book-author">— Kanehito Yamada &amp; Tsukasa Abe</span></li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="repeat-h">
+        <h2 id="repeat-h">On Repeat</h2>
+        <p class="aside">What's actually coming out of my headphones — live from the Spotify API.</p>
+        <div class="spotify" id="spotify">
+          <div class="np" id="np" hidden>
+            <img class="np-art" id="np-art" alt="" width="56" height="56" hidden />
+            <div class="np-info">
+              <div class="np-status">
+                <span class="np-eq" id="np-eq" aria-hidden="true"><i></i><i></i><i></i></span>
+                <span id="np-label">now playing</span>
+              </div>
+              <a class="np-track" id="np-track" href="#" rel="noopener">—</a>
+              <div class="np-artist" id="np-artist">—</div>
+            </div>
+          </div>
+          <ul class="np-recent" id="np-recent" hidden></ul>
+          <p class="spotify-pending" id="spotify-pending">
+            Live listening data connects once the Spotify env vars land on
+            Vercel — `nowplaying` in the terminal will tell you the truth
+            either way.
+          </p>
+        </div>
       </section>
 
       <section aria-labelledby="contact-h">

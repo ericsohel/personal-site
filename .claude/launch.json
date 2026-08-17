@@ -4,7 +4,7 @@
     {
       "name": "site",
       "runtimeExecutable": "python3",
-      "runtimeArgs": ["-m", "http.server", "4321"],
+      "runtimeArgs": ["-m", "http.server", "4321", "--directory", "/Users/ericsohel/Documents/personal-site"],
       "port": 4321
     }
   ]
