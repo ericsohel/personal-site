@@ -24,7 +24,7 @@ import urllib.request
 import webbrowser
 
 REDIRECT = "http://127.0.0.1:8877/callback"
-SCOPES = "user-read-currently-playing user-read-recently-played"
+SCOPES = "user-read-currently-playing user-read-recently-played user-top-read"
 
 
 def main():

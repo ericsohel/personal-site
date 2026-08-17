@@ -65,6 +65,10 @@
       </button>
     </header>
 
+    <div class="tape" id="tape" hidden aria-label="live ticker — hover to pause">
+      <div class="tape-inner" id="tape-inner"></div>
+    </div>
+
     <main id="main">
       <section class="intro">
         <h1>Eric Sohel</h1>
@@ -258,7 +262,8 @@
           <div class="entry-body">
             <h3>DraftIQ Player Data API</h3>
             <p>
-              A production REST API for fantasy baseball auction drafting. Real-time
+              A market maker for fantasy baseball auctions — a production REST API
+              that prices every draftable player in real time. Real-time
               MLB data ingestion via a tiered scheduler (30-minute injuries with
               active-hours gating, 6-hour depth charts &amp; transactions, daily
               metadata, seasonal stats); idempotent jobs with exponential backoff and
@@ -347,7 +352,12 @@
         <h2 id="books-h">Bookshelf</h2>
         <p class="aside">The ones I push on people.</p>
 
-        <p class="book-group">thinking &amp; doing</p>
+        <p class="book-current">
+          <span class="book-current-label">current position</span>
+          <span id="current-book"><span class="book-title">Thinking in Systems</span> <span class="book-author">— Donella Meadows</span></span>
+        </p>
+
+        <p class="book-group">research desk</p>
         <ul class="books">
           <li><span class="book-title">Thinking in Bets</span> <span class="book-author">— Annie Duke</span></li>
           <li><span class="book-title">Principles</span> <span class="book-author">— Ray Dalio</span></li>
@@ -359,7 +369,7 @@
           <li><span class="book-title">Open to Work</span></li>
         </ul>
 
-        <p class="book-group">math &amp; puzzles</p>
+        <p class="book-group">the quant shelf</p>
         <ul class="books">
           <li><span class="book-title">How to Solve It</span> <span class="book-author">— George Pólya</span></li>
           <li><span class="book-title">Algorithms to Live By</span> <span class="book-author">— Brian Christian &amp; Tom Griffiths</span></li>
@@ -367,7 +377,7 @@
           <li><span class="book-title">Mathematical Brainteasers with Surprising Solutions</span> <span class="book-author">— Owen O'Shea</span></li>
         </ul>
 
-        <p class="book-group">fiction &amp; elsewhere</p>
+        <p class="book-group">long-term holds</p>
         <ul class="books">
           <li><span class="book-title">East of Eden</span> <span class="book-author">— John Steinbeck</span></li>
           <li><span class="book-title">Never Let Me Go</span> <span class="book-author">— Kazuo Ishiguro</span></li>
@@ -394,6 +404,12 @@
             </div>
           </div>
           <ul class="np-recent" id="np-recent" hidden></ul>
+          <div class="portfolio" id="portfolio" hidden>
+            <p class="portfolio-label">the listening book <span class="portfolio-sub" id="portfolio-sub">— recent flow, last 50 plays</span></p>
+            <div class="alloc-bar" id="alloc-bar" aria-hidden="true"></div>
+            <ul class="holdings" id="holdings"></ul>
+            <p class="portfolio-note" id="portfolio-note" hidden></p>
+          </div>
           <p class="spotify-pending" id="spotify-pending">
             Live listening data connects once the Spotify env vars land on
             Vercel — `nowplaying` in the terminal will tell you the truth

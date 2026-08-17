@@ -174,11 +174,17 @@
   const recentEl = document.getElementById("np-recent");
   const pending = document.getElementById("spotify-pending");
 
+  // One fetch per page view, shared by the widget, tape, and terminal.
+  let memo = null;
   function load() {
-    return fetch("/api/now-playing").then((r) => {
-      if (!r.ok) throw Object.assign(new Error("unavailable"), { code: r.status });
-      return r.json();
-    });
+    if (!memo) {
+      memo = fetch("/api/now-playing").then((r) => {
+        if (!r.ok) throw Object.assign(new Error("unavailable"), { code: r.status });
+        return r.json();
+      });
+      memo.catch(() => { memo = null; });
+    }
+    return memo;
   }
   window.spotifyNow = { load };
 
@@ -216,11 +222,141 @@
         recentEl.appendChild(li);
       });
     }
+    renderPortfolio(d);
     pending.hidden = true;
+  }
+
+  function renderPortfolio(d) {
+    const box = document.getElementById("portfolio");
+    const bar = document.getElementById("alloc-bar");
+    const list = document.getElementById("holdings");
+    const note = document.getElementById("portfolio-note");
+    const sub = document.getElementById("portfolio-sub");
+    if (!box || !(d.holdings || []).length) return;
+    box.hidden = false;
+    if (d.sampleSize) sub.textContent = "— recent flow, last " + d.sampleSize + " plays";
+
+    bar.textContent = "";
+    let covered = 0;
+    d.holdings.forEach((h) => {
+      covered += h.share;
+      const seg = document.createElement("span");
+      seg.style.width = h.share + "%";
+      bar.appendChild(seg);
+    });
+    if (covered < 100) {
+      const rest = document.createElement("span");
+      rest.className = "alloc-rest";
+      rest.style.width = 100 - covered + "%";
+      bar.appendChild(rest);
+    }
+
+    list.textContent = "";
+    d.holdings.forEach((h) => {
+      const li = document.createElement("li");
+      const t = document.createElement("span");
+      t.className = "h-ticker";
+      t.textContent = "$" + h.ticker;
+      const n = document.createElement("span");
+      n.textContent = h.artist + " ";
+      const s = document.createElement("span");
+      s.className = "h-share";
+      s.textContent = h.share + "%";
+      const p = document.createElement("span");
+      p.className = "h-plays";
+      p.textContent = " · " + h.plays + " plays";
+      li.append(t, n, s, p);
+      list.appendChild(li);
+    });
+
+    if ((d.topArtists || []).length) {
+      note.hidden = false;
+      note.textContent =
+        "core positions (6mo): " +
+        d.topArtists.map((a) => "$" + a.ticker + " " + a.artist).join(" · ");
+    }
   }
 
   // Silent on failure — the pending note already explains itself.
   load().then(render).catch(() => {});
+})();
+
+/* Ticker tape — live desk data, muted presentation. */
+(function () {
+  const tape = document.getElementById("tape");
+  const inner = document.getElementById("tape-inner");
+  if (!tape || !inner) return;
+
+  let items = [];
+  const add = (key, text) => items.push({ key, text });
+
+  function staticItems() {
+    const book = document.getElementById("current-book");
+    if (book) add("current position", book.textContent.replace(/\s+/g, " ").trim());
+    const dq = window.draftiqDemo && window.draftiqDemo.cached();
+    if (dq && dq.top && dq.top[0]) {
+      add("draftiq top", dq.top[0].name + " $" + dq.top[0].dollarValue);
+    } else {
+      add("draftiq", "1,600+ players priced live — type `demo`");
+    }
+    add("citadel terminal", "P2");
+    add("cornell trading comp", "top 5 ×2");
+    add("desk hours", "nyc · shipping");
+  }
+
+  function musicItems(d) {
+    if (d.track) {
+      add(d.playing ? "now playing" : "last played", d.track.name + " — " + d.track.artist);
+    }
+    if ((d.holdings || [])[0]) {
+      const h = d.holdings[0];
+      add("heavy rotation", "$" + h.ticker + " " + h.artist + " " + h.share + "%");
+    }
+  }
+
+  function renderTape() {
+    inner.textContent = "";
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const passes = reduce ? 1 : 2; // duplicate content for a seamless loop
+    for (let p = 0; p < passes; p++) {
+      items.forEach((it) => {
+        const span = document.createElement("span");
+        span.className = "tape-item";
+        const key = document.createElement("span");
+        key.className = "tape-key";
+        key.textContent = it.key;
+        span.appendChild(key);
+        span.appendChild(document.createTextNode(it.text));
+        inner.appendChild(span);
+        const sep = document.createElement("span");
+        sep.className = "tape-sep";
+        sep.textContent = "·";
+        inner.appendChild(sep);
+      });
+    }
+    tape.hidden = false;
+    requestAnimationFrame(() => {
+      const w = inner.scrollWidth / passes;
+      inner.style.setProperty("--tape-dur", Math.max(30, Math.round(w / 35)) + "s");
+    });
+  }
+
+  staticItems();
+  renderTape();
+
+  if (window.spotifyNow) {
+    window.spotifyNow
+      .load()
+      .then((d) => {
+        items = [];
+        musicItems(d);
+        staticItems();
+        renderTape();
+      })
+      .catch(() => {});
+  }
+
+  window.tapeData = () => items.map((i) => i.key.toUpperCase() + ": " + i.text);
 })();
 
 /* Terminal — progressive enhancement; the box stays hidden without JS. */
@@ -265,6 +401,9 @@
           "whoami       who is this guy",
           "demo         run draftiq live, against the real production api",
           "nowplaying   what's in my headphones (live)",
+          "tape         read the ticker",
+          "portfolio    my listening book, quantified",
+          "quote &lt;a&gt;    look up an artist's position",
           "projects     what i've built",
           "experience   where i've worked",
           "awards       the trophy shelf",
@@ -412,6 +551,51 @@
           }
         });
     },
+    tape() {
+      if (!window.tapeData) return print("tape offline — refresh the page?", "muted");
+      window.tapeData().forEach((line) => print(line));
+    },
+    portfolio() {
+      if (!window.spotifyNow) return print("spotify module missing — refresh the page?", "muted");
+      print("spotify → aggregating recent flow…", "muted");
+      window.spotifyNow
+        .load()
+        .then((d) => {
+          if (!(d.holdings || []).length) return print("no positions — the book is empty this week.", "muted");
+          print("the listening book — last " + (d.sampleSize || "?") + " plays");
+          d.holdings.forEach((h) =>
+            print(
+              ("$" + h.ticker).padEnd(6) + " " +
+                String(h.artist).slice(0, 24).padEnd(24) + " " +
+                String(h.share + "%").padStart(4) + "  " + h.plays + " plays"
+            )
+          );
+          if ((d.topArtists || []).length) {
+            print("core positions (6mo): " + d.topArtists.map((a) => "$" + a.ticker + " " + a.artist).join(" · "), "muted");
+          } else {
+            print("core positions locked — token predates user-top-read scope.", "muted");
+          }
+        })
+        .catch(() => print("spotify not wired yet — see SPOTIFY-SETUP.md", "muted"));
+    },
+    quote(rest) {
+      const q = (rest || []).join(" ").trim();
+      if (!q) return print("usage: quote &lt;artist&gt; — e.g. `quote frank ocean`", "muted");
+      if (!window.spotifyNow) return print("spotify module missing — refresh the page?", "muted");
+      window.spotifyNow
+        .load()
+        .then((d) => {
+          const pool = [...(d.holdings || []), ...(d.topArtists || [])];
+          const hit = pool.find((h) => h.artist.toLowerCase().includes(q));
+          if (!hit) return print('no position in "' + q + '" — not in the recent book.', "muted");
+          if (hit.share !== undefined) {
+            print("$" + hit.ticker + " " + hit.artist + " — " + hit.share + "% of recent flow (" + hit.plays + " plays)");
+          } else {
+            print("$" + hit.ticker + " " + hit.artist + " — core position (6mo top artist)");
+          }
+        })
+        .catch(() => print("spotify not wired yet — see SPOTIFY-SETUP.md", "muted"));
+    },
   };
   COMMANDS.hi = COMMANDS.hello;
   COMMANDS.exp = COMMANDS.experience;
@@ -432,7 +616,7 @@
     if (cmd === "sudo") return print("nice try.", "muted");
     if (cmd === "cd") return rest[0] ? jump(rest[0]) : print("cd: where to? try `ls`", "muted");
     if (SECTIONS.includes(cmd)) return jump(cmd);
-    if (COMMANDS[cmd]) return COMMANDS[cmd]();
+    if (COMMANDS[cmd]) return COMMANDS[cmd](rest);
 
     print("command not found: " + esc(cmd) + " — try `help`", "muted");
   }

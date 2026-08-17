@@ -166,6 +166,45 @@ section.intro { border-top: none; }
 :root[data-theme="dark"] .theme-toggle .icon-sun { display: none; }
 :root[data-theme="dark"] .theme-toggle .icon-moon { display: inline-block; }
 
+/* Ticker tape */
+
+.tape {
+  border-bottom: 1px solid var(--rule);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--muted);
+  overflow: hidden;
+}
+.tape-inner {
+  display: inline-flex;
+  align-items: baseline;
+  white-space: nowrap;
+  padding: 0.45rem 0;
+  animation: tape-scroll var(--tape-dur, 60s) linear infinite;
+  will-change: transform;
+}
+.tape:hover .tape-inner,
+.tape:focus-within .tape-inner {
+  animation-play-state: paused;
+}
+@keyframes tape-scroll {
+  to { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tape-inner { animation: none; }
+}
+.tape-item { margin-right: 1.4rem; }
+.tape-key {
+  color: var(--accent);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-right: 0.45rem;
+}
+.tape-sep {
+  opacity: 0.4;
+  margin-right: 1.4rem;
+}
+
 /* Intro */
 
 .intro { padding: 2rem 0 3rem; }
@@ -550,6 +589,71 @@ section.intro { border-top: none; }
   padding: 0.8rem 1rem;
 }
 
+/* Listening portfolio */
+
+.portfolio { margin-top: 1rem; }
+.portfolio-label {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  margin: 0 0 0.55rem;
+}
+.portfolio-sub { text-transform: none; letter-spacing: 0.02em; opacity: 0.8; }
+.alloc-bar {
+  display: flex;
+  height: 6px;
+  border-radius: 3px;
+  overflow: hidden;
+  gap: 2px;
+  margin-bottom: 0.6rem;
+}
+.alloc-bar span { background: var(--accent); height: 100%; }
+.alloc-bar span:nth-child(2) { opacity: 0.75; }
+.alloc-bar span:nth-child(3) { opacity: 0.55; }
+.alloc-bar span:nth-child(4) { opacity: 0.4; }
+.alloc-bar span:nth-child(5) { opacity: 0.28; }
+.alloc-bar span.alloc-rest { opacity: 0.12; }
+.holdings {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.28rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+}
+.holdings .h-ticker { color: var(--accent); margin-right: 0.5rem; }
+.holdings .h-share { color: var(--fg); }
+.holdings .h-plays { color: var(--muted); }
+.portfolio-note {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: var(--muted);
+  margin: 0.6rem 0 0;
+}
+
+/* Bookshelf — current position */
+
+.book-current {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  border: 1px solid var(--rule-strong);
+  border-left: 2px solid var(--accent);
+  border-radius: 0 8px 8px 0;
+  padding: 0.6rem 0.9rem;
+  margin: 0 0 1.2rem;
+}
+.book-current-label {
+  display: block;
+  font-size: 0.64rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  margin-bottom: 0.2rem;
+}
+
 /* Skills */
 
 .skills {
@@ -615,7 +719,7 @@ section.intro { border-top: none; }
 }
 
 @media print {
-  .theme-toggle, .site-footer, .terminal { display: none; }
+  .theme-toggle, .site-footer, .terminal, .tape { display: none; }
   a { color: var(--fg); text-decoration: none; }
   section { border-top: 1px solid #ccc; }
   .entry.hero::before { display: none; }
