@@ -128,6 +128,17 @@ module.exports = async (_req, res) => {
       const items = d.items || [];
       payload.sampleSize = items.length;
       payload.holdings = holdingsFrom(items);
+      // Plays-per-hour histogram in ET, for the blotter's volume chart.
+      const hourFmt = new Intl.DateTimeFormat("en-US", {
+        hour: "numeric",
+        hour12: false,
+        timeZone: "America/New_York",
+      });
+      payload.volumeByHour = new Array(24).fill(0);
+      for (const i of items) {
+        const h = Number(hourFmt.format(new Date(i.played_at))) % 24;
+        if (h >= 0 && h < 24) payload.volumeByHour[h]++;
+      }
       payload.recent = items
         .map((i) => ({ ...shape(i.track), playedAt: i.played_at }))
         .filter((t) => !payload.track || t.url !== payload.track.url)

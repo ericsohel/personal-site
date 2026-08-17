@@ -440,7 +440,34 @@ section.intro { border-top: none; }
   justify-content: space-between;
   align-items: flex-start;
   position: relative;
-  padding: 0.4rem 0 4.6rem;
+  padding: 0.4rem 0 5.4rem;
+}
+/* the little E train — rides to whichever stop you tap */
+.train {
+  position: absolute;
+  top: calc(0.4rem - 9px);
+  left: 0;
+  width: 28px;
+  height: 13px;
+  background: var(--accent);
+  border-radius: 3px 6px 2px 2px;
+  transition: left 900ms cubic-bezier(0.45, 0.05, 0.25, 1);
+  z-index: 1;
+}
+.train::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 4px;
+  width: 20px;
+  height: 4px;
+  background:
+    repeating-linear-gradient(90deg, #fff 0 3px, transparent 3px 7px);
+  border-radius: 1px;
+  opacity: 0.9;
+}
+@media (prefers-reduced-motion: reduce) {
+  .train { transition: none; }
 }
 /* the line itself */
 .subway-track::before {
@@ -499,13 +526,13 @@ section.intro { border-top: none; }
 /* MTA-style angled station labels, anchored at the dot */
 .stop-label {
   position: absolute;
-  top: calc(0.4rem + 20px);
+  top: calc(0.4rem + 22px);
   left: 50%;
-  transform: rotate(38deg);
+  transform: rotate(54deg);
   transform-origin: top left;
   white-space: nowrap;
-  font-size: 0.68rem;
-  letter-spacing: 0.03em;
+  font-size: 0.64rem;
+  letter-spacing: 0.02em;
   line-height: 1.2;
 }
 .stop-when { font-size: 0.62rem; opacity: 0.75; }
@@ -521,6 +548,13 @@ section.intro { border-top: none; }
   border-radius: 0 8px 8px 0;
   padding: 0.6rem 0.9rem;
 }
+.subway-caption strong {
+  display: block;
+  color: var(--fg);
+  font-weight: 500;
+  margin-bottom: 0.2rem;
+}
+.cap-story { display: block; }
 
 @media (max-width: 600px) {
   .subway-track { overflow-x: auto; gap: 2.6rem; justify-content: flex-start; padding-bottom: 4.6rem; }
@@ -745,6 +779,141 @@ section.intro { border-top: none; }
   font-size: 0.74rem;
   color: var(--muted);
   margin: 0.6rem 0 0;
+}
+
+/* Blotter — market report + volume chart */
+
+.blotter-report {
+  font-family: var(--font-mono);
+  font-size: 0.84rem;
+  line-height: 1.75;
+  border: 1px solid var(--rule-strong);
+  border-left: 2px solid var(--accent);
+  border-radius: 0 8px 8px 0;
+  padding: 0.8rem 1rem;
+  margin: 0 0 1rem;
+}
+.blotter-report .rpt-head {
+  display: block;
+  font-size: 0.66rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  margin-bottom: 0.35rem;
+}
+.vol { margin-top: 1rem; }
+.vol-label {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  margin: 0 0 0.5rem;
+}
+.vol-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 44px;
+}
+.vol-bars span {
+  flex: 1;
+  min-height: 2px;
+  background: color-mix(in srgb, var(--accent) 30%, var(--code-bg));
+  border-radius: 1px 1px 0 0;
+}
+.vol-bars span.vol-peak { background: var(--accent); }
+.vol-bars span[data-h]::after { content: ""; }
+
+/* DraftIQ fast-glance: chips + pipeline */
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 0.65rem;
+}
+.chips span {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--muted);
+  border: 1px solid var(--rule-strong);
+  border-radius: 999px;
+  padding: 0.14rem 0.6rem;
+  white-space: nowrap;
+}
+.pipeline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--muted);
+  margin-bottom: 0.65rem;
+}
+.pipeline .pipe-a { color: var(--accent); opacity: 0.8; }
+.pipeline .pipe-hot {
+  color: var(--fg);
+  border: 1px solid var(--accent);
+  border-radius: 4px;
+  padding: 0.08rem 0.4rem;
+}
+
+/* Pysa taint-flow demo */
+
+.pysa-demo {
+  margin-top: 0.9rem;
+  border: 1px solid var(--rule-strong);
+  border-radius: 8px;
+  padding: 0.75rem 0.9rem;
+  font-family: var(--font-mono);
+}
+.pysa-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  margin-bottom: 0.6rem;
+}
+.pysa-code {
+  margin: 0;
+  padding: 0.6rem 0.7rem;
+  background: var(--code-bg);
+  border-radius: 6px;
+  font-size: 0.76rem;
+  line-height: 1.7;
+  overflow-x: auto;
+}
+.pline { display: block; border-radius: 3px; padding: 0 0.3rem; transition: background 200ms ease; }
+.pline-dim { color: var(--muted); }
+.pline.lit { background: color-mix(in srgb, var(--accent) 22%, transparent); }
+.pysa-tag {
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  border: 1px solid color-mix(in srgb, var(--accent) 50%, transparent);
+  border-radius: 3px;
+  padding: 0 0.3rem;
+  margin-left: 0.5rem;
+}
+.pysa-verdict {
+  margin-top: 0.6rem;
+  font-size: 0.78rem;
+  line-height: 1.6;
+  color: var(--fg);
+  border-left: 2px solid var(--accent);
+  padding: 0.45rem 0.7rem;
+  animation: note-in 240ms ease;
+}
+@media (prefers-reduced-motion: reduce) {
+  .pysa-verdict { animation: none; }
+  .pline { transition: none; }
 }
 
 /* Bookshelf — current position */

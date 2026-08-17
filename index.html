@@ -126,6 +126,7 @@
             <span class="route-name">the eric local — makes all stops</span>
           </div>
           <div class="subway-track" role="list" aria-label="Life stops, styled as a subway line">
+            <span class="train" id="train" aria-hidden="true"></span>
             <button class="stop" role="listitem" type="button"
               data-story="High school in lower Manhattan. The softdev lab is where the first Flask apps and a Pac-Man clone happened.">
               <span class="stop-dot"></span>
@@ -266,6 +267,7 @@
               metadata, seasonal stats); idempotent jobs with exponential backoff and
               staleness-aware metadata.
             </p>
+            <p class="chips"><span>1,600+ players priced</span><span>valuations in tens of ms</span><span>125 tests</span><span>OpenAPI &middot; CI &middot; deployed</span></p>
             <p>
               Algorithmic valuation engine using z-score-based valuation against a
               replacement-level baseline with positional-scarcity adjustments and
@@ -287,6 +289,8 @@
               <a href="https://github.com/ericsohel/player-data-api">GitHub &rarr;</a>
             </p>
             <p class="aside">125 Jest/supertest tests. OpenAPI 3.0 spec validated by CI. Deployed via GitHub Actions to Render + Vercel.</p>
+
+            <p class="pipeline" aria-label="How DraftIQ works"><span>MLB API</span><span class="pipe-a">&rarr;</span><span>tiered ingest</span><span class="pipe-a">&rarr;</span><span class="pipe-hot">z-score engine</span><span class="pipe-a">&rarr;</span><span>REST API</span><span class="pipe-a">&rarr;</span><span>this widget</span></p>
 
             <div class="demo" id="draftiq-demo" hidden>
               <div class="demo-head">
@@ -315,6 +319,18 @@
               alongside 3 smaller merged PRs (registry instrumentation, diagnostic
               warnings, documentation).
             </p>
+            <div class="pysa-demo" id="pysa-demo">
+              <div class="pysa-head">
+                <span>taint-flow illustration — the class of bug the harness hunts</span>
+                <button id="pysa-run" class="demo-btn" type="button">run analysis</button>
+              </div>
+              <pre class="pysa-code"><code><span class="pline">name = request.GET["q"]  <span class="pysa-tag">source</span></span>
+<span class="pline">query = f"SELECT * FROM users WHERE name = '{name}'"</span>
+<span class="pline">helper(query)</span>
+<span class="pline pline-dim">def helper(q):</span>
+<span class="pline">    cursor.execute(q)  <span class="pysa-tag">sink</span></span></code></pre>
+              <div class="pysa-verdict" id="pysa-verdict" hidden></div>
+            </div>
           </div>
         </article>
       </section>
@@ -356,40 +372,41 @@
 
         <p class="book-group">research desk</p>
         <ul class="spines">
-          <li class="spine" tabindex="0" data-book="Thinking in Bets — Annie Duke"><span>Thinking in Bets</span></li>
-          <li class="spine" tabindex="0" data-book="Principles — Ray Dalio"><span>Principles</span></li>
-          <li class="spine" tabindex="0" data-book="Deep Work — Cal Newport"><span>Deep Work</span></li>
-          <li class="spine" tabindex="0" data-book="Atomic Habits — James Clear"><span>Atomic Habits</span></li>
-          <li class="spine" tabindex="0" data-book="Why We Sleep — Matthew Walker"><span>Why We Sleep</span></li>
-          <li class="spine" tabindex="0" data-book="The Ten-Day MBA — Steven Silbiger"><span>The Ten-Day MBA</span></li>
-          <li class="spine" tabindex="0" data-book="Meditations — Marcus Aurelius"><span>Meditations</span></li>
-          <li class="spine" tabindex="0" data-book="Open to Work — Ryan Roslansky"><span>Open to Work</span></li>
+          <li class="spine" tabindex="0" data-book="Thinking in Bets — Annie Duke" data-thoughts="judge decisions by process, not outcome — 'resulting' is the enemy. poker as epistemology."><span>Thinking in Bets</span></li>
+          <li class="spine" tabindex="0" data-book="Principles — Ray Dalio" data-thoughts="dalio's operating system, written down. radical transparency scales better than it feels like it should."><span>Principles</span></li>
+          <li class="spine" tabindex="0" data-book="Deep Work — Cal Newport" data-thoughts="the case for guarding four uninterrupted hours like capital. newport was right about the phone."><span>Deep Work</span></li>
+          <li class="spine" tabindex="0" data-book="Atomic Habits — James Clear" data-thoughts="systems over goals, identity over willpower. the compounding chapter alone pays for the book."><span>Atomic Habits</span></li>
+          <li class="spine" tabindex="0" data-book="Why We Sleep — Matthew Walker" data-thoughts="the scariest book on this shelf. permanently changed my relationship with 2am commits."><span>Why We Sleep</span></li>
+          <li class="spine" tabindex="0" data-book="The Ten-Day MBA — Steven Silbiger" data-thoughts="a decoder ring for business vocabulary. reads in a week, gets referenced for years."><span>The Ten-Day MBA</span></li>
+          <li class="spine" tabindex="0" data-book="Meditations — Marcus Aurelius" data-thoughts="a roman emperor's private notes on keeping it together. stoicism straight from the source."><span>Meditations</span></li>
+          <li class="spine" tabindex="0" data-book="Open to Work — Ryan Roslansky" data-thoughts="career strategy from the guy who runs the job market. on-theme for a site with a ticker on it."><span>Open to Work</span></li>
         </ul>
 
         <p class="book-group">the quant shelf</p>
         <ul class="spines">
-          <li class="spine" tabindex="0" data-book="How to Solve It — George Pólya"><span>How to Solve It</span></li>
-          <li class="spine" tabindex="0" data-book="Algorithms to Live By — Brian Christian &amp; Tom Griffiths"><span>Algorithms to Live By</span></li>
-          <li class="spine" tabindex="0" data-book="The Moscow Puzzles — Boris Kordemsky"><span>The Moscow Puzzles</span></li>
-          <li class="spine" tabindex="0" data-book="Mathematical Brainteasers with Surprising Solutions — Owen O'Shea"><span>Mathematical Brainteasers with Surprising Solutions</span></li>
+          <li class="spine" tabindex="0" data-book="How to Solve It — George Pólya" data-thoughts="pólya turns 'just be clever' into a repeatable checklist. problem-solving as procedure, not vibes."><span>How to Solve It</span></li>
+          <li class="spine" tabindex="0" data-book="Algorithms to Live By — Brian Christian &amp; Tom Griffiths" data-thoughts="optimal stopping for apartments, caching for closets. cs as life advice, done honestly."><span>Algorithms to Live By</span></li>
+          <li class="spine" tabindex="0" data-book="The Moscow Puzzles — Boris Kordemsky" data-thoughts="soviet-era brainteasers that haven't aged a day. the geometry ones still sting."><span>The Moscow Puzzles</span></li>
+          <li class="spine" tabindex="0" data-book="Mathematical Brainteasers with Surprising Solutions — Owen O'Shea" data-thoughts="the title undersells the 'surprising.' several of these answers feel illegal."><span>Mathematical Brainteasers with Surprising Solutions</span></li>
         </ul>
 
         <p class="book-group">long-term holds</p>
         <ul class="spines">
-          <li class="spine" tabindex="0" data-book="East of Eden — John Steinbeck"><span>East of Eden</span></li>
-          <li class="spine" tabindex="0" data-book="Never Let Me Go — Kazuo Ishiguro"><span>Never Let Me Go</span></li>
-          <li class="spine" tabindex="0" data-book="The Remains of the Day — Kazuo Ishiguro"><span>The Remains of the Day</span></li>
-          <li class="spine" tabindex="0" data-book="The Namesake — Jhumpa Lahiri"><span>The Namesake</span></li>
-          <li class="spine" tabindex="0" data-book="The Kite Runner — Khaled Hosseini"><span>The Kite Runner</span></li>
-          <li class="spine" tabindex="0" data-book="Frieren: Beyond Journey's End, Vol. 1 — Kanehito Yamada &amp; Tsukasa Abe"><span>Frieren: Beyond Journey's End, Vol. 1</span></li>
+          <li class="spine" tabindex="0" data-book="East of Eden — John Steinbeck" data-thoughts="timshel — thou mayest. steinbeck's biggest swing, and it lands. the best thing on this shelf."><span>East of Eden</span></li>
+          <li class="spine" tabindex="0" data-book="Never Let Me Go — Kazuo Ishiguro" data-thoughts="quiet dystopia. ishiguro breaks your heart politely, and exactly on schedule."><span>Never Let Me Go</span></li>
+          <li class="spine" tabindex="0" data-book="The Remains of the Day — Kazuo Ishiguro" data-thoughts="an entire novel in what a butler won't let himself say. devastating restraint."><span>The Remains of the Day</span></li>
+          <li class="spine" tabindex="0" data-book="The Namesake — Jhumpa Lahiri" data-thoughts="growing up between two names and two worlds. lahiri makes the ordinary ache."><span>The Namesake</span></li>
+          <li class="spine" tabindex="0" data-book="The Kite Runner — Khaled Hosseini" data-thoughts="guilt, redemption, and kite string across two countries. hosseini does not miss."><span>The Kite Runner</span></li>
+          <li class="spine" tabindex="0" data-book="Frieren: Beyond Journey's End, Vol. 1 — Kanehito Yamada &amp; Tsukasa Abe" data-thoughts="an elf outlives her hero party and learns to grieve at her own pace. gentle and devastating."><span>Frieren: Beyond Journey's End, Vol. 1</span></li>
         </ul>
         <p class="shelf-caption" id="shelf-caption">hover or tap a spine.</p>
       </section>
 
       <section aria-labelledby="repeat-h">
-        <h2 id="repeat-h">On Repeat</h2>
-        <p class="aside">What's actually coming out of my headphones — live from the Spotify API.</p>
+        <h2 id="repeat-h">The Blotter</h2>
+        <p class="aside">The music desk — real positions, live from the Spotify API.</p>
         <div class="spotify" id="spotify">
+          <p class="blotter-report" id="blotter-report" hidden></p>
           <div class="np" id="np" hidden>
             <img class="np-art" id="np-art" alt="" width="56" height="56" hidden />
             <div class="np-info">
@@ -407,6 +424,10 @@
             <div class="alloc-bar" id="alloc-bar" aria-hidden="true"></div>
             <ul class="holdings" id="holdings"></ul>
             <p class="portfolio-note" id="portfolio-note" hidden></p>
+          </div>
+          <div class="vol" id="vol" hidden>
+            <p class="vol-label">volume by hour — last 50 plays (ET)</p>
+            <div class="vol-bars" id="vol-bars"></div>
           </div>
           <p class="spotify-pending" id="spotify-pending">
             Live listening data connects once the Spotify env vars land on

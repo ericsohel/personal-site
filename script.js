@@ -25,20 +25,92 @@
   if (yr) yr.textContent = new Date().getFullYear();
 })();
 
-/* Subway life-map — caption follows the hovered/focused/tapped stop. */
+/* Subway life-map — a rideable E train with conductor announcements. */
 (function () {
-  const stops = document.querySelectorAll(".subway .stop");
+  const stops = [...document.querySelectorAll(".subway .stop")];
   const cap = document.getElementById("subway-caption");
+  const train = document.getElementById("train");
   if (!stops.length || !cap) return;
+
+  let current = stops[Math.max(0, stops.length - 2)]; // idle at NYC
+
+  function stationName(b) {
+    const label = b.querySelector(".stop-label");
+    return label ? label.textContent.replace(/\s+/g, " ").trim() : "";
+  }
+
+  function parkTrain(b, instant) {
+    if (!train) return;
+    const left = b.offsetLeft + b.offsetWidth / 2 - 14;
+    if (instant) train.style.transition = "none";
+    train.style.left = left + "px";
+    if (instant) requestAnimationFrame(() => { train.style.transition = ""; });
+  }
+
+  function announce(b) {
+    stops.forEach((x) => x.classList.toggle("is-active", x === b));
+    cap.textContent = "";
+    const head = document.createElement("strong");
+    head.textContent = "now arriving · " + stationName(b) + " (bing-bong)";
+    const story = document.createElement("span");
+    story.className = "cap-story";
+    story.textContent = b.dataset.story;
+    cap.append(head, story);
+  }
+
+  function preview(b) {
+    if (b.classList.contains("is-active")) return;
+    cap.textContent = "up ahead · " + stationName(b) + " — " + b.dataset.story;
+  }
+
   stops.forEach((b) => {
-    const show = () => {
-      stops.forEach((x) => x.classList.toggle("is-active", x === b));
-      cap.textContent = b.dataset.story;
-    };
-    b.addEventListener("mouseenter", show);
-    b.addEventListener("focus", show);
-    b.addEventListener("click", show);
+    b.addEventListener("mouseenter", () => preview(b));
+    b.addEventListener("focus", () => preview(b));
+    b.addEventListener("click", () => {
+      current = b;
+      parkTrain(b);
+      announce(b);
+    });
   });
+
+  window.addEventListener("resize", () => parkTrain(current, true));
+
+  parkTrain(current, true);
+  cap.textContent = "train idling at nyc — tap a stop to ride the E.";
+})();
+
+/* Pysa demo — animate the taint trace source → sink. */
+(function () {
+  const btn = document.getElementById("pysa-run");
+  const lines = [...document.querySelectorAll("#pysa-demo .pline")];
+  const verdict = document.getElementById("pysa-verdict");
+  if (!btn || !lines.length || !verdict) return;
+  const FLOW = [0, 1, 2, 4]; // the helper def line isn't on the taint path
+  let running = false;
+
+  window.runPysaDemo = function () {
+    if (running) return;
+    running = true;
+    lines.forEach((l) => l.classList.remove("lit"));
+    verdict.hidden = true;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const step = reduce ? 0 : 420;
+    FLOW.forEach((idx, n) => {
+      setTimeout(() => lines[idx].classList.add("lit"), step * n);
+    });
+    setTimeout(() => {
+      verdict.hidden = false;
+      verdict.textContent =
+        "PYSA · flow detected: user-controlled data reaches SQL execution " +
+        "(request.GET → f-string → helper() → cursor.execute). My harness " +
+        "synthesized 10,000+ programs shaped like this — randomized call " +
+        "graphs, decorator stacks, nested flows — to catch the ones the " +
+        "analyzer missed.";
+      btn.textContent = "run again";
+      running = false;
+    }, step * FLOW.length + 80);
+  };
+  btn.addEventListener("click", window.runPysaDemo);
 })();
 
 /* Bookshelf — hover previews a spine; click pulls the book and opens notes. */
@@ -291,7 +363,86 @@
       });
     }
     renderPortfolio(d);
+    renderReport(d);
+    renderVol(d);
     pending.hidden = true;
+  }
+
+  function relTime(iso) {
+    const mins = Math.round((Date.now() - new Date(iso).getTime()) / 60000);
+    if (mins < 2) return "just now";
+    if (mins < 60) return mins + "m ago";
+    const hrs = Math.round(mins / 60);
+    if (hrs < 24) return hrs + "h ago";
+    return Math.round(hrs / 24) + "d ago";
+  }
+
+  function renderReport(d) {
+    const el = document.getElementById("blotter-report");
+    if (!el || !(d.holdings || []).length) return;
+    const lead = d.holdings[0];
+    const second = d.holdings[1];
+    const hours = d.volumeByHour || [];
+    const maxVol = hours.length ? Math.max.apply(null, hours) : 0;
+    const peak = maxVol > 0 ? hours.indexOf(maxVol) : null;
+    const fmtHour = (x) => (x % 12 || 12) + (x >= 12 ? "pm" : "am");
+    const bookEl = document.getElementById("current-book");
+    const bookTitle = bookEl ? bookEl.textContent.split("—")[0].trim() : null;
+
+    const parts = [];
+    parts.push(
+      "$" + lead.ticker + " (" + lead.artist + ") led the session at " +
+        lead.share + "% of volume — " + lead.plays + " plays."
+    );
+    if (second) parts.push("$" + second.ticker + " held the bid at " + second.share + "%.");
+    if (peak !== null) {
+      parts.push(
+        "flow concentrated around " + fmtHour(peak) + " ET" +
+          (peak >= 22 || peak <= 3 ? " — classic late-session tape." : ".")
+      );
+    }
+    if (d.playing && d.track) {
+      parts.push("currently printing: " + d.track.name + " — " + d.track.artist + ".");
+    } else {
+      const last = d.track || (d.recent || [])[0];
+      if (last) {
+        parts.push(
+          "last trade: " + last.name + " — " + last.artist +
+            (last.playedAt ? " (" + relTime(last.playedAt) + ")" : "") + "."
+        );
+      }
+    }
+    if (bookTitle) {
+      parts.push("over on fixed income, the research desk holds " + bookTitle.toLowerCase() + ", unmoved.");
+    }
+    parts.push("desk remains risk-on.");
+
+    el.hidden = false;
+    el.textContent = "";
+    const head = document.createElement("span");
+    head.className = "rpt-head";
+    head.textContent =
+      "market report · " +
+      new Date().toLocaleDateString("en-US", { month: "short", day: "numeric" });
+    el.appendChild(head);
+    el.appendChild(document.createTextNode(parts.join(" ")));
+  }
+
+  function renderVol(d) {
+    const vol = document.getElementById("vol");
+    const bars = document.getElementById("vol-bars");
+    const hours = d.volumeByHour;
+    if (!vol || !bars || !hours || !hours.some((v) => v > 0)) return;
+    vol.hidden = false;
+    bars.textContent = "";
+    const max = Math.max.apply(null, hours);
+    hours.forEach((v, h) => {
+      const b = document.createElement("span");
+      b.style.height = v === 0 ? "2px" : Math.max(8, Math.round((v / max) * 100)) + "%";
+      if (v === max) b.classList.add("vol-peak");
+      b.title = h + ":00 ET — " + v + " play" + (v === 1 ? "" : "s");
+      bars.appendChild(b);
+    });
   }
 
   function renderPortfolio(d) {
@@ -467,7 +618,7 @@
       print(
         [
           "whoami       who is this guy",
-          "demo         run draftiq live, against the real production api",
+          "demo         draftiq live · `demo pysa` traces a taint flow",
           "nowplaying   what's in my headphones (live)",
           "tape         read the ticker",
           "portfolio    my listening book, quantified",
@@ -556,7 +707,15 @@
     hello() {
       print("hey! type `help` to look around.");
     },
-    demo() {
+    demo(rest) {
+      if ((rest || [])[0] === "pysa") {
+        jump("projects");
+        if (window.runPysaDemo) {
+          window.runPysaDemo();
+          return print("running the taint-flow demo in the pysa card ↓", "muted");
+        }
+        return print("pysa demo failed to load — refresh the page?", "muted");
+      }
       if (!window.draftiqDemo) return print("demo module missing — refresh the page?", "muted");
       let lastMsg = "";
       print("draftiq → GET /api/v1/demo/valuations (live, production)", "muted");
