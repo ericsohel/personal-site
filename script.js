@@ -735,9 +735,7 @@
           "  600+ live player valuations in tens of ms · 125 tests\n" +
           "  " + link("https://draftiq-xkpx.onrender.com/developer-portal/", "developer portal") +
           " · " + link("https://github.com/ericsohel/draftiq", "source") + "\n" +
-          "pysa harness — differential testing for Meta's static analyzer\n" +
-          "  10k+ synthesized programs with ground-truth taint labels\n" +
-          "  " + link("https://github.com/facebook/pyre-check/pull/886", "pyre-check#886")
+          "(pysa fuzzer lives under `experience` — type it, or `demo pysa`)"
       );
     },
     experience() {
@@ -802,10 +800,10 @@
         return print("the $ERIC market is live below — or trade from here: `buy 5`, `sell 3`.", "muted");
       }
       if ((rest || [])[0] === "pysa") {
-        jump("projects");
+        jump("experience");
         if (window.runPysaDemo) {
           window.runPysaDemo();
-          return print("running the taint-flow demo in the pysa card ↓", "muted");
+          return print("running the taint-flow demo in the meta card ↓", "muted");
         }
         return print("pysa demo failed to load — refresh the page?", "muted");
       }

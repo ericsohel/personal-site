@@ -295,6 +295,18 @@
               <li>Added a live timer and performance metrics to Pysa's terminal output so engineers could track analysis runs.</li>
             </ul>
             <p class="aside">10,000+ generated programs; merged as <a href="https://github.com/facebook/pyre-check/pull/886">pyre-check#886</a>. <a href="https://github.com/facebook/pyre-check/pulls?q=esohel30+">Merged PRs &rarr;</a></p>
+            <div class="pysa-demo" id="pysa-demo">
+              <div class="pysa-head">
+                <span>taint-flow illustration — the class of bug the fuzzer hunts</span>
+                <button id="pysa-run" class="demo-btn" type="button">run analysis</button>
+              </div>
+              <pre class="pysa-code"><code><span class="pline">name = request.GET["q"]  <span class="pysa-tag">source</span></span>
+<span class="pline">query = f"SELECT * FROM users WHERE name = '{name}'"</span>
+<span class="pline">helper(query)</span>
+<span class="pline pline-dim">def helper(q):</span>
+<span class="pline">    cursor.execute(q)  <span class="pysa-tag">sink</span></span></code></pre>
+              <div class="pysa-verdict" id="pysa-verdict" hidden></div>
+            </div>
           </div>
         </article>
 
@@ -417,33 +429,6 @@
           </div>
         </article>
 
-        <article class="entry">
-          <div class="entry-when">2024</div>
-          <div class="entry-body">
-            <h3>Pysa differential-testing harness <span class="role">— facebook/pyre-check</span></h3>
-            <p>
-              A differential-testing harness for Meta's Pysa static analyzer, built
-              during the MLH Fellowship. Generated Python programs with ground-truth
-              taint labels to expose false negatives in Pysa's interprocedural
-              taint-tracking; shipped as
-              <a href="https://github.com/facebook/pyre-check/pull/886">pyre-check#886</a>
-              alongside 3 smaller merged PRs (registry instrumentation, diagnostic
-              warnings, documentation).
-            </p>
-            <div class="pysa-demo" id="pysa-demo">
-              <div class="pysa-head">
-                <span>taint-flow illustration — the class of bug the harness hunts</span>
-                <button id="pysa-run" class="demo-btn" type="button">run analysis</button>
-              </div>
-              <pre class="pysa-code"><code><span class="pline">name = request.GET["q"]  <span class="pysa-tag">source</span></span>
-<span class="pline">query = f"SELECT * FROM users WHERE name = '{name}'"</span>
-<span class="pline">helper(query)</span>
-<span class="pline pline-dim">def helper(q):</span>
-<span class="pline">    cursor.execute(q)  <span class="pysa-tag">sink</span></span></code></pre>
-              <div class="pysa-verdict" id="pysa-verdict" hidden></div>
-            </div>
-          </div>
-        </article>
       </section>
 
       <section aria-labelledby="skills-h">
