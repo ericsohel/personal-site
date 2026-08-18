@@ -535,7 +535,12 @@ section.intro { border-top: none; }
   letter-spacing: 0.02em;
   line-height: 1.2;
 }
-.stop-when { font-size: 0.62rem; opacity: 0.75; }
+.stop-when {
+  display: block;
+  font-size: 0.6rem;
+  opacity: 0.75;
+  margin-top: 0.1rem;
+}
 .stop:hover .stop-label, .stop.is-active .stop-label { color: var(--fg); }
 .subway-caption {
   font-family: var(--font-mono);
