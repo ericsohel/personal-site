@@ -959,7 +959,7 @@ section.intro { border-top: none; }
 /* Agent-call diagram (2026 Capital One) */
 
 .diagram-wrap {
-  max-width: 480px;
+  max-width: 520px;
   margin: 0 auto 0.7rem;
 }
 .agent-diagram {
@@ -975,6 +975,22 @@ section.intro { border-top: none; }
 }
 .ad-hot { stroke: var(--accent); stroke-width: 1.6; }
 .ad-row { stroke: var(--rule-strong); stroke-width: 1; }
+.ad-node { transition: stroke 220ms ease, fill 220ms ease, opacity 220ms ease; }
+rect.ad-node.is-live {
+  stroke: var(--accent);
+  stroke-width: 2;
+  fill: color-mix(in srgb, var(--accent) 12%, var(--code-bg));
+}
+rect.ad-node.is-visited {
+  stroke: color-mix(in srgb, var(--accent) 45%, var(--rule-strong));
+}
+path.ad-node.is-live {
+  stroke-width: 2.2;
+  opacity: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ad-node { transition: none; }
+}
 .ad-title { fill: var(--fg); font-size: 12px; font-weight: 600; }
 .ad-sub { fill: var(--muted); font-size: 9.5px; }
 .ad-lbl { fill: var(--muted); font-size: 9.5px; }

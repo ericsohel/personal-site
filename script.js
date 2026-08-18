@@ -115,7 +115,7 @@
 
 /* Capital One micro-demos — staged log illustrations (labeled as such). */
 (function () {
-  function stager(btnId, logId, lines, doneLabel) {
+  function stager(btnId, logId, lines, doneLabel, onLine) {
     const btn = document.getElementById(btnId);
     const log = document.getElementById(logId);
     if (!btn || !log) return;
@@ -133,12 +133,41 @@
           div.className = "log-line" + (line[0] === "·" ? " log-note" : "");
           div.textContent = line;
           log.appendChild(div);
+          if (onLine) onLine(n);
           if (n === lines.length - 1) {
             btn.textContent = doneLabel;
             running = false;
           }
         }, step * n);
       });
+    });
+  }
+
+  // Which diagram nodes glow for each line of the agent demo log.
+  const STAGE_MAP = [
+    ["ad-s-prompt"],
+    ["ad-s-sql", "ad-s-wh"],
+    ["ad-s-analysis"],
+    ["ad-s-orch", "ad-s-commentary", "ad-s-charts", "ad-s-tables"],
+    ["ad-s-revise", "ad-s-charts"],
+    ["ad-s-orch", "ad-s-report"],
+    ["ad-s-report"],
+  ];
+  function syncAgentDiagram(n) {
+    const nodes = document.querySelectorAll(".ad-node");
+    if (n === 0) nodes.forEach((el) => el.classList.remove("is-live", "is-visited"));
+    nodes.forEach((el) => {
+      if (el.classList.contains("is-live")) {
+        el.classList.remove("is-live");
+        el.classList.add("is-visited");
+      }
+    });
+    (STAGE_MAP[n] || []).forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.classList.add("is-live");
+        el.classList.remove("is-visited");
+      }
     });
   }
 
@@ -150,7 +179,7 @@
     '[revise]      "break out marketing spend" → section re-rendered, 9s',
     "[validate]    strict checks ✓ · 1 call remediated · shipped to 20 finance-tech teams",
     "· illustration of the pipeline — the real system runs inside capital one",
-  ], "run again");
+  ], "run again", syncAgentDiagram);
 
   stager("wire-run", "wire-log", [
     "[client]  POST /wires  key=7f3a…  $240,000 → ACME LLC",

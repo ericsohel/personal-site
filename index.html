@@ -187,7 +187,7 @@
               Finance Tech with a 95% satisfaction rate.
             </p>
             <div class="diagram-wrap">
-              <svg class="agent-diagram" viewBox="0 0 460 416" role="img"
+              <svg class="agent-diagram" viewBox="0 0 524 416" role="img"
                 aria-label="Pipeline: a natural-language prompt becomes SQL queries against a 2K-table warehouse; results feed analysis and a template; the orchestrator fans tasks out to commentary, charts, and tables agents, whose components assemble into the final report; chat revisions loop back to the orchestrator.">
                 <defs>
                   <marker id="ad-a" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
@@ -199,17 +199,17 @@
                 </defs>
 
                 <!-- 1 · natural-language prompt -->
-                <rect class="ad-box" x="130" y="6" width="200" height="42" rx="6"/>
+                <rect class="ad-box ad-node" id="ad-s-prompt" x="130" y="6" width="200" height="42" rx="6"/>
                 <text class="ad-title" x="230" y="24" text-anchor="middle">NL prompt</text>
                 <text class="ad-sub" x="230" y="39" text-anchor="middle">&quot;may card-spend report&quot;</text>
                 <path class="ad-flow" d="M230 48 L230 66" marker-end="url(#ad-a)"/>
 
                 <!-- 2 · SQL generation + warehouse -->
-                <rect class="ad-box" x="130" y="68" width="200" height="42" rx="6"/>
+                <rect class="ad-box ad-node" id="ad-s-sql" x="130" y="68" width="200" height="42" rx="6"/>
                 <text class="ad-title" x="230" y="86" text-anchor="middle">SQL generation</text>
                 <text class="ad-sub" x="230" y="101" text-anchor="middle">prompt &#8594; queries</text>
 
-                <rect class="ad-box" x="346" y="58" width="106" height="64" rx="10"/>
+                <rect class="ad-box ad-node" id="ad-s-wh" x="346" y="58" width="106" height="64" rx="10"/>
                 <text class="ad-title" x="399" y="78" text-anchor="middle">warehouse</text>
                 <text class="ad-sub" x="399" y="93" text-anchor="middle">2K tables</text>
                 <line class="ad-row" x1="358" y1="103" x2="440" y2="103"/>
@@ -222,13 +222,13 @@
                 <path class="ad-flow" d="M230 110 L230 128" marker-end="url(#ad-a)"/>
 
                 <!-- 3 · analysis + template -->
-                <rect class="ad-box" x="130" y="130" width="200" height="42" rx="6"/>
+                <rect class="ad-box ad-node" id="ad-s-analysis" x="130" y="130" width="200" height="42" rx="6"/>
                 <text class="ad-title" x="230" y="148" text-anchor="middle">analysis</text>
                 <text class="ad-sub" x="230" y="163" text-anchor="middle">trends &#183; anomalies &#8594; template</text>
                 <path class="ad-flow" d="M230 172 L230 190" marker-end="url(#ad-a)"/>
 
                 <!-- 4 · orchestrator -->
-                <rect class="ad-box ad-hot" x="130" y="192" width="200" height="44" rx="6"/>
+                <rect class="ad-box ad-hot ad-node" id="ad-s-orch" x="130" y="192" width="200" height="44" rx="6"/>
                 <text class="ad-title" x="230" y="211" text-anchor="middle">orchestrator</text>
                 <text class="ad-sub" x="230" y="226" text-anchor="middle">fan out &#183; validate &#183; remediate</text>
 
@@ -237,13 +237,13 @@
                 <path class="ad-flow" d="M230 236 L230 276" marker-end="url(#ad-a)"/>
                 <path class="ad-flow" d="M260 236 C300 252 348 260 378 276" marker-end="url(#ad-a)"/>
 
-                <rect class="ad-box" x="8" y="278" width="140" height="42" rx="6"/>
+                <rect class="ad-box ad-node" id="ad-s-commentary" x="8" y="278" width="140" height="42" rx="6"/>
                 <text class="ad-title" x="78" y="296" text-anchor="middle">commentary</text>
                 <text class="ad-sub" x="78" y="311" text-anchor="middle">agent</text>
-                <rect class="ad-box" x="160" y="278" width="140" height="42" rx="6"/>
+                <rect class="ad-box ad-node" id="ad-s-charts" x="160" y="278" width="140" height="42" rx="6"/>
                 <text class="ad-title" x="230" y="296" text-anchor="middle">charts</text>
                 <text class="ad-sub" x="230" y="311" text-anchor="middle">agent</text>
-                <rect class="ad-box" x="312" y="278" width="140" height="42" rx="6"/>
+                <rect class="ad-box ad-node" id="ad-s-tables" x="312" y="278" width="140" height="42" rx="6"/>
                 <text class="ad-title" x="382" y="296" text-anchor="middle">tables</text>
                 <text class="ad-sub" x="382" y="311" text-anchor="middle">agent</text>
 
@@ -253,19 +253,19 @@
                 <path class="ad-flow" d="M382 320 C350 340 300 350 258 360" marker-end="url(#ad-a)"/>
 
                 <!-- 5 · final report -->
-                <rect class="ad-box" x="110" y="362" width="240" height="46" rx="6"/>
+                <rect class="ad-box ad-node" id="ad-s-report" x="110" y="362" width="240" height="46" rx="6"/>
                 <text class="ad-title" x="230" y="382" text-anchor="middle">final report</text>
                 <text class="ad-sub" x="230" y="397" text-anchor="middle">commentary &#183; charts &#183; tables</text>
 
                 <!-- chat revision loop -->
-                <path class="ad-rev" d="M350 380 C448 366 448 240 334 214" marker-end="url(#ad-a)"/>
-                <text class="ad-lbl ad-lbl-hot" x="424" y="300" text-anchor="middle">&#10226; revise</text>
-                <text class="ad-lbl ad-lbl-hot" x="424" y="312" text-anchor="middle">via chat</text>
+                <path class="ad-rev ad-node" id="ad-s-revise" d="M350 382 C512 368 512 238 334 214" marker-end="url(#ad-a)"/>
+                <text class="ad-lbl ad-lbl-hot" x="496" y="296" text-anchor="middle">&#10226; revise</text>
+                <text class="ad-lbl ad-lbl-hot" x="496" y="308" text-anchor="middle">via chat</text>
               </svg>
             </div>
             <div class="pysa-demo">
               <div class="pysa-head">
-                <span>pipeline illustration — one request through the agents</span>
+                <span>pipeline illustration — the diagram lights up as it runs</span>
                 <button id="agent-run" class="demo-btn" type="button">run request</button>
               </div>
               <div class="pysa-code agent-log" id="agent-log" hidden></div>
