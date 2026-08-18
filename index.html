@@ -362,18 +362,8 @@
             <ul class="resume-bullets">
               <li>Built a fantasy-baseball auction draft assistant that computes a fair price for each of 1,600+ MLB players by distributing the league's total auction capital according to statistical player value.</li>
               <li>Launched a developer portal with self-service API key management, secure password hashing, signed-cookie sessions, per-key IP whitelisting, sliding-window rate limiting, and a 30-day audit log.</li>
+              <li>Ingests live MLB data on a tiered scheduler and re-values every player with a z-score, replacement-baseline engine — full budget allocation in about 3 seconds.</li>
             </ul>
-            <p class="chips"><span>1,600+ players priced</span><span>valuations in tens of ms</span><span>124+ tests</span><span>OpenAPI &middot; CI &middot; deployed</span></p>
-            <p class="aside">
-              Real-time MLB data ingestion via a tiered scheduler (30-minute
-              injuries with active-hours gating, 6-hour depth charts &amp;
-              transactions, daily metadata, seasonal stats); idempotent jobs
-              with exponential backoff and staleness-aware metadata. Z-score
-              valuation against a replacement-level baseline with
-              positional-scarcity adjustments and live draft-state
-              re-valuation — ranked nominations, positional-need scores, and
-              a full budget allocation in about 3 seconds.
-            </p>
             <p class="stack">
               <span>Node.js</span><span>Express</span><span>SQLite</span><span>React</span><span>MLB Stats API</span><span>OpenAPI 3.0</span>
             </p>
@@ -381,8 +371,6 @@
               <a href="https://draftiq-xkpx.onrender.com/developer-portal/">Live developer portal &rarr;</a>
               <a href="https://github.com/ericsohel/draftiq">GitHub &rarr;</a>
             </p>
-            <p class="aside">124+ Jest/supertest tests. OpenAPI 3.0 spec validated by CI. Deployed via GitHub Actions to Render + Vercel.</p>
-
             <p class="pipeline" aria-label="How DraftIQ works"><span>MLB API</span><span class="pipe-a">&rarr;</span><span>tiered ingest</span><span class="pipe-a">&rarr;</span><span class="pipe-hot">z-score engine</span><span class="pipe-a">&rarr;</span><span>REST API</span><span class="pipe-a">&rarr;</span><span>this widget</span></p>
 
             <div class="demo" id="draftiq-demo" hidden>
