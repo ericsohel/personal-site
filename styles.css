@@ -332,6 +332,30 @@ section.intro { border-top: none; }
   opacity: 0.5;
 }
 
+/* Resume-bullet lists — literal resume wording, minimal marker */
+.resume-bullets {
+  list-style: none;
+  margin: 0 0 var(--gap);
+  padding: 0;
+  display: grid;
+  gap: 0.5rem;
+}
+.resume-bullets li {
+  position: relative;
+  padding-left: 1.15rem;
+}
+.resume-bullets li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.6em;
+  width: 6px;
+  height: 6px;
+  border-radius: 1.5px;
+  background: var(--accent);
+  opacity: 0.85;
+}
+
 .links { display: flex; flex-wrap: wrap; gap: 0.25rem 1.1rem; margin-bottom: 0.4rem; }
 .links a { font-size: 0.93rem; }
 

@@ -173,19 +173,12 @@
           <div class="entry-when">Jun – Aug 2026</div>
           <div class="entry-body">
             <h3>Capital One <span class="role">— SWE Intern, NYC</span></h3>
-            <p>
-              Built a multi-agent system (Python, LangGraph, FastAPI) that
-              automates creating financial reports — a three-stage pipeline of
-              natural-language-to-SQL retrieval across 2K tables, analysis,
-              and an orchestrator rendering charts, tables, and commentary
-              revisable via chat, with strict validation and intelligent
-              remediation throughout.
-            </p>
-            <p>
-              Cut report generation time 75% by parallelizing LLM calls and
-              caching retrieved data in Redis. Adopted by 20 teams within
-              Finance Tech with a 95% satisfaction rate.
-            </p>
+            <ul class="resume-bullets">
+              <li>Built a multi-agent system using Python, LangGraph, and FastAPI that automates creating financial reports.</li>
+              <li>Designed a three-stage pipeline: natural-language-to-SQL retrieval across 2K tables, analysis, and an orchestrator rendering charts, tables, and commentary revisable via chat; features strict validation and intelligent remediation.</li>
+              <li>Cut report generation time 75% by parallelizing LLM calls; cut cost by caching retrieved data in Redis.</li>
+              <li>Adopted by 20 teams within Finance Tech with a 95% satisfaction rate.</li>
+            </ul>
             <div class="diagram-wrap">
               <svg class="agent-diagram" viewBox="0 0 524 416" role="img"
                 aria-label="Pipeline: a natural-language prompt becomes SQL queries against a 2K-table warehouse; results feed analysis and a template; the orchestrator fans tasks out to commentary, charts, and tables agents, whose components assemble into the final report; chat revisions loop back to the orchestrator.">
@@ -277,20 +270,11 @@
           <div class="entry-when">Jun – Aug 2025</div>
           <div class="entry-body">
             <h3>Capital One <span class="role">— SWE Intern, Wire Transfer Platform, McLean</span></h3>
-            <p>
-              Built the React UI of a wire transfer platform facilitating
-              5K+ daily payments worth ~$1B.
-            </p>
-            <p>
-              Implemented wire-execution and validation logic across the
-              platform's Node.js/Fastify microservices — idempotency keys so
-              each wire executes exactly once despite network failures or
-              duplicate requests.
-            </p>
-            <p>
-              Built a PostgreSQL-backed state machine coordinating checks
-              across 4 verification services before each wire is released.
-            </p>
+            <ul class="resume-bullets">
+              <li>Built the React UI of a wire transfer platform that facilitated 5K+ daily payments worth ~$1B.</li>
+              <li>Implemented wire-execution and validation logic across the platform's Node.js and Fastify microservices, using idempotency keys so each wire executes exactly once despite network failures or duplicate requests.</li>
+              <li>Built a PostgreSQL-backed state machine coordinating checks across 4 verification services.</li>
+            </ul>
             <p class="pipeline" aria-label="Wire platform flow"><span>React UI</span><span class="pipe-a">&rarr;</span><span>wire API</span><span class="pipe-a">&rarr;</span><span>validation</span><span class="pipe-a">&rarr;</span><span class="pipe-hot">state machine · 4 services</span><span class="pipe-a">&rarr;</span><span>execute exactly once</span></p>
             <div class="pysa-demo">
               <div class="pysa-head">
@@ -306,19 +290,11 @@
           <div class="entry-when">May – Aug 2024</div>
           <div class="entry-body">
             <h3>Meta <span class="role">— SWE Fellow, MLH Fellowship · Pysa Static Analyzer</span></h3>
-            <p>
-              Built a fuzzer generating 10,000+ Python programs with known
-              source-to-sink taint flows — randomized call graphs, nested
-              objects — uncovering 30+ flows missed by
-              <a href="https://github.com/facebook/pyre-check">Pysa</a>,
-              Meta's open-source Python security analyzer (merged as
-              <a href="https://github.com/facebook/pyre-check/pull/886">pyre-check#886</a>).
-            </p>
-            <p>
-              Also added a live timer and performance metrics to Pysa's
-              terminal output so engineers can track long analysis runs.
-              <a href="https://github.com/facebook/pyre-check/pulls?q=esohel30+">Merged PRs &rarr;</a>
-            </p>
+            <ul class="resume-bullets">
+              <li>Built a fuzzer generating Python programs with known source-to-sink taint flows through randomized call graph patterns and nested objects, uncovering 30+ flows missed by <a href="https://github.com/facebook/pyre-check">Pysa</a>, Meta's static security analyzer.</li>
+              <li>Added a live timer and performance metrics to Pysa's terminal output so engineers could track analysis runs.</li>
+            </ul>
+            <p class="aside">10,000+ generated programs; merged as <a href="https://github.com/facebook/pyre-check/pull/886">pyre-check#886</a>. <a href="https://github.com/facebook/pyre-check/pulls?q=esohel30+">Merged PRs &rarr;</a></p>
           </div>
         </article>
 
@@ -326,11 +302,10 @@
           <div class="entry-when">Mar – Jun 2024</div>
           <div class="entry-body">
             <h3>Stanford University <span class="role">— Teaching Assistant, CS 106A Programming Methodology</span></h3>
-            <p>
-              Led Python lectures and interactive lab sections for 200+ students
-              in Stanford's free global CS 106A — 30,000+ learners across 100+
-              countries. Invited back as Head TA for the next cohort.
-            </p>
+            <ul class="resume-bullets">
+              <li>Led Python lectures and interactive lab sections for 200+ students, covering programming and data structures.</li>
+            </ul>
+            <p class="aside">Stanford's free global CS 106A — 30,000+ learners across 100+ countries. Invited back as Head TA for the next cohort.</p>
           </div>
         </article>
       </section>
@@ -344,28 +319,20 @@
           </div>
           <div class="entry-body">
             <h3>DraftIQ Player Data API</h3>
-            <p>
-              A market maker for fantasy baseball auctions — a production REST API
-              that prices every draftable player in real time. Real-time
-              MLB data ingestion via a tiered scheduler (30-minute injuries with
-              active-hours gating, 6-hour depth charts &amp; transactions, daily
-              metadata, seasonal stats); idempotent jobs with exponential backoff and
-              staleness-aware metadata.
-            </p>
+            <ul class="resume-bullets">
+              <li>Built a fantasy-baseball auction draft assistant that computes a fair price for each of 1,600+ MLB players by distributing the league's total auction capital according to statistical player value.</li>
+              <li>Launched a developer portal with self-service API key management, secure password hashing, signed-cookie sessions, per-key IP whitelisting, sliding-window rate limiting, and a 30-day audit log.</li>
+            </ul>
             <p class="chips"><span>1,600+ players priced</span><span>valuations in tens of ms</span><span>124+ tests</span><span>OpenAPI &middot; CI &middot; deployed</span></p>
-            <p>
-              Algorithmic valuation engine using z-score-based valuation against a
-              replacement-level baseline with positional-scarcity adjustments and
-              live draft-state re-valuation — ranking 1,600+ players with
-              valuations in tens of milliseconds, and generating ranked
-              nominations, positional-need scores, and a full budget allocation
-              in about 3 seconds.
-            </p>
-            <p>
-              Self-serve developer portal with full API-key management — scrypt
-              password hashing, signed-cookie sessions, per-key IP whitelisting
-              (pure-Node, no library), sliding-window rate limiting, and a 30-day
-              audit log.
+            <p class="aside">
+              Real-time MLB data ingestion via a tiered scheduler (30-minute
+              injuries with active-hours gating, 6-hour depth charts &amp;
+              transactions, daily metadata, seasonal stats); idempotent jobs
+              with exponential backoff and staleness-aware metadata. Z-score
+              valuation against a replacement-level baseline with
+              positional-scarcity adjustments and live draft-state
+              re-valuation — ranked nominations, positional-need scores, and
+              a full budget allocation in about 3 seconds.
             </p>
             <p class="stack">
               <span>Node.js</span><span>Express</span><span>SQLite</span><span>React</span><span>MLB Stats API</span><span>OpenAPI 3.0</span>
@@ -396,14 +363,14 @@
           <div class="entry-when">2026 — now</div>
           <div class="entry-body">
             <h3>Open Orderbook <span class="role">— trade $ERIC, right here</span></h3>
-            <p>
-              A limit order book and matching engine with price-time priority —
-              the data structure at the center of every exchange. The C++17
-              core benchmarks at 3.7M ops/s (269&thinsp;ns mean per operation)
-              on a seeded mixed workload; a JavaScript twin held to the same
-              12-case test list runs the live market below, where a market
-              maker quotes around a drifting fair value, a noise trader takes
-              liquidity, and you trade against both.
+            <ul class="resume-bullets">
+              <li>Built a low-latency limit order book and matching engine in C++17 with price-time priority, guaranteed price improvement, O(log L) inserts; benchmarked at 3.7M ops/sec (269 ns/op) on a mixed workload of limits, cancels, and markets.</li>
+            </ul>
+            <p class="aside">
+              A JavaScript twin held to the same 12-case test list runs the
+              live market below — a market maker quotes around a drifting
+              fair value, a noise trader takes liquidity, and you trade
+              against both.
             </p>
             <p class="stack">
               <span>C++17</span><span>JavaScript</span><span>zero dependencies</span><span>269 ns/op</span><span>GitHub Actions CI</span>
@@ -501,7 +468,7 @@
         <ul class="contact">
           <li>Citadel Terminal Trading Competition — 2nd place (2023)</li>
           <li>Cornell Trading Competition — Top 5 (2024, 2025)</li>
-          <li>AIME — three-time qualifier</li>
+          <li>AIME Qualifier (&times;3)</li>
           <li>USACO — Silver Division</li>
         </ul>
       </section>
