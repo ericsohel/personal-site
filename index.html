@@ -275,13 +275,41 @@
               <li>Implemented wire-execution and validation logic across the platform's Node.js and Fastify microservices, using idempotency keys so each wire executes exactly once despite network failures or duplicate requests.</li>
               <li>Built a PostgreSQL-backed state machine coordinating checks across 4 verification services.</li>
             </ul>
-            <p class="pipeline" aria-label="Wire platform flow"><span>React UI</span><span class="pipe-a">&rarr;</span><span>wire API</span><span class="pipe-a">&rarr;</span><span>validation</span><span class="pipe-a">&rarr;</span><span class="pipe-hot">state machine · 4 services</span><span class="pipe-a">&rarr;</span><span>execute exactly once</span></p>
-            <div class="pysa-demo">
-              <div class="pysa-head">
-                <span>idempotency illustration — the same wire, sent twice</span>
-                <button id="wire-run" class="demo-btn" type="button">send wire &times;2</button>
+            <div class="wire-widget" id="wire-widget">
+              <div class="ww-grid">
+                <div class="ww-app" aria-label="Miniature wire form — an illustration, not the real UI">
+                  <div class="ww-titlebar"><span class="ww-dot"></span><span class="ww-dot"></span><span class="ww-dot"></span>wires &middot; artist's impression</div>
+                  <label class="ww-field">recipient
+                    <select id="ww-to">
+                      <option>ACME LLC</option>
+                      <option>Globex Corp</option>
+                      <option>Initech Inc</option>
+                    </select>
+                  </label>
+                  <label class="ww-field">amount (USD)
+                    <input id="ww-amt" type="number" min="1" step="1000" value="240000" inputmode="numeric" />
+                  </label>
+                  <div class="ww-key">idempotency key <code id="ww-key">7f3a&#8230;c2</code></div>
+                  <div class="ww-actions">
+                    <button id="ww-send" class="ww-btn" type="button">send wire</button>
+                    <button id="ww-retry" class="ww-btn ww-btn-ghost" type="button" hidden>send again &mdash; same key</button>
+                  </div>
+                </div>
+                <div class="ww-flow" aria-hidden="true">
+                  <div class="ww-node" id="ww-n-ui">React UI</div>
+                  <div class="ww-arrow">&darr;</div>
+                  <div class="ww-node" id="ww-n-api">wire API</div>
+                  <div class="ww-arrow">&darr;</div>
+                  <div class="ww-node" id="ww-n-val">validation</div>
+                  <div class="ww-arrow">&darr;</div>
+                  <div class="ww-node" id="ww-n-sm">state machine<span class="ww-pips"><i></i><i></i><i></i><i></i></span></div>
+                  <div class="ww-arrow">&darr;</div>
+                  <div class="ww-node" id="ww-n-led">ledger</div>
+                  <div class="ww-ledger" id="ww-ledger">0 payments &middot; 0 duplicates</div>
+                </div>
               </div>
               <div class="pysa-code agent-log" id="wire-log" hidden></div>
+              <p class="aside">An illustration of the flow &mdash; the real platform runs inside Capital One. Send the same wire twice and watch the ledger.</p>
             </div>
           </div>
         </article>

@@ -180,15 +180,131 @@
     "[validate]    strict checks ✓ · 1 call remediated · shipped to 20 finance-tech teams",
     "· illustration of the pipeline — the real system runs inside capital one",
   ], "run again", syncAgentDiagram);
+})();
 
-  stager("wire-run", "wire-log", [
-    "[client]  POST /wires  key=7f3a…  $240,000 → ACME LLC",
-    "[state-machine] key 7f3a… unseen → 4/4 verification services ✓ → EXECUTED",
-    "[client]  POST /wires  key=7f3a…  (retry — client saw a timeout)",
-    "[state-machine] key 7f3a… already executed → replayed response · no double debit",
-    "[result]  1 payment posted, 0 duplicates — at 5K wires/day, that's the whole job",
-    "· illustration of the idempotency pattern — the real platform runs inside capital one",
-  ], "send again");
+/* Wire desk — a miniature of the wire UI; sends drive the flow + log. */
+(function () {
+  const widget = document.getElementById("wire-widget");
+  if (!widget) return;
+  const $id = (s) => document.getElementById(s);
+  const sendBtn = $id("ww-send"), retryBtn = $id("ww-retry");
+  const toSel = $id("ww-to"), amtIn = $id("ww-amt");
+  const keyEl = $id("ww-key"), log = $id("wire-log"), ledgerEl = $id("ww-ledger");
+  const nodes = { ui: $id("ww-n-ui"), api: $id("ww-n-api"), val: $id("ww-n-val"), sm: $id("ww-n-sm"), led: $id("ww-n-led") };
+  const pips = [...widget.querySelectorAll(".ww-pips i")];
+
+  let key = newKey(), executed = false, payments = 0, replays = 0, running = false;
+
+  function newKey() {
+    const hex = "0123456789abcdef";
+    let s = "";
+    for (let i = 0; i < 4; i++) s += hex[Math.floor(Math.random() * 16)];
+    return s + "…" + hex[Math.floor(Math.random() * 16)] + hex[Math.floor(Math.random() * 16)];
+  }
+  function fmtAmt() {
+    const v = Math.max(1, Math.floor(Number(amtIn.value) || 0));
+    return "$" + v.toLocaleString("en-US");
+  }
+  function addLine(text, note) {
+    log.hidden = false;
+    const div = document.createElement("div");
+    div.className = "log-line" + (note ? " log-note" : "");
+    div.textContent = text;
+    log.appendChild(div);
+  }
+  function setLive(nodeKey) {
+    Object.values(nodes).forEach((n) => {
+      if (n.classList.contains("is-live")) {
+        n.classList.remove("is-live");
+        n.classList.add("is-visited");
+      }
+    });
+    if (nodeKey) {
+      nodes[nodeKey].classList.add("is-live");
+      nodes[nodeKey].classList.remove("is-visited");
+    }
+  }
+  function resetFlow() {
+    Object.values(nodes).forEach((n) => n.classList.remove("is-live", "is-visited"));
+    pips.forEach((p) => p.classList.remove("on"));
+  }
+  function ledger() {
+    ledgerEl.textContent =
+      payments + (payments === 1 ? " payment" : " payments") +
+      (replays ? " · " + replays + (replays === 1 ? " replay" : " replays") : "") +
+      " · 0 duplicates";
+  }
+  function run(steps) {
+    running = true;
+    sendBtn.disabled = retryBtn.disabled = true;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const dt = reduce ? 0 : 430;
+    let t = 0;
+    steps.forEach((fn) => { setTimeout(fn, t); t += dt; });
+    setTimeout(() => {
+      running = false;
+      sendBtn.disabled = retryBtn.disabled = false;
+      setLive(null);
+    }, t + 60);
+  }
+
+  window.wireHasExecuted = () => executed;
+  window.wireSend = function (isRetry) {
+    if (running) return;
+    resetFlow();
+    const amt = fmtAmt(), to = toSel.value, k = key;
+    if (!isRetry) log.textContent = "";
+    const steps = [];
+    steps.push(() => { setLive("ui"); addLine("[ui] send " + amt + " → " + to + " · key " + k + (isRetry ? " (again)" : "")); });
+    steps.push(() => { setLive("api"); addLine("[api] POST /wires key=" + k + (isRetry ? " (retry — same key)" : "")); });
+    if (!isRetry) {
+      steps.push(() => { setLive("val"); addLine("[validate] schema ✓ · limits ✓"); });
+      pips.forEach((p, i) => steps.push(() => {
+        setLive("sm");
+        p.classList.add("on");
+        addLine("[state-machine] verification service " + (i + 1) + "/4 ✓");
+      }));
+      steps.push(() => {
+        setLive("led");
+        payments++;
+        executed = true;
+        ledger();
+        addLine("[ledger] EXECUTED — " + amt + " → " + to + " recorded");
+        retryBtn.hidden = false;
+        sendBtn.textContent = "new wire — new key";
+      });
+    } else {
+      steps.push(() => { setLive("sm"); addLine("[state-machine] key " + k + " already executed → replaying stored response"); });
+      steps.push(() => {
+        setLive("led");
+        replays++;
+        ledger();
+        addLine("[ledger] no double debit — still " + payments + (payments === 1 ? " payment" : " payments"), true);
+      });
+    }
+    run(steps);
+  };
+
+  sendBtn.addEventListener("click", () => {
+    if (running) return;
+    if (executed) {
+      key = newKey();
+      keyEl.textContent = key;
+      executed = false;
+      retryBtn.hidden = true;
+      sendBtn.textContent = "send wire";
+    }
+    window.wireSend(false);
+  });
+  retryBtn.addEventListener("click", () => window.wireSend(true));
+  [toSel, amtIn].forEach((el) => el.addEventListener("input", () => {
+    if (!executed) {
+      key = newKey();
+      keyEl.textContent = key;
+    }
+  }));
+  keyEl.textContent = key;
+  ledger();
 })();
 
 /* Bookshelf — hover previews a spine; click pulls the book and opens notes. */
@@ -704,7 +820,7 @@
       print(
         [
           "whoami       who is this guy",
-          "demo         draftiq live · `demo pysa` · `demo book`",
+          "demo         draftiq · `demo pysa` · `demo book` · `demo wire`",
           "buy/sell <n> trade $ERIC against the in-page market",
           "nowplaying   what's in my headphones (live)",
           "tape         read the ticker",
@@ -798,6 +914,16 @@
         const ob = document.getElementById("orderbook");
         if (ob) ob.scrollIntoView({ behavior: "smooth", block: "start" });
         return print("the $ERIC market is live below — or trade from here: `buy 5`, `sell 3`.", "muted");
+      }
+      if ((rest || [])[0] === "wire") {
+        const w = document.getElementById("wire-widget");
+        if (w) w.scrollIntoView({ behavior: "smooth", block: "center" });
+        if (window.wireSend) {
+          const again = window.wireHasExecuted && window.wireHasExecuted();
+          window.wireSend(again);
+          return print(again ? "same key, sent again — watch the replay ↓" : "sending a wire in the mclean card ↓", "muted");
+        }
+        return print("wire widget failed to load — refresh the page?", "muted");
       }
       if ((rest || [])[0] === "pysa") {
         jump("experience");
