@@ -232,7 +232,7 @@
 
 /* DraftIQ live demo — fetch shared by the projects widget and the terminal. */
 (function () {
-  const API = "https://player-data-api.onrender.com/api/v1/demo/valuations";
+  const API = "https://draftiq-xkpx.onrender.com/api/v1/demo/valuations";
   const CACHE_KEY = "draftiq-demo-v1";
   const COLD_MSGS = [
     [0, "calling the production API…"],
@@ -703,8 +703,8 @@
       print(
         "draftiq — production REST API for fantasy baseball auction drafting\n" +
           "  600+ live player valuations in tens of ms · 125 tests\n" +
-          "  " + link("https://player-data-api.onrender.com/developer-portal/", "developer portal") +
-          " · " + link("https://github.com/ericsohel/player-data-api", "source") + "\n" +
+          "  " + link("https://draftiq-xkpx.onrender.com/developer-portal/", "developer portal") +
+          " · " + link("https://github.com/ericsohel/draftiq", "source") + "\n" +
           "pysa harness — differential testing for Meta's static analyzer\n" +
           "  10k+ synthesized programs with ground-truth taint labels\n" +
           "  " + link("https://github.com/facebook/pyre-check/pull/886", "pyre-check#886")
