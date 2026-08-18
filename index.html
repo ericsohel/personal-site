@@ -103,16 +103,17 @@
         <p>
           I'm studying computer science and applied math at Stony Brook University,
           graduating May 2027. I just wrapped my second SWE internship at Capital One
-          in NYC, where I built a multi-agent system that turns natural-language
-          requests into finished financial reports — work that used to take analysts
-          two days.
+          in NYC, where I built Clyde — a multi-agent system that turns a
+          natural-language request into a finished monthly spend-variance
+          report, automating about two days of manual work per analyst each
+          month.
         </p>
         <p>
-          Before that, I built a differential-testing harness for Meta's
-          <a href="https://github.com/facebook/pyre-check">Pysa</a> static analyzer
-          through the MLH Fellowship — it synthesized 10,000+ Python programs with
-          ground-truth source→sink labels to surface false negatives in Pysa's
-          interprocedural taint-tracking. Right now I'm building
+          Before that, I built a fuzzer for Meta's
+          <a href="https://github.com/facebook/pyre-check">Pysa</a> security
+          analyzer through the MLH Fellowship — 10,000+ generated Python
+          programs with known source→sink taint flows, uncovering 30+ flows
+          Pysa missed. Right now I'm building
           <a href="#draftiq">DraftIQ</a>, a production REST API for fantasy baseball
           auction drafting.
         </p>
@@ -143,17 +144,17 @@
               <span class="stop-label">Code in Place <span class="stop-when">’24</span></span>
             </button>
             <button class="stop" role="listitem" type="button"
-              data-story="MLH Fellowship on Pysa — the static analyzer that hunts taint flows across Instagram's Python.">
+              data-story="MLH Fellowship on Pysa, Meta's security analyzer — fuzzed it with 10K+ generated programs.">
               <span class="stop-dot"></span>
               <span class="stop-label">Meta <span class="stop-when">’24</span></span>
             </button>
             <button class="stop" role="listitem" type="button"
-              data-story="Capital One: designed, built, and deployed their first in-house wire transfer platform. 5K payments a day, worth $1.2B.">
+              data-story="Capital One: built the React front end and wire-execution logic for their in-house wire platform. 5K payments a day, worth $1.2B.">
               <span class="stop-dot"></span>
               <span class="stop-label">McLean <span class="stop-when">’25</span></span>
             </button>
             <button class="stop" role="listitem" type="button"
-              data-story="Capital One again — multi-agent reporting with LangGraph. Also: home.">
+              data-story="Capital One again — built Clyde, a multi-agent spend-variance reporting system. Also: home.">
               <span class="stop-dot"></span>
               <span class="stop-label">NYC <span class="stop-when">’26</span></span>
             </button>
@@ -175,24 +176,24 @@
           <div class="entry-body">
             <h3>Capital One <span class="role">— SWE Intern, NYC</span></h3>
             <p>
-              Architected and built a multi-agent financial reporting system —
-              Python, LangGraph, and LangChain agents handling data discovery,
-              query generation, financial analysis, and report synthesis across
-              4,000+ enterprise data tables. Natural-language requests become
-              finished reports: a 2-day analyst process now takes about a minute,
-              saving 720+ analyst hours monthly.
+              Built Clyde — a multi-agent system (Python, LangGraph, FastAPI)
+              that turns a natural-language request into a finished monthly
+              spend-variance report, automating about two days of manual work
+              per analyst each month.
             </p>
             <p>
-              Hardened it with agentic validation loops, schema-aware query
-              verification, and context guardrails — 92% of reports shipped with
-              no analyst corrections, and the rest resolved in fewer than 3
-              interactions. Instrumented the pipeline with latency metrics and
-              dashboards, then cut per-report latency from 8 minutes to 60 seconds
-              with Redis-backed caching and concurrent agent execution.
+              The three-stage pipeline: natural-language-to-SQL retrieval
+              across 4,000+ tables, anomaly analysis that drafts a report
+              template, and an orchestrator rendering charts, tables, and
+              commentary — revisable via chat. Per-stage validation and
+              self-correcting retries mean most reports need no analyst edits;
+              parallelized LLM calls and Redis caching cut end-to-end
+              generation from about 4 minutes to 1.
             </p>
+            <p class="pipeline" aria-label="Clyde's pipeline"><span>NL request</span><span class="pipe-a">&rarr;</span><span>NL&rarr;SQL retrieval · 4K+ tables</span><span class="pipe-a">&rarr;</span><span>anomaly analysis</span><span class="pipe-a">&rarr;</span><span class="pipe-hot">orchestrator</span><span class="pipe-a">&rarr;</span><span>charts · tables · commentary</span><span class="pipe-a">&#10226;</span><span>chat revisions</span></p>
             <div class="pysa-demo">
               <div class="pysa-head">
-                <span>orchestration illustration — one request through the agents</span>
+                <span>pipeline illustration — one request through clyde</span>
                 <button id="agent-run" class="demo-btn" type="button">run request</button>
               </div>
               <div class="pysa-code agent-log" id="agent-log" hidden></div>
@@ -205,21 +206,23 @@
           <div class="entry-body">
             <h3>Capital One <span class="role">— SWE Intern, Wire Transfer Platform, McLean</span></h3>
             <p>
-              Designed, developed, and deployed an in-house, high-value wire
-              transfer platform — 5K daily payments worth \$1.2B — replacing
-              third-party processing infrastructure and eliminating \$3.75M in
-              external processing fees.
+              Built the entire React front end of Capital One's in-house
+              high-value wire transfer platform — 5K daily payments worth
+              \$1.2B brought off external vendors, eliminating \$3.75M in
+              processing fees.
             </p>
             <p>
-              Decreased reconciliation risk with Node.js / Fastify microservices
-              on AWS Lambda and EC2 — idempotency keys, retry logic, and strict
-              validation so a payment can never post twice, even under network
-              jitter, upstream timeouts, and client retries.
+              Implemented wire-execution and validation logic across the
+              platform's Node.js/Fastify microservices — idempotency keys so
+              each wire executes exactly once despite network failures or
+              duplicate requests.
             </p>
             <p>
-              Automated compliance checks with a PostgreSQL-backed approval flow
-              integrating 4 verification APIs for auditable multi-step clearance.
+              Automated compliance approvals with a PostgreSQL-backed state
+              machine coordinating checks across 4 verification services
+              before each wire is released.
             </p>
+            <p class="pipeline" aria-label="Wire platform flow"><span>React UI</span><span class="pipe-a">&rarr;</span><span>wire API</span><span class="pipe-a">&rarr;</span><span>validation</span><span class="pipe-a">&rarr;</span><span class="pipe-hot">state machine · 4 services</span><span class="pipe-a">&rarr;</span><span>execute exactly once</span></p>
             <div class="pysa-demo">
               <div class="pysa-head">
                 <span>idempotency illustration — the same wire, sent twice</span>
@@ -235,20 +238,17 @@
           <div class="entry-body">
             <h3>Meta <span class="role">— SWE Fellow, MLH Fellowship · Pysa Static Analyzer</span></h3>
             <p>
-              Contributed to Pysa within Meta's
-              <a href="https://github.com/facebook/pyre-check">facebook/pyre-check</a>
-              repo — interprocedural taint analysis catching SQLi, SSRF, code
-              injection, and path traversal across Instagram's Python codebase.
+              Built a fuzzer generating 10,000+ Python programs with known
+              source-to-sink taint flows — randomized call graphs, nested
+              objects — uncovering 30+ flows missed by
+              <a href="https://github.com/facebook/pyre-check">Pysa</a>,
+              Meta's open-source Python security analyzer (merged as
+              <a href="https://github.com/facebook/pyre-check/pull/886">pyre-check#886</a>).
             </p>
             <p>
-              Designed and shipped a differential-testing harness (merged as
-              <a href="https://github.com/facebook/pyre-check/pull/886">pyre-check#886</a>)
-              synthesizing 10,000+ Python programs with ground-truth source→sink
-              labels — randomized call graphs, decorator stacks, and API-misuse
-              patterns — to grade Pysa's analysis against an oracle. Surfaced 20+
-              previously-undetected exploit-shape taint flows; each locked as a
-              regression test.
-              <a href="https://github.com/facebook/pyre-check/pulls?q=esohel30+">Merged PRs →</a>
+              Also added a live timer and performance metrics to Pysa's
+              terminal output so engineers can track long analysis runs.
+              <a href="https://github.com/facebook/pyre-check/pulls?q=esohel30+">Merged PRs &rarr;</a>
             </p>
           </div>
         </article>
@@ -283,7 +283,7 @@
               metadata, seasonal stats); idempotent jobs with exponential backoff and
               staleness-aware metadata.
             </p>
-            <p class="chips"><span>1,600+ players priced</span><span>valuations in tens of ms</span><span>125 tests</span><span>OpenAPI &middot; CI &middot; deployed</span></p>
+            <p class="chips"><span>1,600+ players priced</span><span>valuations in tens of ms</span><span>124+ tests</span><span>OpenAPI &middot; CI &middot; deployed</span></p>
             <p>
               Algorithmic valuation engine using z-score-based valuation against a
               replacement-level baseline with positional-scarcity adjustments and
@@ -305,7 +305,7 @@
               <a href="https://draftiq-xkpx.onrender.com/developer-portal/">Live developer portal &rarr;</a>
               <a href="https://github.com/ericsohel/draftiq">GitHub &rarr;</a>
             </p>
-            <p class="aside">125 Jest/supertest tests. OpenAPI 3.0 spec validated by CI. Deployed via GitHub Actions to Render + Vercel.</p>
+            <p class="aside">124+ Jest/supertest tests. OpenAPI 3.0 spec validated by CI. Deployed via GitHub Actions to Render + Vercel.</p>
 
             <p class="pipeline" aria-label="How DraftIQ works"><span>MLB API</span><span class="pipe-a">&rarr;</span><span>tiered ingest</span><span class="pipe-a">&rarr;</span><span class="pipe-hot">z-score engine</span><span class="pipe-a">&rarr;</span><span>REST API</span><span class="pipe-a">&rarr;</span><span>this widget</span></p>
 
@@ -328,15 +328,16 @@
           <div class="entry-body">
             <h3>Open Orderbook <span class="role">— trade $ERIC, right here</span></h3>
             <p>
-              A price-time-priority matching engine — the data structure at the
-              center of every exchange. Dependency-free, O(log&nbsp;L) level
-              inserts, strict FIFO within levels, and every trade prints at the
-              maker's price. The market below is live in your browser: a market
+              A limit order book and matching engine with price-time priority —
+              the data structure at the center of every exchange. The C++17
+              core benchmarks at 3.7M ops/s (269&thinsp;ns mean per operation)
+              on a seeded mixed workload; a JavaScript twin held to the same
+              12-case test list runs the live market below, where a market
               maker quotes around a drifting fair value, a noise trader takes
-              liquidity, and you can trade against both.
+              liquidity, and you trade against both.
             </p>
             <p class="stack">
-              <span>JavaScript</span><span>zero dependencies</span><span>node:test</span><span>GitHub Actions CI</span>
+              <span>C++17</span><span>JavaScript</span><span>zero dependencies</span><span>269 ns/op</span><span>GitHub Actions CI</span>
             </p>
             <p class="links">
               <a href="https://github.com/ericsohel/orderbook">GitHub &rarr;</a>
@@ -371,9 +372,10 @@
                 <div class="ob-tape" id="ob-tape" aria-label="Recent trades"></div>
               </div>
               <p class="aside">
-                Runs entirely in your browser — the exact engine.js the repo
-                ships, unminified. The terminal trades this market too: try
-                `buy 5`. ($ERIC is not listed. Yet.)
+                The demo runs the JS engine entirely in your browser; the
+                C++17 core in the repo passes the same test suite at 3.7M
+                ops/s. The terminal trades this market too: try `buy 5`.
+                ($ERIC is not listed. Yet.)
               </p>
             </div>
           </div>
@@ -428,9 +430,10 @@
       <section aria-labelledby="awards-h">
         <h2 id="awards-h">Awards</h2>
         <ul class="contact">
-          <li>Citadel Terminal Competition — 2nd place</li>
-          <li>Cornell Trading Competition — top 5 (2×)</li>
-          <li>AIME Qualifier (2×) — top ~5% of AMC test-takers</li>
+          <li>Citadel Terminal Trading Competition — 2nd place (2023)</li>
+          <li>Cornell Trading Competition — Top 5 (2024, 2025)</li>
+          <li>AIME — three-time qualifier</li>
+          <li>USACO — Silver Division</li>
         </ul>
       </section>
 

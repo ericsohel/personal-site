@@ -143,20 +143,20 @@
   }
 
   stager("agent-run", "agent-log", [
-    '[request]    "q3 delinquency report for the card portfolio, by segment"',
-    "[discovery]  scanning schema registry… 4,012 tables → 3 candidates",
-    "[query-gen]  drafting SQL → schema check ✗ (column renamed) → regenerated → ✓",
-    "[analysis]   delinquency by vintage segment · quarter-over-quarter trend",
-    "[validate]   guardrails: PII clean · figures reconcile against source ✓",
-    "[synthesize] report assembled — 58s end to end",
-    "· illustration of the system's shape — the real one runs inside capital one",
+    '[request]     "may spend-variance report for card servicing"',
+    "[retrieval]   NL→SQL across 4,012 tables → 3 queries · redis cache warm",
+    "[analysis]    variance anomalies: 2 segments off-trend → template drafted",
+    "[orchestrate] charts + tables + commentary rendered — 61s end to end",
+    '[revise]      "break out marketing spend" → section re-rendered, 9s',
+    "[validate]    per-stage checks ✓ · self-corrected 1 retry · no analyst edits",
+    "· illustration of clyde's shape — the real system runs inside capital one",
   ], "run again");
 
   stager("wire-run", "wire-log", [
     "[client]  POST /wires  key=7f3a…  $240,000 → ACME LLC",
-    "[ledger]  key 7f3a… unseen → validate → compliance 4/4 ✓ → EXECUTED",
+    "[state-machine] key 7f3a… unseen → 4/4 verification services ✓ → EXECUTED",
     "[client]  POST /wires  key=7f3a…  (retry — client saw a timeout)",
-    "[ledger]  key 7f3a… already executed → replayed response · no double debit",
+    "[state-machine] key 7f3a… already executed → replayed response · no double debit",
     "[result]  1 payment posted, 0 duplicates — at 5K wires/day, that's the whole job",
     "· illustration of the idempotency pattern — the real platform runs inside capital one",
   ], "send again");
@@ -576,6 +576,7 @@
     }
     add("citadel terminal", "P2");
     add("cornell trading comp", "top 5 ×2");
+    add("usaco", "silver");
     add("desk hours", "nyc · shipping");
   }
 
@@ -712,18 +713,19 @@
     },
     experience() {
       print(
-        "2026  capital one, nyc — multi-agent financial reporting (langgraph)\n" +
-          "2025  capital one, mclean — first in-house wire transfer platform\n" +
-          "2024  meta (mlh fellowship) — pysa static analyzer\n" +
+        "2026  capital one, nyc — clyde: multi-agent spend-variance reports\n" +
+          "2025  capital one, mclean — react front end + wire execution, $1.2B/day platform\n" +
+          "2024  meta (mlh fellowship) — fuzzed pysa, 30+ missed flows found\n" +
           "2024  stanford code in place — section leader → head TA\n" +
           "(`cd experience` jumps to the full writeups — i worked hard on that layout)"
       );
     },
     awards() {
       print(
-        "citadel terminal — 2nd place\n" +
-          "cornell trading competition — top 5 (×2)\n" +
-          "AIME qualifier (×2)"
+        "citadel terminal trading competition — 2nd place (2023)\n" +
+          "cornell trading competition — top 5 (2024, 2025)\n" +
+          "AIME — three-time qualifier\n" +
+          "USACO — silver division"
       );
     },
     contact() {
