@@ -674,7 +674,8 @@
       print(
         [
           "whoami       who is this guy",
-          "demo         draftiq live · `demo pysa` traces a taint flow",
+          "demo         draftiq live · `demo pysa` · `demo book`",
+          "buy/sell <n> trade $ERIC against the in-page market",
           "nowplaying   what's in my headphones (live)",
           "tape         read the ticker",
           "portfolio    my listening book, quantified",
@@ -764,6 +765,11 @@
       print("hey! type `help` to look around.");
     },
     demo(rest) {
+      if ((rest || [])[0] === "book") {
+        const ob = document.getElementById("orderbook");
+        if (ob) ob.scrollIntoView({ behavior: "smooth", block: "start" });
+        return print("the $ERIC market is live below — or trade from here: `buy 5`, `sell 3`.", "muted");
+      }
       if ((rest || [])[0] === "pysa") {
         jump("projects");
         if (window.runPysaDemo) {
@@ -812,6 +818,21 @@
     },
     onrepeat() {
       jump("repeat");
+    },
+    buy(rest) {
+      this._trade("buy", rest);
+    },
+    sell(rest) {
+      this._trade("sell", rest);
+    },
+    _trade(side, rest) {
+      if (!window.obApi) return print("market's not open — the orderbook module didn't load.", "muted");
+      const qty = Math.floor(Number((rest || [])[0])) || 1;
+      try {
+        print(window.obApi.marketOrder(side, qty));
+      } catch (e) {
+        print(e.message, "muted");
+      }
     },
     nowplaying() {
       if (!window.spotifyNow) return print("spotify module missing — refresh the page?", "muted");

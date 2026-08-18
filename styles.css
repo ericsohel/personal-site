@@ -865,6 +865,96 @@ section.intro { border-top: none; }
   padding: 0.08rem 0.4rem;
 }
 
+/* Open Orderbook — the $ERIC market */
+
+.ob {
+  margin-top: 0.9rem;
+  border: 1px solid var(--rule-strong);
+  border-radius: 8px;
+  padding: 0.8rem 0.95rem;
+  font-family: var(--font-mono);
+}
+.ob-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.1rem;
+  font-size: 0.74rem;
+  margin-bottom: 0.6rem;
+}
+.ob-stats em {
+  font-style: normal;
+  color: var(--muted);
+  font-size: 0.64rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-right: 0.2rem;
+}
+.ob-up { color: var(--accent); }
+.ob-down { color: var(--muted); }
+.ob-depth {
+  width: 100%;
+  height: 150px;
+  display: block;
+  background: var(--code-bg);
+  border-radius: 6px;
+  margin-bottom: 0.7rem;
+}
+.ob-grid {
+  display: grid;
+  grid-template-columns: 1fr 15rem;
+  gap: 1rem;
+  align-items: start;
+}
+.ob-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  align-items: end;
+  font-size: 0.74rem;
+}
+.ob-sides { display: inline-flex; border: 1px solid var(--rule-strong); border-radius: 999px; overflow: hidden; }
+.ob-side-btn {
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  font: inherit;
+  padding: 0.28rem 0.85rem;
+  cursor: pointer;
+}
+.ob-side-btn.is-sel { background: var(--accent); color: #fff; }
+.ob-field { display: flex; flex-direction: column; gap: 0.2rem; color: var(--muted); text-transform: uppercase; font-size: 0.62rem; letter-spacing: 0.08em; }
+.ob-field input, .ob-field select {
+  font: inherit;
+  font-size: 0.78rem;
+  text-transform: none;
+  letter-spacing: normal;
+  color: var(--fg);
+  background: var(--code-bg);
+  border: 1px solid var(--rule-strong);
+  border-radius: 5px;
+  padding: 0.3rem 0.45rem;
+  width: 5.4rem;
+}
+.ob-field input:focus-visible, .ob-field select:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.ob-field input:disabled { opacity: 0.45; }
+.ob-actions { display: flex; gap: 0.45rem; }
+.ob-msg { flex-basis: 100%; color: var(--muted); font-size: 0.74rem; min-height: 1.2em; }
+.ob-tape {
+  font-size: 0.72rem;
+  line-height: 1.8;
+  border-left: 1px solid var(--rule);
+  padding-left: 0.9rem;
+  min-height: 8.5em;
+  white-space: pre;
+  overflow-x: auto;
+}
+.ob-trade { animation: note-in 180ms ease; }
+@media (prefers-reduced-motion: reduce) { .ob-trade { animation: none; } }
+@media (max-width: 600px) {
+  .ob-grid { grid-template-columns: 1fr; }
+  .ob-tape { border-left: none; padding-left: 0; }
+}
+
 /* Pysa taint-flow demo */
 
 .pysa-demo {

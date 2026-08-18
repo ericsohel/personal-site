@@ -323,6 +323,62 @@
           </div>
         </article>
 
+        <article class="entry hero" id="orderbook">
+          <div class="entry-when">2026 — now</div>
+          <div class="entry-body">
+            <h3>Open Orderbook <span class="role">— trade $ERIC, right here</span></h3>
+            <p>
+              A price-time-priority matching engine — the data structure at the
+              center of every exchange. Dependency-free, O(log&nbsp;L) level
+              inserts, strict FIFO within levels, and every trade prints at the
+              maker's price. The market below is live in your browser: a market
+              maker quotes around a drifting fair value, a noise trader takes
+              liquidity, and you can trade against both.
+            </p>
+            <p class="stack">
+              <span>JavaScript</span><span>zero dependencies</span><span>node:test</span><span>GitHub Actions CI</span>
+            </p>
+            <p class="links">
+              <a href="https://github.com/ericsohel/orderbook">GitHub &rarr;</a>
+            </p>
+            <div class="ob" id="ob">
+              <div class="ob-stats" id="ob-stats"></div>
+              <canvas class="ob-depth" id="ob-depth" height="150" aria-label="Depth chart for the demo market"></canvas>
+              <div class="ob-grid">
+                <form class="ob-form" id="ob-form">
+                  <div class="ob-sides" role="group" aria-label="Order side">
+                    <button type="button" id="ob-buy" class="ob-side-btn is-sel">buy</button>
+                    <button type="button" id="ob-sell" class="ob-side-btn">sell</button>
+                  </div>
+                  <label class="ob-field">type
+                    <select id="ob-type">
+                      <option value="limit">limit</option>
+                      <option value="market">market</option>
+                    </select>
+                  </label>
+                  <label class="ob-field">price
+                    <input id="ob-price" type="number" step="0.01" min="0" inputmode="decimal" />
+                  </label>
+                  <label class="ob-field">qty
+                    <input id="ob-qty" type="number" step="1" min="1" value="5" inputmode="numeric" />
+                  </label>
+                  <div class="ob-actions">
+                    <button type="submit" class="demo-btn">place</button>
+                    <button type="button" id="ob-cancel" class="demo-btn">cancel mine (0)</button>
+                  </div>
+                  <span class="ob-msg" id="ob-msg" aria-live="polite"></span>
+                </form>
+                <div class="ob-tape" id="ob-tape" aria-label="Recent trades"></div>
+              </div>
+              <p class="aside">
+                Runs entirely in your browser — the exact engine.js the repo
+                ships, unminified. The terminal trades this market too: try
+                `buy 5`. ($ERIC is not listed. Yet.)
+              </p>
+            </div>
+          </div>
+        </article>
+
         <article class="entry">
           <div class="entry-when">2024</div>
           <div class="entry-body">
@@ -470,5 +526,6 @@
     </footer>
 
     <script src="/script.js" defer></script>
+    <script type="module" src="/orderbook/demo.js"></script>
   </body>
 </html>
