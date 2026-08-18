@@ -865,7 +865,7 @@
     },
     awards() {
       print(
-        "citadel terminal trading competition — 2nd place (2023)\n" +
+        "citadel terminal AI competition — 2nd place (2023)\n" +
           "cornell trading competition — top 5 (2024, 2025)\n" +
           "AIME — three-time qualifier\n" +
           "USACO — silver division"
