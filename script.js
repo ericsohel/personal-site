@@ -113,6 +113,55 @@
   btn.addEventListener("click", window.runPysaDemo);
 })();
 
+/* Capital One micro-demos — staged log illustrations (labeled as such). */
+(function () {
+  function stager(btnId, logId, lines, doneLabel) {
+    const btn = document.getElementById(btnId);
+    const log = document.getElementById(logId);
+    if (!btn || !log) return;
+    let running = false;
+    btn.addEventListener("click", () => {
+      if (running) return;
+      running = true;
+      log.hidden = false;
+      log.textContent = "";
+      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const step = reduce ? 0 : 460;
+      lines.forEach((line, n) => {
+        setTimeout(() => {
+          const div = document.createElement("div");
+          div.className = "log-line" + (line[0] === "·" ? " log-note" : "");
+          div.textContent = line;
+          log.appendChild(div);
+          if (n === lines.length - 1) {
+            btn.textContent = doneLabel;
+            running = false;
+          }
+        }, step * n);
+      });
+    });
+  }
+
+  stager("agent-run", "agent-log", [
+    '[request]    "q3 delinquency report for the card portfolio, by segment"',
+    "[discovery]  scanning schema registry… 4,012 tables → 3 candidates",
+    "[query-gen]  drafting SQL → schema check ✗ (column renamed) → regenerated → ✓",
+    "[analysis]   delinquency by vintage segment · quarter-over-quarter trend",
+    "[validate]   guardrails: PII clean · figures reconcile against source ✓",
+    "[synthesize] report assembled — 58s end to end",
+    "· illustration of the system's shape — the real one runs inside capital one",
+  ], "run again");
+
+  stager("wire-run", "wire-log", [
+    "[client]  POST /wires  key=7f3a…  $240,000 → ACME LLC",
+    "[ledger]  key 7f3a… unseen → validate → compliance 4/4 ✓ → EXECUTED",
+    "[client]  POST /wires  key=7f3a…  (retry — client saw a timeout)",
+    "[ledger]  key 7f3a… already executed → replayed response · no double debit",
+    "[result]  1 payment posted, 0 duplicates — at 5K wires/day, that's the whole job",
+    "· illustration of the idempotency pattern — the real platform runs inside capital one",
+  ], "send again");
+})();
+
 /* Bookshelf — hover previews a spine; click pulls the book and opens notes. */
 (function () {
   const spines = document.querySelectorAll(".spine");
@@ -333,17 +382,24 @@
       pending.textContent = "nothing on the turntable lately.";
       return;
     }
-    if (d.track) {
+    // Feature the current track — or, far more often, the last one played.
+    const feature = d.track || (d.recent || [])[0] || null;
+    if (feature) {
       np.hidden = false;
-      if (d.track.art) {
-        art.src = d.track.art;
+      if (feature.art) {
+        art.src = feature.art;
         art.hidden = false;
       }
-      label.textContent = d.playing ? "now playing" : "last played";
+      label.textContent = d.playing
+        ? "now playing"
+        : "last played" + (feature.playedAt ? " · " + relTime(feature.playedAt) : "");
       eq.classList.toggle("live", !!d.playing);
-      track.textContent = d.track.name;
-      if (d.track.url) track.href = d.track.url;
-      artist.textContent = d.track.artist;
+      track.textContent = feature.name;
+      if (feature.url) track.href = feature.url;
+      artist.textContent = feature.artist;
+    }
+    if (!d.track && feature && (d.recent || [])[0] === feature) {
+      d = Object.assign({}, d, { recent: d.recent.slice(1) });
     }
     if ((d.recent || []).length) {
       recentEl.hidden = false;

@@ -138,7 +138,7 @@
               <span class="stop-label">Stony Brook <span class="stop-when">’23–’27</span></span>
             </button>
             <button class="stop" role="listitem" type="button"
-              data-story="Taught two weekly Python sections for Stanford's global CS 106A. Invited back as Head TA.">
+              data-story="Led Python lectures and lab sections for 200+ students in Stanford's global CS 106A. Invited back as Head TA.">
               <span class="stop-dot"></span>
               <span class="stop-label">Code in Place <span class="stop-when">’24</span></span>
             </button>
@@ -148,7 +148,7 @@
               <span class="stop-label">Meta <span class="stop-when">’24</span></span>
             </button>
             <button class="stop" role="listitem" type="button"
-              data-story="Capital One: shipped the approval workflow on their first in-house wire transfer platform. ~$1B/day.">
+              data-story="Capital One: designed, built, and deployed their first in-house wire transfer platform. 5K payments a day, worth $1.2B.">
               <span class="stop-dot"></span>
               <span class="stop-label">McLean <span class="stop-when">’25</span></span>
             </button>
@@ -175,19 +175,28 @@
           <div class="entry-body">
             <h3>Capital One <span class="role">— SWE Intern, NYC</span></h3>
             <p>
-              Built a multi-agent financial reporting system — Python + LangGraph
-              agents handling data discovery, query generation, and report synthesis
-              across 4,000+ enterprise data tables, turning natural-language requests
-              into finished reports. A process that took analysts two days now takes
-              about a minute.
+              Architected and built a multi-agent financial reporting system —
+              Python, LangGraph, and LangChain agents handling data discovery,
+              query generation, financial analysis, and report synthesis across
+              4,000+ enterprise data tables. Natural-language requests become
+              finished reports: a 2-day analyst process now takes about a minute,
+              saving 720+ analyst hours monthly.
             </p>
             <p>
               Hardened it with agentic validation loops, schema-aware query
-              verification, and context guardrails — 92% of reports shipped with no
-              analyst corrections. Instrumented the pipeline with latency metrics and
+              verification, and context guardrails — 92% of reports shipped with
+              no analyst corrections, and the rest resolved in fewer than 3
+              interactions. Instrumented the pipeline with latency metrics and
               dashboards, then cut per-report latency from 8 minutes to 60 seconds
               with Redis-backed caching and concurrent agent execution.
             </p>
+            <div class="pysa-demo">
+              <div class="pysa-head">
+                <span>orchestration illustration — one request through the agents</span>
+                <button id="agent-run" class="demo-btn" type="button">run request</button>
+              </div>
+              <div class="pysa-code agent-log" id="agent-log" hidden></div>
+            </div>
           </div>
         </article>
 
@@ -196,21 +205,28 @@
           <div class="entry-body">
             <h3>Capital One <span class="role">— SWE Intern, Wire Transfer Platform, McLean</span></h3>
             <p>
-              Shipped the validation and approval workflow for Capital One's first
-              in-house wire transfer platform — ~$1B/day in high-value payments on
-              internal AWS, replacing the third-party vendor and eliminating
-              per-transaction fees.
+              Designed, developed, and deployed an in-house, high-value wire
+              transfer platform — 5K daily payments worth \$1.2B — replacing
+              third-party processing infrastructure and eliminating \$3.75M in
+              external processing fees.
             </p>
             <p>
-              Built Node.js / Fastify microservices on AWS Lambda and Fargate with
-              idempotency keys and exponential-backoff retries to prevent duplicate
-              debits under network jitter, upstream timeouts, and client retries.
+              Decreased reconciliation risk with Node.js / Fastify microservices
+              on AWS Lambda and EC2 — idempotency keys, retry logic, and strict
+              validation so a payment can never post twice, even under network
+              jitter, upstream timeouts, and client retries.
             </p>
             <p>
-              Designed an Aurora PostgreSQL approval state machine spanning four
-              verification APIs for auditable multi-step clearance, with automated
-              compliance checks and clean recovery from mid-flow worker crashes.
+              Automated compliance checks with a PostgreSQL-backed approval flow
+              integrating 4 verification APIs for auditable multi-step clearance.
             </p>
+            <div class="pysa-demo">
+              <div class="pysa-head">
+                <span>idempotency illustration — the same wire, sent twice</span>
+                <button id="wire-run" class="demo-btn" type="button">send wire &times;2</button>
+              </div>
+              <div class="pysa-code agent-log" id="wire-log" hidden></div>
+            </div>
           </div>
         </article>
 
@@ -242,9 +258,9 @@
           <div class="entry-body">
             <h3>Stanford Code in Place <span class="role">— Section Leader, CS 106A</span></h3>
             <p>
-              Led 2 weekly Python and Karel sections (~20 students) for Stanford's
-              free global CS 106A — 30,000+ learners across 100+ countries. Invited
-              back as Head TA for the next cohort.
+              Led Python lectures and interactive lab sections for 200+ students
+              in Stanford's free global CS 106A — 30,000+ learners across 100+
+              countries. Invited back as Head TA for the next cohort.
             </p>
           </div>
         </article>
@@ -271,14 +287,15 @@
             <p>
               Algorithmic valuation engine using z-score-based valuation against a
               replacement-level baseline with positional-scarcity adjustments and
-              live draft-state re-valuation — 600+ player valuations in tens of
-              milliseconds, feeding ranked nominations, positional-need scores, and
-              budget allocations.
+              live draft-state re-valuation — ranking 1,600+ players with
+              valuations in tens of milliseconds, and generating ranked
+              nominations, positional-need scores, and a full budget allocation
+              in about 3 seconds.
             </p>
             <p>
               Self-serve developer portal with full API-key management — scrypt
-              password hashing, signed-cookie sessions, per-key CIDR whitelisting
-              (pure-Node, no library), tumbling-window rate limiting, and a 30-day
+              password hashing, signed-cookie sessions, per-key IP whitelisting
+              (pure-Node, no library), sliding-window rate limiting, and a 30-day
               audit log.
             </p>
             <p class="stack">
@@ -342,7 +359,7 @@
           <dd>Python, JavaScript / TypeScript, Java, SQL; familiar with C / C++ and OCaml.</dd>
 
           <dt>Cloud &amp; Distributed</dt>
-          <dd>AWS (Lambda, Fargate, EC2, Aurora, SQS), microservices, idempotency, exactly-once semantics, state machines, exponential backoff, REST / OpenAPI 3.0.</dd>
+          <dd>AWS (Lambda, EC2), microservices, idempotency, exactly-once semantics, state machines, exponential backoff, REST / OpenAPI 3.0.</dd>
 
           <dt>Databases</dt>
           <dd>PostgreSQL, MongoDB, SQLite, Redis.</dd>

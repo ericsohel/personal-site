@@ -902,6 +902,13 @@ section.intro { border-top: none; }
   padding: 0 0.3rem;
   margin-left: 0.5rem;
 }
+.agent-log { font-size: 0.74rem; line-height: 1.75; }
+.log-line { animation: note-in 200ms ease; }
+.log-note { color: var(--muted); margin-top: 0.35rem; }
+@media (prefers-reduced-motion: reduce) {
+  .log-line { animation: none; }
+}
+
 .pysa-verdict {
   margin-top: 0.6rem;
   font-size: 0.78rem;
