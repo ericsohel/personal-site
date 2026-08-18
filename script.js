@@ -144,12 +144,12 @@
 
   stager("agent-run", "agent-log", [
     '[request]     "may spend-variance report for card servicing"',
-    "[retrieval]   NL→SQL across 4,012 tables → 3 queries · redis cache warm",
-    "[analysis]    variance anomalies: 2 segments off-trend → template drafted",
-    "[orchestrate] charts + tables + commentary rendered — 61s end to end",
+    "[retrieval]   NL→SQL across 2,014 tables → 3 queries · redis cache warm",
+    "[analysis]    2 segments off-trend flagged → drafted into the report",
+    "[orchestrate] charts + tables + commentary rendered (LLM calls in parallel, 75% faster)",
     '[revise]      "break out marketing spend" → section re-rendered, 9s',
-    "[validate]    per-stage checks ✓ · self-corrected 1 retry · no analyst edits",
-    "· illustration of clyde's shape — the real system runs inside capital one",
+    "[validate]    strict checks ✓ · 1 call remediated · shipped to 20 finance-tech teams",
+    "· illustration of the pipeline — the real system runs inside capital one",
   ], "run again");
 
   stager("wire-run", "wire-log", [
@@ -713,10 +713,10 @@
     },
     experience() {
       print(
-        "2026  capital one, nyc — clyde: multi-agent spend-variance reports\n" +
-          "2025  capital one, mclean — react front end + wire execution, $1.2B/day platform\n" +
+        "2026  capital one, nyc — multi-agent financial reporting, 20 teams\n" +
+          "2025  capital one, mclean — react ui + wire execution, ~$1B/day platform\n" +
           "2024  meta (mlh fellowship) — fuzzed pysa, 30+ missed flows found\n" +
-          "2024  stanford code in place — section leader → head TA\n" +
+          "2024  stanford — TA for cs106a → head TA\n" +
           "(`cd experience` jumps to the full writeups — i worked hard on that layout)"
       );
     },
