@@ -891,9 +891,9 @@
     github() {
       print(
         link("https://github.com/ericsohel") + " — where things live now\n" +
-          link("https://github.com/esohel30") + " — the old account. my merged PRs into\n" +
-          "facebook/pyre-check are under this handle: " +
-          link("https://github.com/facebook/pyre-check/pulls?q=esohel30+", "proof")
+          link("https://github.com/esohel30") + " — the old account (retired). the pysa fuzzer\n" +
+          "landed upstream under it: " +
+          link("https://github.com/facebook/pyre-check/tree/main/scripts/pysa_fuzzer", "scripts/pysa_fuzzer")
       );
     },
     resume() {
@@ -1081,6 +1081,7 @@
     if (!line) return;
 
     const [cmd, ...rest] = line.toLowerCase().split(/\s+/);
+    if (window.va) window.va("event", { name: "terminal", data: { cmd } });
 
     if (cmd === "sudo") return print("nice try.", "muted");
     if (cmd === "cd") return rest[0] ? jump(rest[0]) : print("cd: where to? try `ls`", "muted");

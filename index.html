@@ -10,9 +10,14 @@
     <meta property="og:description" content="Software engineer working on backend systems, multi-agent AI, and security tooling." />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://ericsohel.com" />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image" content="https://ericsohel.com/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Eric Sohel — a terminal and ticker tape from ericsohel.com" />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Eric Sohel" />
     <meta name="twitter:description" content="Software engineer working on backend systems, multi-agent AI, and security tooling." />
+    <meta name="twitter:image" content="https://ericsohel.com/og.png" />
     <link rel="canonical" href="https://ericsohel.com/" />
 
     <meta name="theme-color" content="#0d0c0b" media="(prefers-color-scheme: dark)" />
@@ -343,7 +348,7 @@
               <li>Built a fuzzer generating Python programs with known source-to-sink taint flows through randomized call graph patterns and nested objects, uncovering 30+ flows missed by <a href="https://github.com/facebook/pyre-check">Pysa</a>, Meta's static security analyzer.</li>
               <li>Added a live timer and performance metrics to Pysa's terminal output so engineers could track analysis runs.</li>
             </ul>
-            <p class="aside">10,000+ generated programs; merged as <a href="https://github.com/facebook/pyre-check/pull/886">pyre-check#886</a>. <a href="https://github.com/facebook/pyre-check/pulls?q=esohel30+">Merged PRs &rarr;</a></p>
+            <p class="aside">10,000+ generated programs; landed upstream as <a href="https://github.com/facebook/pyre-check/tree/main/scripts/pysa_fuzzer">scripts/pysa_fuzzer</a> (from <a href="https://github.com/facebook/pyre-check/pull/886">pyre-check#886</a>) &mdash; since extended by Meta&rsquo;s Pysa team.</p>
             <div class="pysa-demo" id="pysa-demo">
               <div class="pysa-head">
                 <span>taint-flow illustration — the class of bug the fuzzer hunts</span>
@@ -574,7 +579,7 @@
           <li><a href="/resume.pdf">resume.pdf</a></li>
           <li><a href="https://github.com/ericsohel">github.com/ericsohel</a></li>
           <li><a href="https://www.linkedin.com/in/eric-sohel/">linkedin.com/in/eric-sohel</a></li>
-          <li><a href="https://github.com/facebook/pyre-check/pulls?q=esohel30+">Pysa merged PRs</a></li>
+          <li><a href="https://github.com/facebook/pyre-check/tree/main/scripts/pysa_fuzzer">Pysa fuzzer, upstream</a></li>
         </ul>
       </section>
     </main>
@@ -583,6 +588,11 @@
       <p>&copy; <span id="year"></span> Eric Sohel</p>
     </footer>
 
+    <script>
+      // Vercel Web Analytics — no-op until enabled in the dashboard.
+      window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    </script>
+    <script defer src="/_vercel/insights/script.js"></script>
     <script src="/script.js" defer></script>
     <script type="module" src="/orderbook/demo.js"></script>
   </body>
