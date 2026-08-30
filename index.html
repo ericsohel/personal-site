@@ -10,12 +10,33 @@
     <meta property="og:description" content="Software engineer working on backend systems, multi-agent AI, and security tooling." />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://ericsohel.com" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Eric Sohel" />
+    <meta name="twitter:description" content="Software engineer working on backend systems, multi-agent AI, and security tooling." />
+    <link rel="canonical" href="https://ericsohel.com/" />
 
     <meta name="theme-color" content="#0d0c0b" media="(prefers-color-scheme: dark)" />
     <meta name="theme-color" content="#fbfaf7" media="(prefers-color-scheme: light)" />
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="/styles.css" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Eric Sohel",
+        "url": "https://ericsohel.com",
+        "email": "mailto:ericsohel05@gmail.com",
+        "jobTitle": "Software Engineer",
+        "alumniOf": "Stony Brook University",
+        "sameAs": [
+          "https://github.com/ericsohel",
+          "https://github.com/esohel30",
+          "https://www.linkedin.com/in/eric-sohel/"
+        ]
+      }
+    </script>
 
     <script>
       // Inline to avoid FOUC on theme. Reads stored preference, falls back to system.
@@ -360,7 +381,7 @@
           <div class="entry-body">
             <h3>DraftIQ Player Data API</h3>
             <ul class="resume-bullets">
-              <li>Built a fantasy-baseball auction draft assistant that computes a fair price for each of 1,600+ MLB players by distributing the league's total auction capital according to statistical player value.</li>
+              <li>Built a fantasy-baseball auction draft assistant that computes a fair price for each of 1,300+ MLB players by distributing the league's total auction capital according to statistical player value.</li>
               <li>Launched a developer portal with self-service API key management, secure password hashing, signed-cookie sessions, per-key IP whitelisting, sliding-window rate limiting, and a 30-day audit log.</li>
               <li>Ingests live MLB data on a tiered scheduler and re-values every player with a z-score, replacement-baseline engine — full budget allocation in about 3 seconds.</li>
             </ul>
@@ -392,7 +413,7 @@
           <div class="entry-body">
             <h3>Open Orderbook <span class="role">— trade $ERIC, right here</span></h3>
             <ul class="resume-bullets">
-              <li>Built a low-latency limit order book and matching engine in C++17 with price-time priority, guaranteed price improvement, O(log L) inserts; benchmarked at 3.7M ops/sec (269 ns/op) on a mixed workload of limits, cancels, and markets.</li>
+              <li>Built a low-latency limit order book and matching engine in C++17 with price-time priority, guaranteed price improvement, O(log L) inserts; benchmarked at 9.9M ops/sec (99 ns/op) on a mixed workload of limits, cancels, and markets.</li>
             </ul>
             <p class="aside">
               A JavaScript twin held to the same 12-case test list runs the
@@ -401,7 +422,7 @@
               against both.
             </p>
             <p class="stack">
-              <span>C++17</span><span>JavaScript</span><span>zero dependencies</span><span>269 ns/op</span><span>GitHub Actions CI</span>
+              <span>C++17</span><span>JavaScript</span><span>zero dependencies</span><span>99 ns/op</span><span>GitHub Actions CI</span>
             </p>
             <p class="links">
               <a href="https://github.com/ericsohel/orderbook">GitHub &rarr;</a>
@@ -437,7 +458,7 @@
               </div>
               <p class="aside">
                 The demo runs the JS engine entirely in your browser; the
-                C++17 core in the repo passes the same test suite at 3.7M
+                C++17 core in the repo passes the same test suite at 9.9M
                 ops/s. The terminal trades this market too: try `buy 5`.
                 ($ERIC is not listed. Yet.)
               </p>
@@ -482,34 +503,34 @@
 
         <p class="book-group">research desk</p>
         <ul class="spines">
-          <li class="spine" tabindex="0" data-book="Thinking in Bets — Annie Duke" data-thoughts="judge decisions by process, not outcome — 'resulting' is the enemy. poker as epistemology."><span>Thinking in Bets</span></li>
-          <li class="spine" tabindex="0" data-book="Principles — Ray Dalio" data-thoughts="dalio's operating system, written down. radical transparency scales better than it feels like it should."><span>Principles</span></li>
-          <li class="spine" tabindex="0" data-book="Deep Work — Cal Newport" data-thoughts="the case for guarding four uninterrupted hours like capital. newport was right about the phone."><span>Deep Work</span></li>
-          <li class="spine" tabindex="0" data-book="Atomic Habits — James Clear" data-thoughts="systems over goals, identity over willpower. the compounding chapter alone pays for the book."><span>Atomic Habits</span></li>
-          <li class="spine" tabindex="0" data-book="Why We Sleep — Matthew Walker" data-thoughts="the scariest book on this shelf. permanently changed my relationship with 2am commits."><span>Why We Sleep</span></li>
-          <li class="spine" tabindex="0" data-book="The Ten-Day MBA — Steven Silbiger" data-thoughts="a decoder ring for business vocabulary. reads in a week, gets referenced for years."><span>The Ten-Day MBA</span></li>
-          <li class="spine" tabindex="0" data-book="Meditations — Marcus Aurelius" data-thoughts="a roman emperor's private notes on keeping it together. stoicism straight from the source."><span>Meditations</span></li>
-          <li class="spine" tabindex="0" data-book="Open to Work — Ryan Roslansky" data-thoughts="career strategy from the guy who runs the job market. on-theme for a site with a ticker on it."><span>Open to Work</span></li>
+          <li class="spine" role="button" tabindex="0" data-book="Thinking in Bets — Annie Duke" data-thoughts="judge decisions by process, not outcome — 'resulting' is the enemy. poker as epistemology."><span>Thinking in Bets</span></li>
+          <li class="spine" role="button" tabindex="0" data-book="Principles — Ray Dalio" data-thoughts="dalio's operating system, written down. radical transparency scales better than it feels like it should."><span>Principles</span></li>
+          <li class="spine" role="button" tabindex="0" data-book="Deep Work — Cal Newport" data-thoughts="the case for guarding four uninterrupted hours like capital. newport was right about the phone."><span>Deep Work</span></li>
+          <li class="spine" role="button" tabindex="0" data-book="Atomic Habits — James Clear" data-thoughts="systems over goals, identity over willpower. the compounding chapter alone pays for the book."><span>Atomic Habits</span></li>
+          <li class="spine" role="button" tabindex="0" data-book="Why We Sleep — Matthew Walker" data-thoughts="the scariest book on this shelf. permanently changed my relationship with 2am commits."><span>Why We Sleep</span></li>
+          <li class="spine" role="button" tabindex="0" data-book="The Ten-Day MBA — Steven Silbiger" data-thoughts="a decoder ring for business vocabulary. reads in a week, gets referenced for years."><span>The Ten-Day MBA</span></li>
+          <li class="spine" role="button" tabindex="0" data-book="Meditations — Marcus Aurelius" data-thoughts="a roman emperor's private notes on keeping it together. stoicism straight from the source."><span>Meditations</span></li>
+          <li class="spine" role="button" tabindex="0" data-book="Open to Work — Ryan Roslansky" data-thoughts="career strategy from the guy who runs the job market. on-theme for a site with a ticker on it."><span>Open to Work</span></li>
         </ul>
 
         <p class="book-group">puzzles &amp; proofs</p>
         <ul class="spines">
-          <li class="spine" tabindex="0" data-book="How to Solve It — George Pólya" data-thoughts="pólya turns 'just be clever' into a repeatable checklist. problem-solving as procedure, not vibes."><span>How to Solve It</span></li>
-          <li class="spine" tabindex="0" data-book="Algorithms to Live By — Brian Christian &amp; Tom Griffiths" data-thoughts="optimal stopping for apartments, caching for closets. cs as life advice, done honestly."><span>Algorithms to Live By</span></li>
-          <li class="spine" tabindex="0" data-book="The Moscow Puzzles — Boris Kordemsky" data-thoughts="soviet-era brainteasers that haven't aged a day. the geometry ones still sting."><span>The Moscow Puzzles</span></li>
-          <li class="spine" tabindex="0" data-book="Mathematical Brainteasers with Surprising Solutions — Owen O'Shea" data-thoughts="the title undersells the 'surprising.' several of these answers feel illegal."><span>Mathematical Brainteasers with Surprising Solutions</span></li>
+          <li class="spine" role="button" tabindex="0" data-book="How to Solve It — George Pólya" data-thoughts="pólya turns 'just be clever' into a repeatable checklist. problem-solving as procedure, not vibes."><span>How to Solve It</span></li>
+          <li class="spine" role="button" tabindex="0" data-book="Algorithms to Live By — Brian Christian &amp; Tom Griffiths" data-thoughts="optimal stopping for apartments, caching for closets. cs as life advice, done honestly."><span>Algorithms to Live By</span></li>
+          <li class="spine" role="button" tabindex="0" data-book="The Moscow Puzzles — Boris Kordemsky" data-thoughts="soviet-era brainteasers that haven't aged a day. the geometry ones still sting."><span>The Moscow Puzzles</span></li>
+          <li class="spine" role="button" tabindex="0" data-book="Mathematical Brainteasers with Surprising Solutions — Owen O'Shea" data-thoughts="the title undersells the 'surprising.' several of these answers feel illegal."><span>Mathematical Brainteasers with Surprising Solutions</span></li>
         </ul>
 
         <p class="book-group">long-term holds</p>
         <ul class="spines">
-          <li class="spine" tabindex="0" data-book="East of Eden — John Steinbeck" data-thoughts="timshel — thou mayest. steinbeck's biggest swing, and it lands. the best thing on this shelf."><span>East of Eden</span></li>
-          <li class="spine" tabindex="0" data-book="Never Let Me Go — Kazuo Ishiguro" data-thoughts="quiet dystopia. ishiguro breaks your heart politely, and exactly on schedule."><span>Never Let Me Go</span></li>
-          <li class="spine" tabindex="0" data-book="The Remains of the Day — Kazuo Ishiguro" data-thoughts="an entire novel in what a butler won't let himself say. devastating restraint."><span>The Remains of the Day</span></li>
-          <li class="spine" tabindex="0" data-book="The Namesake — Jhumpa Lahiri" data-thoughts="growing up between two names and two worlds. lahiri makes the ordinary ache."><span>The Namesake</span></li>
-          <li class="spine" tabindex="0" data-book="The Kite Runner — Khaled Hosseini" data-thoughts="guilt, redemption, and kite string across two countries. hosseini does not miss."><span>The Kite Runner</span></li>
-          <li class="spine" tabindex="0" data-book="Frieren: Beyond Journey's End, Vol. 1 — Kanehito Yamada &amp; Tsukasa Abe" data-thoughts="an elf outlives her hero party and learns to grieve at her own pace. gentle and devastating."><span>Frieren: Beyond Journey's End, Vol. 1</span></li>
+          <li class="spine" role="button" tabindex="0" data-book="East of Eden — John Steinbeck" data-thoughts="timshel — thou mayest. steinbeck's biggest swing, and it lands. the best thing on this shelf."><span>East of Eden</span></li>
+          <li class="spine" role="button" tabindex="0" data-book="Never Let Me Go — Kazuo Ishiguro" data-thoughts="quiet dystopia. ishiguro breaks your heart politely, and exactly on schedule."><span>Never Let Me Go</span></li>
+          <li class="spine" role="button" tabindex="0" data-book="The Remains of the Day — Kazuo Ishiguro" data-thoughts="an entire novel in what a butler won't let himself say. devastating restraint."><span>The Remains of the Day</span></li>
+          <li class="spine" role="button" tabindex="0" data-book="The Namesake — Jhumpa Lahiri" data-thoughts="growing up between two names and two worlds. lahiri makes the ordinary ache."><span>The Namesake</span></li>
+          <li class="spine" role="button" tabindex="0" data-book="The Kite Runner — Khaled Hosseini" data-thoughts="guilt, redemption, and kite string across two countries. hosseini does not miss."><span>The Kite Runner</span></li>
+          <li class="spine" role="button" tabindex="0" data-book="Frieren: Beyond Journey's End, Vol. 1 — Kanehito Yamada &amp; Tsukasa Abe" data-thoughts="an elf outlives her hero party and learns to grieve at her own pace. gentle and devastating."><span>Frieren: Beyond Journey's End, Vol. 1</span></li>
         </ul>
-        <p class="shelf-caption" id="shelf-caption">hover or tap a spine.</p>
+        <p class="shelf-caption" id="shelf-caption" aria-live="polite">hover or tap a spine.</p>
       </section>
 
       <section aria-labelledby="repeat-h">
@@ -540,9 +561,8 @@
             <div class="vol-bars" id="vol-bars"></div>
           </div>
           <p class="spotify-pending" id="spotify-pending">
-            Live listening data connects once the Spotify env vars land on
-            Vercel — `nowplaying` in the terminal will tell you the truth
-            either way.
+            Pulling live positions from the Spotify API&hellip; if the feed
+            stays quiet, `nowplaying` in the terminal will tell you why.
           </p>
         </div>
       </section>
@@ -551,6 +571,7 @@
         <h2 id="contact-h">Contact</h2>
         <ul class="contact">
           <li><a href="mailto:ericsohel05@gmail.com">ericsohel05@gmail.com</a></li>
+          <li><a href="/resume.pdf">resume.pdf</a></li>
           <li><a href="https://github.com/ericsohel">github.com/ericsohel</a></li>
           <li><a href="https://www.linkedin.com/in/eric-sohel/">linkedin.com/in/eric-sohel</a></li>
           <li><a href="https://github.com/facebook/pyre-check/pulls?q=esohel30+">Pysa merged PRs</a></li>

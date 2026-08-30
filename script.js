@@ -323,6 +323,7 @@
   function closeBook() {
     if (!open) return;
     open.classList.remove("is-open");
+    open.setAttribute("aria-expanded", "false");
     open = null;
     cap.classList.remove("is-reading");
     cap.textContent = "hover or tap a spine — click to pull one off the shelf.";
@@ -330,9 +331,13 @@
 
   function openBook(s) {
     if (open === s) return closeBook();
-    if (open) open.classList.remove("is-open");
+    if (open) {
+      open.classList.remove("is-open");
+      open.setAttribute("aria-expanded", "false");
+    }
     open = s;
     s.classList.add("is-open");
+    s.setAttribute("aria-expanded", "true");
 
     cap.classList.remove("is-reading");
     void cap.offsetWidth; // restart the entrance animation
@@ -343,7 +348,6 @@
     title.textContent = s.dataset.book;
     const note = document.createElement("span");
     note.className = "shelf-note";
-    // Mocked for now — replace data-thoughts per book with the real take.
     note.textContent =
       s.dataset.thoughts ||
       "eric's marginalia are being transcribed — real notes on this one soon.";
@@ -354,6 +358,7 @@
   }
 
   spines.forEach((s) => {
+    s.setAttribute("aria-expanded", "false");
     s.addEventListener("mouseenter", () => preview(s));
     s.addEventListener("focus", () => preview(s));
     s.addEventListener("click", () => openBook(s));
@@ -423,6 +428,9 @@
 
   window.draftiqDemo = { fetchDemo, cached };
 
+  // Warm the free-tier dyno on page load so a click never eats the cold start.
+  fetchDemo().catch(() => {});
+
   // ── Widget wiring ──────────────────────────────────────────────────────────
   const panel = document.getElementById("draftiq-demo");
   const btn = document.getElementById("demo-run");
@@ -483,7 +491,7 @@
     } catch (err) {
       panel.classList.remove("is-live");
       if (err.code === 404) {
-        setStatus("demo endpoint isn't deployed yet (branch awaiting merge) — meanwhile the developer portal above is fully live.");
+        setStatus("the demo endpoint answered 404 — unexpected. the developer portal link above still works.");
       } else if (err.name === "AbortError") {
         setStatus("timed out after 75s — the free-tier server is napping hard. worth one more try.");
       } else {
@@ -717,7 +725,7 @@
     if (dq && dq.top && dq.top[0]) {
       add("draftiq top", dq.top[0].name + " $" + dq.top[0].dollarValue);
     } else {
-      add("draftiq", "1,600+ players priced live — type `demo`");
+      add("draftiq", "1,300+ players priced live — type `demo`");
     }
     add("citadel terminal", "P2");
     add("cornell trading comp", "top 5 ×2");
@@ -743,6 +751,7 @@
       items.forEach((it) => {
         const span = document.createElement("span");
         span.className = "tape-item";
+        if (p > 0) span.setAttribute("aria-hidden", "true"); // loop copy — visual only
         const key = document.createElement("span");
         key.className = "tape-key";
         key.textContent = it.key;
@@ -752,6 +761,7 @@
         const sep = document.createElement("span");
         sep.className = "tape-sep";
         sep.textContent = "·";
+        sep.setAttribute("aria-hidden", "true");
         inner.appendChild(sep);
       });
     }
@@ -831,7 +841,7 @@
           "awards       the trophy shelf",
           "contact      say hi",
           "github       both of them — long story",
-          "resume       (it's on request)",
+          "resume       the pdf, one page",
           "theme        lights on / off",
           "ls           list sections — type a name to jump to it",
           "clear        wipe the screen",
@@ -848,7 +858,7 @@
     projects() {
       print(
         "draftiq — production REST API for fantasy baseball auction drafting\n" +
-          "  600+ live player valuations in tens of ms · 125 tests\n" +
+          "  1,300+ live player valuations in tens of ms · 131 tests\n" +
           "  " + link("https://draftiq-xkpx.onrender.com/developer-portal/", "developer portal") +
           " · " + link("https://github.com/ericsohel/draftiq", "source") + "\n" +
           "(pysa fuzzer lives under `experience` — type it, or `demo pysa`)"
@@ -887,7 +897,7 @@
       );
     },
     resume() {
-      print("available on request → " + link("mailto:ericsohel05@gmail.com", "ericsohel05@gmail.com"), "muted");
+      print(link("/resume.pdf", "resume.pdf") + " — one page, current", "muted");
     },
     theme() {
       document.getElementById("theme-toggle").click();
@@ -960,7 +970,7 @@
         })
         .catch((err) => {
           if (err.code === 404) {
-            print("demo endpoint not deployed yet — branch is awaiting merge. the developer portal is live though: type `projects`", "muted");
+            print("demo endpoint answered 404 — unexpected. the developer portal is live though: type `projects`", "muted");
           } else if (err.name === "AbortError") {
             print("timed out — free-tier server is napping hard. run `demo` once more.", "muted");
           } else {
@@ -1004,7 +1014,7 @@
         })
         .catch((e) => {
           if (e.code === 404 || e.code === 503) {
-            print("spotify isn't wired up yet — env vars pending on vercel (see SPOTIFY-SETUP.md).", "muted");
+            print("the spotify feed is offline right now — the desk trades unquoted.", "muted");
           } else {
             print("spotify api unreachable — try again later.", "muted");
           }
@@ -1035,7 +1045,7 @@
             print("core positions locked — token predates user-top-read scope.", "muted");
           }
         })
-        .catch(() => print("spotify not wired yet — see SPOTIFY-SETUP.md", "muted"));
+        .catch(() => print("spotify feed offline — no book to report.", "muted"));
     },
     quote(rest) {
       const q = (rest || []).join(" ").trim();
@@ -1053,7 +1063,7 @@
             print("$" + hit.ticker + " " + hit.artist + " — core position (6mo top artist)");
           }
         })
-        .catch(() => print("spotify not wired yet — see SPOTIFY-SETUP.md", "muted"));
+        .catch(() => print("spotify feed offline — no quotes on the wire.", "muted"));
     },
   };
   COMMANDS.hi = COMMANDS.hello;
@@ -1074,8 +1084,8 @@
 
     if (cmd === "sudo") return print("nice try.", "muted");
     if (cmd === "cd") return rest[0] ? jump(rest[0]) : print("cd: where to? try `ls`", "muted");
-    if (SECTIONS.includes(cmd)) return jump(cmd);
     if (COMMANDS[cmd]) return COMMANDS[cmd](rest);
+    if (SECTIONS.includes(cmd)) return jump(cmd);
 
     print("command not found: " + esc(cmd) + " — try `help`", "muted");
   }
