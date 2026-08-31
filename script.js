@@ -841,7 +841,7 @@
           "awards       the trophy shelf",
           "contact      say hi",
           "github       both of them — long story",
-          "resume       the pdf, one page",
+          "resume       (it's on request)",
           "theme        lights on / off",
           "ls           list sections — type a name to jump to it",
           "clear        wipe the screen",
@@ -897,7 +897,7 @@
       );
     },
     resume() {
-      print(link("/resume.pdf", "resume.pdf") + " — one page, current", "muted");
+      print("available on request → " + link("mailto:ericsohel05@gmail.com", "ericsohel05@gmail.com"), "muted");
     },
     theme() {
       document.getElementById("theme-toggle").click();
