@@ -421,13 +421,15 @@
               <li>Built a low-latency limit order book and matching engine in C++17 with price-time priority, guaranteed price improvement, O(1) cancels; benchmarked at 19.2M ops/sec (52 ns/op) on a mixed workload of limits, cancels, and markets.</li>
             </ul>
             <p class="aside">
-              A JavaScript twin held to the same 12-case test list runs the
-              live market below — a market maker quotes around a drifting
-              fair value, a noise trader takes liquidity, and you trade
-              against both.
+              The C++ core also speaks NASDAQ TotalView-ITCH 5.0: it replays
+              a full real trading day — 268.7M messages, 8,906 symbols, peak
+              1.9M live orders — with zero integrity violations. A JavaScript
+              twin held to the same 12-case test list runs the live market
+              below — a market maker quotes around a drifting fair value, a
+              noise trader takes liquidity, and you trade against both.
             </p>
             <p class="stack">
-              <span>C++17</span><span>JavaScript</span><span>zero dependencies</span><span>52 ns/op</span><span>GitHub Actions CI</span>
+              <span>C++17</span><span>JavaScript</span><span>ITCH 5.0</span><span>zero dependencies</span><span>52 ns/op</span><span>GitHub Actions CI</span>
             </p>
             <p class="links">
               <a href="https://github.com/ericsohel/orderbook">GitHub &rarr;</a>
