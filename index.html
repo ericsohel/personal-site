@@ -418,7 +418,7 @@
           <div class="entry-body">
             <h3>Open Orderbook <span class="role">— trade $ERIC, right here</span></h3>
             <ul class="resume-bullets">
-              <li>Built a low-latency limit order book and matching engine in C++17 with price-time priority, guaranteed price improvement, O(1) cancels; benchmarked at 19.2M ops/sec (52 ns/op) on a mixed workload of limits, cancels, and markets.</li>
+              <li>Built a low-latency limit order book and matching engine in C++17 with price-time priority, guaranteed price improvement, O(1) cancels; benchmarked at 24.3M ops/sec (41 ns/op) on a mixed workload of limits, cancels, and markets.</li>
             </ul>
             <p class="aside">
               The C++ core also speaks NASDAQ TotalView-ITCH 5.0: it replays
@@ -429,7 +429,7 @@
               noise trader takes liquidity, and you trade against both.
             </p>
             <p class="stack">
-              <span>C++17</span><span>JavaScript</span><span>ITCH 5.0</span><span>zero dependencies</span><span>52 ns/op</span><span>GitHub Actions CI</span>
+              <span>C++17</span><span>JavaScript</span><span>ITCH 5.0</span><span>zero dependencies</span><span>41 ns/op</span><span>GitHub Actions CI</span>
             </p>
             <p class="links">
               <a href="https://github.com/ericsohel/orderbook">GitHub &rarr;</a>
@@ -465,7 +465,7 @@
               </div>
               <p class="aside">
                 The demo runs the JS engine entirely in your browser; the
-                C++17 core in the repo passes the same test suite at 19.2M
+                C++17 core in the repo passes the same test suite at 24.3M
                 ops/s. The terminal trades this market too: try `buy 5`.
                 ($ERIC is not listed. Yet.)
               </p>
