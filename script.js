@@ -831,7 +831,7 @@
         [
           "whoami       who is this guy",
           "demo         draftiq · `demo pysa` · `demo book` · `demo wire`",
-          "buy/sell <n> trade $ERIC against the in-page market",
+          "buy/sell &lt;n&gt; trade $ERIC against the in-page market",
           "nowplaying   what's in my headphones (live)",
           "tape         read the ticker",
           "portfolio    my listening book, quantified",
@@ -1077,7 +1077,7 @@
 
   function run(raw) {
     const line = raw.trim();
-    print('<span class="term-prompt">' + PROMPT + "</span> " + esc(raw), "echo");
+    print('<span class="term-prompt">' + PROMPT + "</span>" + esc(raw), "echo");
     if (!line) return;
 
     const [cmd, ...rest] = line.toLowerCase().split(/\s+/);
