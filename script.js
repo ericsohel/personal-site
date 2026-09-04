@@ -841,6 +841,7 @@
           "awards       the trophy shelf",
           "contact      say hi",
           "github       both of them — long story",
+          "linkedin     the professional feed",
           "resume       (it's on request)",
           "theme        lights on / off",
           "ls           list sections — type a name to jump to it",
@@ -895,6 +896,9 @@
           "landed upstream under it: " +
           link("https://github.com/facebook/pyre-check/tree/main/scripts/pysa_fuzzer", "scripts/pysa_fuzzer")
       );
+    },
+    linkedin() {
+      print(link("https://www.linkedin.com/in/eric-sohel/", "linkedin.com/in/eric-sohel"));
     },
     resume() {
       print("available on request → " + link("mailto:ericsohel05@gmail.com", "ericsohel05@gmail.com"), "muted");
